@@ -1,9 +1,9 @@
-AxisPlane::AxisPlane(int ax,double d):
+inline AxisPlane::AxisPlane(int ax,double d):
 	axis(ax),
 	offset(d)
 {}
 
-Eigen::Vector3d AxisPlane::normal() const
+inline Eigen::Vector3d AxisPlane::normal() const
 {
 	Eigen::Vector3d v(0.0,0.0,0.0);
 	v[axis]=-offset;
