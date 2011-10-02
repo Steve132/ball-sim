@@ -1,4 +1,4 @@
-Sphere::Sphere()
+inline Sphere::Sphere()
 {
 }
 

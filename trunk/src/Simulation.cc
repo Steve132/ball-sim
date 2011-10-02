@@ -1,13 +1,70 @@
 #include "Simulation.h"
 #include <mmintrin.h>
 #include <cstdlib>
+#include <string>
+#include <vector>
+#include <cstring>
 
-Simulation::Simulation(const Eigen::Vector3d& dimensions,double timedelta,unsigned int seedhash,unsigned int ballcount,bool t):
+Simulation::Simulation(int argc,char** argv):
+	current_timestamp(0)
+{
+	Eigen::Vector3d dimensions(5.0,3.0,5.0);
+	threaded=false;
+	unsigned int seedhash=0;
+	num_spheres=100;
+	dt=1.0/64.0;
+
+	for(int i=0;i<argc;i++)
+	{
+		if(argv[i][0]=='-')
+		{
+			char c=argv[i][1];
+			if(c=='-')
+			{
+				c=argv[i][2];
+			}
+			switch(tolower(c))
+			{
+			case 'x':
+				{
+					dimensions[0]=atof(argv[++i]);
+					break;
+				}
+			case 'y':
+				{
+					dimensions[1]=atof(argv[++i]);
+					break;
+				}
+			case 'z':
+				{
+					dimensions[2]=atof(argv[++i]);
+					break;
+				}
+			case 'n':
+				{
+					num_spheres=atoi(argv[++i]);
+					break;
+				}
+			case 't':
+				{
+					threaded=true;
+					break;
+				}
+			case 'f':
+				{
+					dt=1.0/atof(argv[++i]);
+					break;
+				}
+			};
+		}
+	}
+/*
+	const Eigen::Vector3d& dimensions,double timedelta,unsigned int seedhash,unsigned int ballcount,bool t):
 	dt(timedelta),
 	current_timestamp(0),
 	threaded(t),
 	num_spheres(ballcount)
-{
+{*/
 	dynamic_spheres=reinterpret_cast<Sphere*>(_mm_malloc(num_spheres*sizeof(Sphere),16));
 
 	for(int i=0;i<3;i++)
@@ -17,7 +74,7 @@ Simulation::Simulation(const Eigen::Vector3d& dimensions,double timedelta,unsign
 	}
 	
 	srand(seedhash);
-	for(Sphere* s=dynamic_spheres;s != (dynamic_spheres+ballcount);++s)
+	for(Sphere* s=dynamic_spheres;s != (dynamic_spheres+num_spheres);++s)
 	{
 		new (s) Sphere;
 		initialize_sphere(*s);
@@ -63,10 +120,22 @@ void Simulation::initialize_sphere(Sphere& s)
 void Simulation::run(double seconds,const std::function<bool (const Simulation&)>& callback)
 {
 	std::uint64_t timesteps=seconds/dt;
-	for(current_timestamp=0;current_timestamp < timesteps;current_timestamp++)
+	bool quit=false;
+	if(threaded)
 	{
-		update(dt);
-		callback(*this);
+		for(current_timestamp=0;current_timestamp < timesteps && (!quit);current_timestamp++)
+		{
+			update(dt);
+			quit=callback(*this);
+		}
+	}
+	else
+	{
+		for(current_timestamp=0;current_timestamp < timesteps && (!quit);current_timestamp++)
+		{
+			update_threaded(dt);
+			quit=callback(*this);
+		}	
 	}
 }
 
