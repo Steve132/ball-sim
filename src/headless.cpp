@@ -11,6 +11,12 @@ int main(int argc,char** argv)
 {
 	bool predictive=false;
 	double length=30.0;
+	
+	if(argc <= 1)
+	{
+		Simulation::print_help(argv[0]);
+		return 0;
+	}
 
 	for(int i=0;i<argc;i++)
 	{
@@ -29,6 +35,11 @@ int main(int argc,char** argv)
 			if(ch=='l')
 			{
 				length=atof(argv[++i]);
+			}
+			if(ch=='h')
+			{
+				Simulation::print_help(argv[0]);
+				return 0;
 			}
 		}
 	}
