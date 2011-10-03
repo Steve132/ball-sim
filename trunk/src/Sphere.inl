@@ -21,6 +21,10 @@ inline void Sphere::collide(Sphere& c1,const AxisPlane& t)
 	c1.position[t.axis]=t.offset+(t.offset <= 0.0 ? r : -r);
 }
 
+inline void Sphere::collide(Sphere& c1, Sphere& c2)
+{
+}
+
 inline void Sphere::update(double dt)
 {
 	position+=velocity*dt+acceleration*dt*dt*0.5;
