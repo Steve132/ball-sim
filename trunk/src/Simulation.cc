@@ -4,9 +4,25 @@
 #include <string>
 #include <vector>
 #include <cstring>
+#include <iostream>
+#include <omp.h>
 
+void Simulation::print_help(const char* arg0)
+{
+	std::cout << "Usage: " << arg0 << "[options]" << std::endl;
+	std::cout << "\t-x <float> -y <float> -z <float>\tSets the dimensions of the room of interest.  Defaults to {5,3,5}" << std::endl;
+	std::cout << "\t-n <int> | --num_spheres <int>\t Sets the number of spheres to generate.  Defaults to 100" << std::endl;
+	std::cout << "\t-t | --threaded\t Enables threaded mode.  Disabled by default" << std::endl;
+	std::cout << "\t-h | --help\t Prints this help message." << std::endl;
+	std::cout << "\t-f <float> | --fps <float>\tSets the simulation timedelta as frames per second. Defaults to 64.0" << std::endl;
+	std::cout << "\t-l <float> | --length <float>\tSets the length of the simulation to run in seconds.  Defaults to 30.0" << std::endl;
+	std::cout << "\t-p | --predictive\t Enables predictive mode.  Disabled by default" << std::endl;
+
+}
 Simulation::Simulation(int argc,char** argv):
-	current_timestamp(0)
+	current_timestamp(0),
+	collisions(0),
+	checks(0)
 {
 	Eigen::Vector3d dimensions(5.0,3.0,5.0);
 	threaded=false;
@@ -27,17 +43,17 @@ Simulation::Simulation(int argc,char** argv):
 			{
 			case 'x':
 				{
-					dimensions[0]=atof(argv[++i]);
+					dimensions[0]=atof(argv[++i])/2.0;
 					break;
 				}
 			case 'y':
 				{
-					dimensions[1]=atof(argv[++i]);
+					dimensions[1]=atof(argv[++i])/2.0;
 					break;
 				}
 			case 'z':
 				{
-					dimensions[2]=atof(argv[++i]);
+					dimensions[2]=atof(argv[++i])/2.0;
 					break;
 				}
 			case 'n':
@@ -119,23 +135,33 @@ void Simulation::initialize_sphere(Sphere& s)
 
 void Simulation::run(double seconds,const std::function<bool (const Simulation&)>& callback)
 {
+	double tinit=omp_get_wtime();
 	std::uint64_t timesteps=seconds/dt;
+	std::cout << timesteps;
 	bool quit=false;
-	if(threaded)
+	for(current_timestamp=0;(current_timestamp < timesteps) && (!quit);current_timestamp++)
 	{
-		for(current_timestamp=0;current_timestamp < timesteps && (!quit);current_timestamp++)
-		{
-			update(dt);
-			quit=callback(*this);
-		}
-	}
-	else
-	{
-		for(current_timestamp=0;current_timestamp < timesteps && (!quit);current_timestamp++)
-		{
+		
+		if(threaded)
 			update_threaded(dt);
-			quit=callback(*this);
-		}	
+		else
+			update(dt);
+		quit=!callback(*this);
+		
 	}
+	double tend=omp_get_wtime();
+
+	std::cout << "Run statistics:" << std::endl;
+	std::cout << "total_timesteps\t" << current_timestamp << std::endl;
+	std::cout << "total_real_world_time\t"      << tend-tinit << std::endl;	
+
+	std::cout << "total_collisions\t" << collisions << std::endl;
+	std::cout << "total_checks\t" << checks <<std::endl;
+
+	std::cout << "average timesteps/second\t" << double(current_timestamp)/(tend-tinit)<<std::endl;
+	std::cout << "average milliseconds/timestep\t" << (tend-tinit)/double(current_timestamp/1000) << std::endl;
+	std::cout << "time_dilation\t" << (current_timestamp*dt)/(tend-tinit) << std::endl;
+	
+	std::cout << "total_max_threads\t" << omp_get_max_threads() << std::endl;
 }
 

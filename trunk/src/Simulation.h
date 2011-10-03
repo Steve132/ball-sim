@@ -12,6 +12,8 @@ class Simulation
 protected:
 	double dt;
 	std::uint64_t current_timestamp;
+	std::uint64_t collisions;
+	std::uint64_t checks;
 	std::vector<AxisPlane> boundingplanes;
 	bool threaded;
 
@@ -24,6 +26,8 @@ protected:
 public:
 	Simulation(int argc,char**);
 	virtual ~Simulation();
+
+	static void print_help(const char*);
 
 	void run(double seconds,const std::function<bool (const Simulation&)>& callback);
 };
