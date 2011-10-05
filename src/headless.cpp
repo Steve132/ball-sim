@@ -17,7 +17,7 @@ int main(int argc,char** argv)
 		Simulation::print_help(argv[0]);
 		return 0;
 	}
-
+	//Scan the arguments for prediction and simulation length
 	for(int i=0;i<argc;i++)
 	{
 		if(argv[i][0]=='-')
@@ -44,7 +44,7 @@ int main(int argc,char** argv)
 		}
 	}
 	std::shared_ptr<Simulation> sim;
-
+	//create a simulation
 	if(!predictive)
 	{
 		sim.reset(new NaiveSimulation(argc,argv));
@@ -53,6 +53,7 @@ int main(int argc,char** argv)
 	{
 		sim.reset(new PredictiveSimulation(argc,argv));
 	}
+	//run the simulation with no visualization callback
 	sim->run(length,empty_callback);
 	return 0;
 }
