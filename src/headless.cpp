@@ -45,7 +45,7 @@ int main(int argc,char** argv)
 	}
 	std::shared_ptr<Simulation> sim;
 
-	if(predictive)
+	if(!predictive)
 	{
 		sim.reset(new NaiveSimulation(argc,argv));
 	}
