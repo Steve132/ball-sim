@@ -24,12 +24,14 @@ Simulation::Simulation(int argc,char** argv):
 	collisions(0),
 	checks(0)
 {
+//Make defaults for the simulation
 	Eigen::Vector3d dimensions(5.0,3.0,5.0);
 	threaded=false;
 	unsigned int seedhash=0;
 	num_spheres=100;
 	dt=1.0/64.0;
 
+	//Scan the arguments
 	for(int i=0;i<argc;i++)
 	{
 		if(argv[i][0]=='-')
@@ -81,6 +83,7 @@ Simulation::Simulation(int argc,char** argv):
 	threaded(t),
 	num_spheres(ballcount)
 {*/
+	//Make the spheres using aligned memory.
 	dynamic_spheres=reinterpret_cast<Sphere*>(_mm_malloc(num_spheres*sizeof(Sphere),16));
 
 	for(int i=0;i<3;i++)
@@ -88,7 +91,7 @@ Simulation::Simulation(int argc,char** argv):
 		boundingplanes.push_back(AxisPlane(i,-dimensions[i]));
 		boundingplanes.push_back(AxisPlane(i,dimensions[i]));
 	}
-	
+	//use the seed value to initialize the simulation the same every run.
 	srand(seedhash);
 	for(Sphere* s=dynamic_spheres;s != (dynamic_spheres+num_spheres);++s)
 	{
@@ -108,6 +111,7 @@ static double randfloat(double lower,double upper)
 
 void Simulation::initialize_sphere(Sphere& s)
 {	
+	//find the minimum offset size
 	double minbounds=10e20;
 	for(int i=0;i<3;i++)
 	{
@@ -117,15 +121,21 @@ void Simulation::initialize_sphere(Sphere& s)
 		}
 	}
 
+	//make a ball between 1 30th and 1/10th of the offset
 	s.radius=randfloat(minbounds/30.0,minbounds/10.0);
+	//put the ball in the room somewhere.
 	s.position.x()=randfloat(boundingplanes[0].offset+s.radius,boundingplanes[1].offset-s.radius);
 	s.position.y()=randfloat(boundingplanes[2].offset+s.radius,boundingplanes[3].offset-s.radius);
 	s.position.z()=randfloat(boundingplanes[4].offset+s.radius,boundingplanes[5].offset-s.radius);
 
+	//average density of a rubber-like ball
 	double density=1200.0+randfloat(-100.0,100.0); //kg/m^3
 	density/=1000.0;
 	s.mass = s.radius * s.radius * s.radius * 4.0 / 3.0 * M_PI * density;
+
+	//average cor (bounciness) is bouncy.
 	s.cor=randfloat(.8,.9999);
+	//apply gravity and shoot it in a random direction.
 	s.acceleration=Eigen::Vector3d(0.0,-9.8,0.0);
 	s.velocity.x()=randfloat(-20.0,20.0);
 	s.velocity.y()=randfloat(-20.0,20.0);
@@ -135,9 +145,12 @@ void Simulation::initialize_sphere(Sphere& s)
 
 void Simulation::run(double seconds,const std::function<bool (const Simulation&)>& callback)
 {
+	//Calculate the real-world time
 	double tinit=omp_get_wtime();
+	//Calculate the number of timesteps
 	std::uint64_t timesteps=seconds/dt;
-	std::cout << timesteps;
+
+	//While the callback doesn't trigger a quit, keep going.
 	bool quit=false;
 	for(current_timestamp=0;(current_timestamp < timesteps) && (!quit);current_timestamp++)
 	{
