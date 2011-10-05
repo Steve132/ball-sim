@@ -1,0 +1,23 @@
+This is our project for COP6616, our predictive collision detection sphere simulator.
+
+To build the source code, you can use linux, mac, or windows, as long as your C++ compiler supports C++0x and OpenMP.  (MSVC2010, or GNU G++ 4.4+ (LLVM support is unknown))
+
+This project has two main dependencies.  The first dependency is Eigen, a C++ Vector library that can be found at eigen.tuxfamily.org. 
+
+0)  Extract this project zip file to some directory.  From now on, we will refer to that directory as $BALLDIR
+1)  Download the eigen tarball.  Inside that tarball is a directory Eigen.  Copy that directory to $BALLDIR/src.
+2)  Install CMake however you want for your platform.  
+3)  Run cmake.  Target the cmake source code line at the root $BALLDIR line.
+4)  Set the cmake variable CMAKE_BUILD_TYPE to "Release" under "Advanced Options"
+5)  Set the target directory to some binary directory.  I prefer $BALLDIR/build
+6)  Run "Configure" twice and then run "Generate"
+    On Ubuntu 11.04, steps 3-6 can be performed with the commands
+        mkdir $BALLDIR/build
+        cd $BALLDIR/build
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+7)  Build the project
+        make
+8)  You should now see a binary in $BALLDIR/build.  headless_sim
+    Run this binary to see the help options.
+
+
