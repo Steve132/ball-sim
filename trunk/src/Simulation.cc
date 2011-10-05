@@ -156,6 +156,8 @@ void Simulation::run(double seconds,const std::function<bool (const Simulation&)
 	std::cout << "total_real_world_time\t"      << tend-tinit << std::endl;	
 
 	std::cout << "total_collisions\t" << collisions << std::endl;
+	std::cout << "wall_collisions\t" << wall_collisions << std::endl;
+	std::cout << "sphere_collisions\t" << sphere_collisions << std::endl;
 	std::cout << "total_checks\t" << checks <<std::endl;
 
 	std::cout << "average timesteps/second\t" << double(current_timestamp)/(tend-tinit)<<std::endl;

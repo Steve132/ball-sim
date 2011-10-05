@@ -3,9 +3,9 @@
 
 #include "AxisPlane.h"
 #include "Sphere.h"
-#include<vector>
-#include<cstdint>
-#include<functional>
+#include <vector>
+#include <cstdint>
+#include <functional>
 
 class Simulation
 {
@@ -13,6 +13,8 @@ protected:
 	double dt;
 	std::uint64_t current_timestamp;
 	std::uint64_t collisions;
+	std::uint64_t wall_collisions;
+	std::uint64_t sphere_collisions;
 	std::uint64_t checks;
 	std::vector<AxisPlane> boundingplanes;
 	bool threaded;
