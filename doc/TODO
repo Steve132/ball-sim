@@ -1,5 +1,3 @@
- Provide another enumerated to-do list with the set of features and performance tests that you plan to include in the next phase of your work.
-
 In the next month, we have several tasks to complete.
 
 0)	We will debug why the threaded performance of the naive algorithm seems to be worse than the single-core performance
