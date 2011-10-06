@@ -1,0 +1,13 @@
+COP 6616 Final Project
+Nicholas Arnold
+Steven Braeger
+
+Completed Modules:
+--------------------------
+1) Object classes AxisPlane and Sphere
+2) Overall project shell structure
+3) Virtual class Simulation to hold default simulation values and functions
+4) Derived class NaiveSimulation to implement the naive solution for checking every sphere, threaded and single-threaded.
+5) NaiveSimulation::update and NaiveSimulation::update_threaded functions to calculate the updates to the spheres' positions as well as checking every sphere-sphere pair and sphere-wall pair for collision.
+6) Sphere::collide function defined to calculate new velocity vectors of spheres after a collision is detected
+
