@@ -11,18 +11,18 @@ void NaiveSimulation::update(double dt)
 	// Now that all spheres have been updated, we are interested in checking
 	// sphere-sphere collisions, as well as sphere-wall collisions.
 	// First, let's loop through all walls, checking each sphere as we do so.
-	for(int i = 0; i < boundingplanes.size(); i++)
+	for(int i = 0; i < num_spheres; i++)
 	{
-		for(int j = 0; j < num_spheres; j++)
+		for(int j = 0; j < boundingplanes.size(); j++)
 		{
 			// at each sphere, check to see if it has collided with a wall
-			if(dynamic_spheres[j].collided(boundingplanes[i]))
+			if(dynamic_spheres[i].collided(boundingplanes[j]))
 			{
 				// if so, increment collided counter and calculate
 				// collision effects
 				collisions++;
 				wall_collisions++;
-				Sphere::collide(dynamic_spheres[j], boundingplanes[i]);
+				Sphere::collide(dynamic_spheres[i], boundingplanes[j]);
 			}
 			// increment check counter
 			checks++;
@@ -65,18 +65,18 @@ void NaiveSimulation::update_threaded(double dt)
 	// sphere-sphere collisions, as well as sphere-wall collisions.
 	// First, let's loop through all walls, checking each sphere as we do so.
 	#pragma omp parallel for private(j)
-	for(i = 0; i < boundingplanes.size(); i++)
+	for(i = 0; i < num_spheres; i++)
 	{
-		for(j = 0; j < num_spheres; j++)
+		for(j = 0; j < boundingplanes.size(); j++)
 		{
 			// at each sphere, check to see if it has collided with a wall
-			if(dynamic_spheres[j].collided(boundingplanes[i]))
+			if(dynamic_spheres[i].collided(boundingplanes[j]))
 			{
 				// if so, increment collided counter and calculate
 				// collision effects
 				collisions++;
 				wall_collisions++;
-				Sphere::collide(dynamic_spheres[j], boundingplanes[i]);
+				Sphere::collide(dynamic_spheres[i], boundingplanes[j]);
 			}
 			// increment check counter
 			checks++;
