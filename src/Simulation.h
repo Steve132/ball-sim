@@ -14,7 +14,6 @@ class Simulation
 {
 protected:
 	//The difference between two timestamps in time.
-	double dt;
 	std::uint64_t current_timestamp;
 	std::uint64_t collisions;
 	std::uint64_t wall_collisions;
@@ -46,6 +45,8 @@ public:
 
 	//Run a simulation with an optional callback on every loop iteration.
 	void run(double seconds,const std::function<bool (const Simulation&)>& callback);
+
+	double dt;
 };
 
 #endif
