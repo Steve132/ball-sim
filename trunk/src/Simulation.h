@@ -21,7 +21,6 @@ protected:
 	std::uint64_t checks;
 
 	//all 6 bounding planes in the walls.
-	std::vector<AxisPlane> boundingplanes;
 	
 	//true if the simulation is configured to run in a thread
 	bool threaded;
@@ -47,6 +46,7 @@ public:
 	void run(double seconds,const std::function<bool (const Simulation&)>& callback);
 
 	double dt;
+	std::vector<AxisPlane> boundingplanes;
 };
 
 #endif
