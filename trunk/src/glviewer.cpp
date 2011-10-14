@@ -81,16 +81,17 @@ static void display(const Simulation& s)
 	glutSwapBuffers();
 }
 
+double tstart=0;
+
 bool glutloop(const Simulation& s)
 {	
-	double tstart=omp_get_wtime();
 	while((omp_get_wtime()-tstart) < s.dt)
 	{
 		display(s);
 		glutPostRedisplay();
 		glutMainLoopEvent();
 	}
-
+	tstart=omp_get_wtime();
 	return true;
 }
 
