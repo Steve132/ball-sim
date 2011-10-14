@@ -109,7 +109,7 @@ static double randfloat(double lower,double upper)
 	return (double)rand()/(double)RAND_MAX;
 }
 
-void Simulation::initialize_sphere(Sphere& s)
+void Simulation::initialize_sphere(Sphere& s) const
 {	
 	//find the minimum offset size
 	double minbounds=10e20;

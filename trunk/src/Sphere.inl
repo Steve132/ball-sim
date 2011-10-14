@@ -10,8 +10,14 @@ inline bool Sphere::collided(const Sphere& s)
 
 inline bool Sphere::collided(const AxisPlane& ap)
 {
-	double r=position[ap.axis]-ap.offset;
-	return r*r < radius*radius;
+	if(ap.offset < 0.0f)
+	{
+		return position[ap.axis]< (ap.offset+radius);
+	}
+	else
+	{
+		return position[ap.axis]> (ap.offset-radius);
+	}
 }
 
 inline void Sphere::collide(Sphere& c1,const AxisPlane& t)
