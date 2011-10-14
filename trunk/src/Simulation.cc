@@ -22,6 +22,8 @@ void Simulation::print_help(const char* arg0)
 Simulation::Simulation(int argc,char** argv):
 	current_timestamp(0),
 	collisions(0),
+	wall_collisions(0),
+	sphere_collisions(0),
 	checks(0)
 {
 //Make defaults for the simulation
