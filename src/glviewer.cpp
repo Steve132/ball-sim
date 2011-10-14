@@ -16,6 +16,8 @@ static void display(const Simulation& s)
 	Eigen::Vector3f dims(s.boundingplanes[1].offset,s.boundingplanes[3].offset,s.boundingplanes[5].offset);
 
 
+	glDisable(GL_LIGHTING);
+
 	//do walls
 	glBegin(GL_QUADS);
 	{
@@ -63,12 +65,12 @@ static void display(const Simulation& s)
 		const Sphere& sph=&s.dynamic_spheres[i];
 		glTranslated(sph.
 	}*/
+	glEnable(GL_LIGHTING);
 	glColor3f(1.0,0.0,0.0);
 		
 	glTranslated(sph.position[0],sph.position[1],sph.position[2]);
 	glutSolidSphere(sph.radius,64,32);
 
-	std::cout << s.dt << std::endl;
 	glLoadIdentity();
 
 	glutSwapBuffers();
@@ -83,7 +85,13 @@ bool glutloop(const Simulation& s)
 		glutPostRedisplay();
 		glutMainLoopEvent();
 	}
-	sph.update(s.dt/2.0);
+	sph.update(s.dt);
+	bool bc=sph.collided(s.boundingplanes[2]);
+	std::cout << bc << std::endl;
+	if(bc)
+	{
+		Sphere::collide(sph,s.boundingplanes[2]);
+	}
 	return true;
 }
 
@@ -120,9 +128,12 @@ void init_gl(const Simulation& s)
 	//-x -y -z -> -1 -1 -1
 	//x -y -z ->
 
-	sph.position=Eigen::Vector3d(0.0,0.0,0.0);
-	sph.radius=1.0;
-	sph.acceleration=Eigen::Vector3d(0.0,-9.8,0.0);
+	s.initialize_sphere(sph);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	float lightpos[]={0.0,1.0,0.0,0.0};
+	glLightfv(GL_LIGHT0,GL_POSITION,lightpos);
 
 	 
 

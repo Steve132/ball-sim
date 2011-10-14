@@ -32,7 +32,7 @@ protected:
 	//The list of all the dynamic spheres
 
 	//Creates one sphere randomly in the scene with some default physics
-	void initialize_sphere(Sphere& s);
+//	void initialize_sphere(Sphere& s);
 public:
 	//Construct a sphere on the command line
 	Simulation(int argc,char**);
@@ -47,6 +47,7 @@ public:
 	std::vector<AxisPlane> boundingplanes;
 	Sphere* dynamic_spheres;
 	unsigned int num_spheres;
+	void initialize_sphere(Sphere& s) const;
 };
 
 #endif
