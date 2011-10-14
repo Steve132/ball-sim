@@ -7,21 +7,52 @@
 #include<iostream>
 #include<cstdlib>
 
-float t=0.0;
 
 static void display(const Simulation& s)
 {
-	glClearColor((sin(t)+1.0)/2.0,(cos(t)+1.0)/2.0,1.0,1.0);
+	glClearColor(0.0,0.0,0.0,1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	Eigen::Vector3f dims(s.boundingplanes[1].offset,s.boundingplanes[3].offset,s.boundingplanes[5].offset);
 
-	glColor3f(1.0f,0.0f,0.0f);
+
+	//do walls
 	glBegin(GL_QUADS);
 	{
+		//back wall
+		glColor3f(.75f,.75f,.8f);
 		glVertex3f(-dims[0],dims[1],dims[2]);
 		glVertex3f(dims[0],dims[1],dims[2]);
 		glVertex3f(dims[0],-dims[1],dims[2]);
 		glVertex3f(-dims[0],-dims[1],dims[2]);
+
+		//top wall
+		glColor3f(.75f,.8f,.75f);
+		glVertex3f(-dims[0],dims[1],dims[2]);
+		glVertex3f(dims[0],dims[1],dims[2]);
+		glVertex3f(dims[0],dims[1],-dims[2]);
+		glVertex3f(-dims[0],dims[1],-dims[2]);
+
+		//bottom wall
+		glColor3f(.8f,.75f,.8f);
+		glVertex3f(-dims[0],-dims[1],dims[2]);
+		glVertex3f(dims[0],-dims[1],dims[2]);
+		glVertex3f(dims[0],-dims[1],-dims[2]);
+		glVertex3f(-dims[0],-dims[1],-dims[2]);
+
+		//right wall
+		glColor3f(.8f,.75f,.75f);
+		glVertex3f(dims[0],dims[1],-dims[2]);
+		glVertex3f(dims[0],dims[1],dims[2]);
+		glVertex3f(dims[0],-dims[1],dims[2]);
+		glVertex3f(dims[0],-dims[1],-dims[2]);
+
+		//left wall
+		glColor3f(.75f,.8f,.8f);
+		glVertex3f(-dims[0],dims[1],-dims[2]);
+		glVertex3f(-dims[0],dims[1],dims[2]);
+		glVertex3f(-dims[0],-dims[1],dims[2]);
+		glVertex3f(-dims[0],-dims[1],-dims[2]);
+		
 	}
 	glEnd();
 
@@ -38,7 +69,7 @@ bool glutloop(const Simulation& s)
 		glutPostRedisplay();
 		glutMainLoopEvent();
 	}
-	t+=omp_get_wtime()-tstart;
+	
 	return true;
 }
 
