@@ -1,0 +1,146 @@
+\documentclass{article}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{moreverb}
+\begin{document}
+
+\title{Parallel Collision Prediction}
+\author{Steven Braeger\\
+	Nicholas Arnold}  
+\date{\today}
+\maketitle
+
+\section*{Introduction}
+Our group has a great deal of interest in discrete event simulation as it applies to video-games and real-time simulation.
+Particularly, we are interested in the application of physics simulations.  This kind of discrete event simulation is traditionally performed on large-scale parallel clusters for film and scientific applications, or on massively parallel GPU architectures \cite{grape,uberflow}.  Specifically, we wish to explore the simulation and evolution of systems of dynamic and static objects where all the dynamic objects interact with all of the other objects, as happens when the dynamic objects physically collide with other objects.  In order to do this, we need to be able to model and react to collisions and interactions between objects. 
+
+Although the naive and semi-naive implementation of this kind of simulation is embarassingly parallel, it is also exceedingly wasteful.  The method used to evaluate the interactions between objects is similar to a busy-wait loop, where all objects are continually polled, waiting for collisions to occur as the simulation progresses \cite{nbodycollisions,Moore88collisiondetection}.   As we will describe in the next sections, we are interested in using a novel predictive model along with a lock-free priority queue and other parallel techniques to attempt to make a new kind of economical collision simulation system that does not perform wasteful checks when checks are unlikely.
+
+We hope to demonstrate a novel technique that does no un-needed collision checking and yet maintains much of the parallelism of the naive and semi-naive solutions.
+
+\section*{Problem}
+We define the problem we wish to solve as the following:
+As input, we are given a description of static objects, dynamic objects, and the geometry defining their boundaries.  We are 
+also given initial states like position, acceleration and velocity of the objects in the system, and a set of rules to update those objects.  
+
+For each object $o$ in the system, we have a subroutine defined \texttt{update($o$,$dt$)}, which computes the state of the object in the next timestamp given the object state in this timestamp and a time delta between timestamps.  In addition, we also have a subroutine defined for every pair of objects \texttt{collide($o1$,$o2$)} which computes the state of each object in the next timestamp assuming that the objects collide this timestamp.
+
+As output, we wish to compute the exact state of each object in the system for each of the $n$ timestamps $t_0, t_1, t_2, \ldots, t_n$.  The results of this simulation could be rendered, stored for later analysis, or thrown away, but we need simulation results for each timestamp.
+\section*{Prior Work}
+\subsection*{Naive Solution (Detection)}
+The brute-force all-pairs solution is the naive solution to this problem as it is commonly implemented in games.   This technique 
+is known as a 'detection' technique because it relies on the idea of detecting a collision when it occurs instead of predicting a collision.  
+
+\begin{verbatimtab}[4]
+for each timestep ti
+	dt is the constant timestep difference
+	for each dynamic object "do"
+		update(do,dt)		
+		for each object  o
+			if(check(do,o))
+				collide(do, o, dt)
+\end{verbatimtab}
+
+This technique is embarassingly parallel, allowing a thread per dynamic object or even a thread per pair with minimal overhead.  However, it is extremely
+wasteful, because there are $O(n^2)$ checks being made every single timestamp, even if the likelihood of a collision has changed little since the last timestep \cite{Seningood}.  
+
+Each of these $O(n^2)$ checks per timestep is computationally cheap individually, but when the number of objects is very great the computational overhead of performing all of them becomes
+unmanagable. Considering that an extreme majority of the checks will fail, most of them do not need to be computed, and avoiding their computation has the ability to dramatically increase the 
+throughput of our simulation. 
+
+\subsection*{Semi-Naive Solution}
+A similar algorithm that we refer to as the 'semi-naive' algorithm also has found great use in practical applications as well \cite{Bittner02hierarchicaltechniques}.  The semi-naive algorithm differs only from the naive algorithm in that it exploits a bounding-volume hierarchy to spatially partition the dynamic objects and pre-filter the collision checks.  This algorithm is equally wasteful, but only has $O(n log n)$ checks if the objects are relatively equally distributed.
+
+\section*{Our approach (Prediction)}
+In our desired solution, we take a completely different approach.  In contrast to the naive and semi-naive algorithms, our solution avoids computing any un-needed checks on timestamps that do not change the solution by \textit{predicting} the intersections before they occur, rather than checking for them when they do not.  Although we have not worked out all the details, our algorithm uses a slightly more complex function \texttt{predict(o1,o2)} that returns the time an intersection is likely to occur, and enters it into a priority queue.  When an intersection occurs, it is recomputed and removed from the queue at that timestamp.
+
+\begin{verbatimtab}[4]
+events=priority_queue()
+#initialize events from initial states.
+
+for each timestep ti
+	dt is the constant timestep difference
+	for each dynamic object "do"
+		update(do,dt)
+
+	#while there are events occuring in this timestep
+	while(events.pop() == ti)
+		e=event.pop()  
+		for each object o
+			if(check(e.o,o))
+				collide(e.o, o, dt)
+				#predict next collision event
+				push(predict(e.o,o)) 
+\end{verbatimtab}
+
+It is worth noting that although our solution is the same runtime complextiy as the naive solution in the worst case, it is unlikely to compute ANY checks that are unlikely to occur, thus saving tremendous computation time.  
+
+However, our work is not done.  This algorithm is difficult to parallelize when compared to the naive algorithm, as it depends implicitly on the calculation of a message passing system in which events take priority over other events about to take place.
+If we split the evaluation of the simulation into threads, then each thread must somehow synchronize which events it will prioritize and avoid collisions.  Furthermore, threads must be able
+to communicate events to each-other globally as collisions are predicted into the future.  This communication overhead is difficult to parallelize correctly, and will be the focus of our project in this course.
+
+\section*{Project Tasks}
+Although we have not fully explored all possibilities, we aim to discover a series of algorithms and/or data structures that 
+allow us to generalize our prediction-based algorithm to regain most of the thread-level parallelism that the naive solution facilitates.
+We will first investigate a lock-free implementation of a priority-queue, as well as other techniques.
+
+\section*{Experimental Setup}
+
+In typical instances of this problem in the real world, the type of simulation varies dramatically.
+
+In many applications, the objects obey complex interaction patterns such as flocking behavior and user interaction.  However, these interactions
+are almost always built around a simple framework for simulation that obeys newtonian physics as the primary motion characteristic, with the more complex
+behaviors simply activating different newtonian trajectories and velocities \cite{Jadbabaie02coordinationof}.  Therefore, without loss of generality, we will simplifiy our simulation by limiting
+the object behaviors to simulate newtonian physical interactions of objects under earth-like gravity.
+
+   Real simulations may also involve extremely complicated geometry, such as the convex shapes of human faces, vehicles, and buildings.  However, 
+all of these simulations generalize objects by a first pass of a 'bounding volume' for the more complex object.  The bounding volume is a simple shape (e.g., a sphere)
+that forms a tight bounds on the object.  Real applications solve the first-pass collision checks for the simple 'bounding volume', and only fall back to a more complex
+collision check on convex shapes if the bounding volumes intersect.  Thus, we can solve the problem without loss of generality by solving the problem
+for simple bounding-volume shapes \cite{uberflow,cloth}.  In our case, we choose to use dynamic objects made of simple spheres, and static objects made of planar triangles.
+
+In order to program the simulation, we will use C++, as it is a good language for high performance simulation applications.  In order to facilitate our 
+3D geometry and numerical libraries, we will write our own simulation system and geometry routines based on the C++ Numerical Vector library Eigen.  
+
+We wish to test performance economy as well as parallizability.  For our parallization tests, we will use thread-level parallelism constructs from the C++ compiler
+extension OpenMP, if applicable.  We may also experiment with using the new thread systems included with the new C++11 standard library.
+
+The performance of these systems is typically evaluated in terms of a throughput measurement that measures the number of timestamps
+per second the system is capable of producing.  Equivilently, one can measure the average wall-clock time that passes while evaluating one timestamp.
+\section*{Evaluation}
+
+In order to evaluate the success of our project, we will need to compare our algorithm against the state of the art.  However, direct comparison of performance between our application
+and real-world applications is difficult, because few real-world applications (e.g. games) have available source.  Furthermore, since many of them
+are interactive, they compute many other subsytems besides physical simulation, making a direct comparison highly difficult.  To solve this problem, we will implement all algorithms within a simple testing framework to allow direct comparisons.
+
+For our tests, will implement at least the naive algorithm, and at least one variant of the predictive algorithm.  We may possibly implement several variants of the predictive algorithm, however, implementing the semi-naive algorithm for dynamic objects requires a thread-safe bounding-volume hierarchy data structure, which we feel is beyond the scope of this course.
+
+\subsection*{Economy}
+We wish to measure two features of the algorithms: Economy, and parallizability.  We define economy as the percentage of raw computations
+our algorithm can avoid with respect to the naive algorithm.  In order to measure economy, we will run all algorithms on a single thread of execution
+and compare their throughput in average time per timestep.  By running only on a single thread of execution, we can determine exactly
+what percentage of the speedup comes from prediction over the naive solution of detection.
+\subsection*{Parallism}
+In order to measure the Parallelism of our algorithms, we will then run the same simultions on a shared-memory architecture with 48 phyical cpu cores with as many threads of execution.
+Theoretically, the naive algorithm should scale nearly linearly with the number of processors.  We will compare the speed increase on each algorithm under shared-memory parallelism with the speed difference on a single thread and determine the speedup (if any) to the parallel predictive algorithm.
+
+\section*{Timeline}
+
+\begin{itemize}
+	\item September 17: Proposal Final Draft
+	\item October TBD:  Presentation of Problem
+	\item October 7th:  Simulation Architecture built and running
+	\item October 13th: Naive Algorithm implemented and preliminary economy/performance benchmarks
+	\item October 14th: Mid-Term research report (as a preliminary paper draft)
+	\item November 2nd: Prediction Algorithm implemented and final performance metrics calculated
+	\item November 18th: Final Paper completed.
+\end{itemize}
+
+\section*{Conclusion}
+We believe that a predictive algorithm will perform significantly better than a detection based algorithm in terms of throughput, because it will only run checks which are guaranteed to result in collisions.  We anticipate that our algorithm we will not be as embarassingly parallel as the naive solution, but
+that with some tweaks to make it mostly parallelizable, our algorithm will compare favorably to the naive solution, even when implemented on a massively parallel architecture.
+ 
+
+\bibliography{Proposal}
+\bibliographystyle{elsarticle-num}
+
+\end{document}
