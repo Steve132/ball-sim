@@ -7,6 +7,7 @@
 #include<iostream>
 #include<cstdlib>
 
+Sphere sph;
 
 static void display(const Simulation& s)
 {
@@ -55,7 +56,20 @@ static void display(const Simulation& s)
 		
 	}
 	glEnd();
+	/*
+	for(unsigned int i=0;i<s.num_spheres;i++)
+	{
+		glLoadIdentity();
+		const Sphere& sph=&s.dynamic_spheres[i];
+		glTranslated(sph.
+	}*/
+	glColor3f(1.0,0.0,0.0);
+		
+	glTranslated(sph.position[0],sph.position[1],sph.position[2]);
+	glutSolidSphere(sph.radius,64,32);
 
+	std::cout << s.dt << std::endl;
+	glLoadIdentity();
 
 	glutSwapBuffers();
 }
@@ -69,7 +83,7 @@ bool glutloop(const Simulation& s)
 		glutPostRedisplay();
 		glutMainLoopEvent();
 	}
-	
+	sph.update(s.dt/2.0);
 	return true;
 }
 
@@ -100,9 +114,16 @@ void init_gl(const Simulation& s)
 	proj(2,2)=1.0/dims[2];
 	//std::cout <<proj << std::endl;
 	glLoadMatrixf(proj.data());
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 	//std::cout << proj*Eigen::Vector4f(-5.0,-3.0,5.0,1.0) << std::endl;;
 	//-x -y -z -> -1 -1 -1
 	//x -y -z ->
+
+	sph.position=Eigen::Vector3d(0.0,0.0,0.0);
+	sph.radius=1.0;
+	sph.acceleration=Eigen::Vector3d(0.0,-9.8,0.0);
+
 	 
 
 }
