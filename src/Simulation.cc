@@ -139,7 +139,7 @@ void Simulation::initialize_sphere(Sphere& s) const
 	s.mass = s.radius * s.radius * s.radius * 4.0 / 3.0 * M_PI * density;
 
 	//average cor (bounciness) is bouncy.
-	s.cor=randfloat(.8,.9999);
+	s.cor=randfloat(.7,.9);
 	//apply gravity and shoot it in a random direction.
 	s.acceleration=Eigen::Vector3d(0.0,-9.8,0.0);
 	s.velocity[0]=randfloat(-20.0,20.0);
