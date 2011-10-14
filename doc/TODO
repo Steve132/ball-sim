@@ -5,7 +5,9 @@ In the next month, we have several tasks to complete.
 	-Make sure that the intersect counter lock/lockfree update data structure
 
 1)	We will create a graphical visualization subroutine that will allow us to inspect the progression of the simulation in 3D (albeit slower).
+	DONE
 	-This will allow us to debug why there are currently many extra intersections
+		DONE (stickiness and 0 crossing failures)
 
 2)	We will create a set of benchmark parameters through trial and error that represents the parameters of our final dataset (seed value, number of balls, number of timestamp)
 3)	We will attempt to implement the predictive algorithm using a data structure with a single global queue
