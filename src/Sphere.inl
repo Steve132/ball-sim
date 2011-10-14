@@ -44,12 +44,17 @@ inline void Sphere::collide(Sphere& c1, Sphere& c2)
     // v2f = v2i + ((m1c)/(m1 + m2))(1 + e)n
     
     Eigen::Vector3d n = c2.position - c1.position;
+    Eigen::Vector3d midpoint=(c2.position+c1.position)/2.0;
+
     n.normalize();
     double c = n.dot((c1.velocity - c2.velocity));
     Eigen::Vector3d c1new = c1.velocity - (((c2.mass * c) / (c1.mass + c2.mass)) * ((1 + c1.cor) * n));
     Eigen::Vector3d c2new = c2.velocity + (((c1.mass * c) / (c1.mass + c2.mass)) * ((1 + c2.cor) * n));
     c1.velocity = c1new;
     c2.velocity = c2new;
+    c1.position = midpoint-c1.radius*n;
+    c2.position = midpoint+c2.radius*n;
+    
 }
 
 inline void Sphere::update(double dt)

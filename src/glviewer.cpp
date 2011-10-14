@@ -7,7 +7,7 @@
 #include<iostream>
 #include<cstdlib>
 
-Sphere sph;
+Eigen::MatrixXf colors;
 
 static void display(const Simulation& s)
 {
@@ -66,12 +66,17 @@ static void display(const Simulation& s)
 		glTranslated(sph.
 	}*/
 	glEnable(GL_LIGHTING);
-	glColor3f(1.0,0.0,0.0);
-		
-	glTranslated(sph.position[0],sph.position[1],sph.position[2]);
-	glutSolidSphere(sph.radius,64,32);
+	
+	
+	for(unsigned int i=0;i<s.num_spheres;i++)
+	{
+		glColor3f(colors(0,i),colors(1,i),colors(2,i));
+		const Sphere& sph=s.dynamic_spheres[i];
+		glTranslated(sph.position[0],sph.position[1],sph.position[2]);
+		glutSolidSphere(sph.radius,64,32);
 
-	glLoadIdentity();
+		glLoadIdentity();
+	}
 
 	glutSwapBuffers();
 }
@@ -85,13 +90,7 @@ bool glutloop(const Simulation& s)
 		glutPostRedisplay();
 		glutMainLoopEvent();
 	}
-	sph.update(s.dt);
-	bool bc=sph.collided(s.boundingplanes[2]);
-	std::cout << bc << std::endl;
-	if(bc)
-	{
-		Sphere::collide(sph,s.boundingplanes[2]);
-	}
+
 	return true;
 }
 
@@ -128,14 +127,20 @@ void init_gl(const Simulation& s)
 	//-x -y -z -> -1 -1 -1
 	//x -y -z ->
 
-	s.initialize_sphere(sph);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	float lightpos[]={0.0,1.0,0.0,0.0};
 	glLightfv(GL_LIGHT0,GL_POSITION,lightpos);
 
-	 
+	Eigen::MatrixXf theta=Eigen::MatrixXf::Random(1,s.num_spheres)*M_PI/2.0;
+	Eigen::MatrixXf phi=Eigen::MatrixXf::Random(1,s.num_spheres)*M_PI/2.0;
+	
+	//Eigen::MatrixXd color(3,s.num_spheres);
+	colors.resize(3,s.num_spheres);
+	colors.row(0)=theta.array().cos()*phi.array().sin();
+	colors.row(1)=theta.array().sin()*phi.array().sin();
+	colors.row(2)=phi.array().cos();
 
 }
 void deinit_gl(const Simulation& s)
