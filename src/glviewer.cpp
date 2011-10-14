@@ -5,34 +5,74 @@
 #include <omp.h>
 #include <memory>
 #include<iostream>
+#include<cstdlib>
 
-static void display()
+float t=0.0;
+
+static void display(const Simulation& s)
 {
-	glClearColor(1.0,0.0,0.0,1.0);
+	glClearColor((sin(t)+1.0)/2.0,(cos(t)+1.0)/2.0,1.0,1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	Eigen::Vector3f dims(s.boundingplanes[1].offset,s.boundingplanes[3].offset,s.boundingplanes[5].offset);
+
+	glColor3f(1.0f,0.0f,0.0f);
+	glBegin(GL_QUADS);
+	{
+		glVertex3f(-dims[0],dims[1],dims[2]);
+		glVertex3f(dims[0],dims[1],dims[2]);
+		glVertex3f(dims[0],-dims[1],dims[2]);
+		glVertex3f(-dims[0],-dims[1],dims[2]);
+	}
+	glEnd();
+
 
 	glutSwapBuffers();
 }
-
-static void idle()
-{
-	glutPostRedisplay();
-}	
 
 bool glutloop(const Simulation& s)
 {	
 	double tstart=omp_get_wtime();
 	while((omp_get_wtime()-tstart) < s.dt)
 	{
-		display();
+		display(s);
 		glutPostRedisplay();
 		glutMainLoopEvent();
 	}
+	t+=omp_get_wtime()-tstart;
 	return true;
 }
 
 void init_gl(const Simulation& s)
 {
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glMatrixMode(GL_PROJECTION);
+	Eigen::Vector3f dims(s.boundingplanes[1].offset,s.boundingplanes[3].offset,s.boundingplanes[5].offset);
+	//dims/=2.0;
+	//double coffset=0.1;
+	//double noverf=coffset/(coffset+2.0*s.boundingplanes[5].offset);
+/*
+	glFrustum(	noverf*s.boundingplanes[0].offset,
+			noverf*s.boundingplanes[1].offset,
+			noverf*s.boundingplanes[2].offset,
+			noverf*s.boundingplanes[3].offset,
+			coffset,
+			coffset/noverf);*/
+
+	double dwidth=2.0;	//projection at back should be reduced to dwidth percentage of the screen
+	Eigen::Matrix4f proj=Eigen::Matrix4f::Zero();
+	proj(3,2)=1.0/(2.0*dims[2]);
+	proj(3,3)=dwidth-.5;
+	proj(0,0)=1.0/dims[0];
+	proj(1,1)=1.0/dims[1];
+	proj(2,2)=1.0/dims[2];
+	//std::cout <<proj << std::endl;
+	glLoadMatrixf(proj.data());
+	//std::cout << proj*Eigen::Vector4f(-5.0,-3.0,5.0,1.0) << std::endl;;
+	//-x -y -z -> -1 -1 -1
+	//x -y -z ->
+	 
 
 }
 void deinit_gl(const Simulation& s)
@@ -46,8 +86,8 @@ int main(int argc,char** argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	glutInit(&argc,argv);
 
-	glutDisplayFunc(display);
-	glutIdleFunc(idle);
+//	glutDisplayFunc(display);
+//	glutIdleFunc(idle);
 	bool predictive=false;
 	double length=30.0;
 	if(argc <= 1)
