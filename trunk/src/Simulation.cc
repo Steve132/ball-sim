@@ -139,7 +139,7 @@ void Simulation::initialize_sphere(Sphere& s) const
 	s.mass = s.radius * s.radius * s.radius * 4.0 / 3.0 * M_PI * density;
 
 	//average cor (bounciness) is bouncy.
-	s.cor=randfloat(.9,.9999);
+	s.cor=randfloat(.8,.9999);
 	//apply gravity and shoot it in a random direction.
 	s.acceleration=Eigen::Vector3d(0.0,-9.8,0.0);
 	s.velocity[0]=randfloat(-20.0,20.0);
@@ -177,7 +177,7 @@ void Simulation::run(double seconds,const std::function<bool (const Simulation&)
 	std::cout << "wall_collisions\t" << wall_collisions << std::endl;
 	std::cout << "sphere_collisions\t" << sphere_collisions << std::endl;
 	std::cout << "total_checks\t" << checks <<std::endl;
-	std::cout << "average_checks/timestep\t" << double(checks)/double(timesteps);
+	std::cout << "average_checks/timestep\t" << double(checks)/double(timesteps) << std::endl;
 
 	std::cout << "average timesteps/second\t" << double(current_timestamp)/(tend-tinit)<<std::endl;
 	std::cout << "average milliseconds/timestep\t" << (tend-tinit)/double(current_timestamp/1000.0) << std::endl;
