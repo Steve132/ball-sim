@@ -30,8 +30,6 @@ protected:
 	virtual void update_threaded(double dt)=0;
 
 	//The list of all the dynamic spheres
-	Sphere* dynamic_spheres;
-	unsigned int num_spheres;
 
 	//Creates one sphere randomly in the scene with some default physics
 	void initialize_sphere(Sphere& s);
@@ -47,6 +45,8 @@ public:
 
 	double dt;
 	std::vector<AxisPlane> boundingplanes;
+	Sphere* dynamic_spheres;
+	unsigned int num_spheres;
 };
 
 #endif
