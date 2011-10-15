@@ -234,11 +234,21 @@ Future Work to be written for Final Paper.
 
 \section{Results} %Steven
 
-Data
+We collected data from several runs of the program.  As one can see, the time dilation (amount of time taken to render one second of simulation time)
+scales non-linearly with the size of the input.  (Edit...this graph needs to be fixed..it is supposed to be a scaled scattre plot to show the $O(n^2)$ behavior note also that at this time the threaded result runs slower)
+\begin{center}
+	\includegraphics[width=.45\textwidth]{plot.png}
+	\captionof{figure}{Performance Data}
+	\label{fig:data}
+\end{center}
 
 \section{Conclusion} 
 
+
 As we have only completed the preliminary set of data gathering, and have not implemented our predictive algorithm, we are not able to draw any conclusions as of yet.  Upon completion of the predictive algorithm implementation, and the subsequent data gathering and analysis, we will be able to form appropriate conclusions.
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,midterm}
 
 \appendix %Steven
 \section{Project Progress}
@@ -250,6 +260,18 @@ We encountered several challenges when implementing this project.  Although the 
 \subsubsection{Visualizer}
 We had a great deal of small bugs that needed to be solved.  The primary method of solving this problem from a debugging perspective was the implementation of a real-time visualization in OpenGL.
 This visualization was a little slow, but it facilitated debugging of our simulation.  Creating this visualization required some tweaking of the core simulator to allow a callback hook, as well as some OpenGL code to render the spheres in real-time.
+
+\begin{center}
+	\includegraphics[width=.45\textwidth]{few.png}
+	\captionof{figure}{A few balls}
+	\label{fig:few}
+\end{center}
+
+\begin{center}
+	\includegraphics[width=.45\textwidth]{lots.png}
+	\captionof{figure}{Lots of balls}
+	\label{fig:lots}
+\end{center}
 
 \subsubsection{Sticky Spheres}
 At our first running of the algorithm, we noticed that the number of registered sphere-sphere collisions was greater than the number of timesteps.  This should be impossible, as a sphere-sphere collision should
@@ -435,8 +457,7 @@ Currently, we would like to aim for a submission to the IEEE IPDPS Symposium (\u
 %\bibliographystyle{ieeetr}
 %\bibliography{midterm}
 
-\bibliographystyle{IEEEtran}
-\bibliography{midterm}
+
 
 
 %\appendix
