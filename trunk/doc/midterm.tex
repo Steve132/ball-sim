@@ -62,6 +62,8 @@
 
 % Other Packages
 \usepackage{moreverb}
+\usepackage{graphicx}
+\usepackage{caption}
 
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
@@ -249,9 +251,13 @@ This visualization was a little slow, but it facilitated debugging of our simula
 \subsubsection{Sticky Spheres}
 At our first running of the algorithm, we noticed that the number of registered sphere-sphere collisions was greater than the number of timesteps.  This should be impossible, as a sphere-sphere collision should
 occur very rarely, depending on the total volume of the space and the number of spheres in the simulation.  Even when the number of spheres was 2, this phenomena occured.  Upon debugging the simulation with the visualizer,
-we observed that any time a sphere collided with a larger sphere, it immediately became stuck inside the larger one, as shown in the figure.  
+we observed that any time a sphere collided with a larger sphere, it immediately became stuck inside the larger one, as shown in \ref{fig:linked}.  
 
-%TODO: figure
+\begin{center}
+	\includegraphics[width=.45\textwidth]{linked.png}
+	\captionof{figure}{Two Linked Spheres}
+	\label{fig:linked}
+\end{center}
 
 This problem generated 1 sphere-sphere collisions for each frame, for each pair of 'stuck' spheres.  To mitigate this problem, we implemented a simple hack that pushed the spheres away from each other by a distance equal to the sum of their radii plus an epsilon.
 This dramatically reduced the number of sphere-sphere collisions to the correct number.
