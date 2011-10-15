@@ -110,12 +110,6 @@ IEEEtran.cls version 1.7 and later.
 % (should never be an issue)
 I wish you the best of success.
 
-\cite{grape}
-
-\hfill mds
- 
-\hfill January 11, 2007
-
 \section{Prior Work}
 \subsection{Naive Algorithm}
 
@@ -135,8 +129,44 @@ Data
 
 \appendix %Steven
 \section{Project Progress}
+This project is progressing well.  Save several hiccups in the implementation, we now have a very large and stable mature codebase that implements the naive implementations of the algorithm and allows
+us to visualize the result.
 \subsection{Challenges Encountered}
+We encountered several challenges when implementing this project.  Although the simulation algorithm is simple in theory, debugging and implementing the physics behind the spheres caused a few small problems we did not forsee.
+
+\subsubsection{Visualizer}
+We had a great deal of small bugs that needed to be solved.  The primary method of solving this problem from a debugging perspective was the implementation of a real-time visualization in OpenGL.
+This visualization was a little slow, but it facilitated debugging of our simulation.  Creating this visualization required some tweaking of the core simulator to allow a callback hook, as well as some OpenGL code to render the spheres in real-time.
+
+\subsubsection{Sticky Spheres}
+At our first running of the algorithm, we noticed that the number of registered sphere-sphere collisions was greater than the number of timesteps.  This should be impossible, as a sphere-sphere collision should
+occur very rarely, depending on the total volume of the space and the number of spheres in the simulation.  Even when the number of spheres was 2, this phenomena occured.  Upon debugging the simulation with the visualizer,
+we observed that any time a sphere collided with a larger sphere, it immediately became stuck inside the larger one, as shown in the figure.  
+
+%TODO: figure
+
+This problem generated 1 sphere-sphere collisions for each frame, for each pair of 'stuck' spheres.  To mitigate this problem, we implemented a simple hack that pushed the spheres away from each other by a distance equal to the sum of their radii plus an epsilon.
+This dramatically reduced the number of sphere-sphere collisions to the correct number.
+
+\subsubsection{Thread Overhead}
+	Our implementation of the threading uses the OpenMP compiler extension subsystem.  Our implementation, which is a part of gcc 4.5, is built on top of pthreads under linux.  In our implementation, we 
+spawn a number of worker threads per timestamp in order to thread the system.  Our implementation of the naive algorithm should scale linearly with the number of threads.  However, in our implementation this is not the case.  We strongly suspect that
+several factors could be contributing to this difficulty.  
+
+\begin{itemize}
+	\item The overhead of spawning multiple threads per timestep dwarfs the work done by the update step
+	\item The thread spawn behavior is sub-optimal as described by \cite{performance-critical}
+	\item Thread affinity is poor.
+	\item Threads may be competing for the global statistical variables we are using to measure performance.
+\end{itemize}
+
+We intend on investigating all of these possibilities immediately in the following weeks.  It is important to do so, because our argument for the applicability of this algorithm to parallel data-structures
+is based on the necessity of competing with the highly-scalable naive algorithm.  If we fail to implement a scalable naive algorithm, then our ability to implement a scalable predictive algorithm is questionable.
+
 \subsection{Completed Tasks}
+\subsubsection{Simulation Framework}
+We completed a simulation framework capable of interactively running our simulation in multiple different configurations from the command line.  Our simulation framework correctly
+creates a simulation in a memory and cpu-efficiant way, and allows us to extend the important parts of 
 \subsection{Remaining Tasks}
 
 % An example of a floating figure using the graphicx package.
