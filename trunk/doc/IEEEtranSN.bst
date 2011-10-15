@@ -1,7 +1,7 @@
 %%
-%% IEEEtranS.bst
+%% IEEEtranSN.bst
 %% BibTeX Bibliography Style file
-%% Sorting version of IEEEtran.bst
+%% Sorting Natbib version of IEEEtran.bst
 %% *** Not for normal IEEE work ***
 %% Version 1.13 (2008/09/30)
 %% 
@@ -14,7 +14,9 @@
 %% 1. Howard Trickey and Oren Patashnik's ieeetr.bst  (1985/1988)
 %% 2. Silvano Balemi and Richard H. Roy's IEEEbib.bst (1993)
 %% 
-%% Added sorting code is from plain.bst.
+%% Added sorting and natbib code is from Patrick W Daly's plainnat.bst
+%% and Oren Patashnik's plain.bst.
+%% 
 %% 
 %% Support sites:
 %% http://www.michaelshell.org/tex/ieeetran/
@@ -24,7 +26,7 @@
 %% 
 %% For use with BibTeX version 0.99a or later
 %%
-%% This is a numerical citation style.
+%% This is a natbib compatible citation style.
 %% 
 %%*************************************************************************
 %% Legal Notice:
@@ -57,36 +59,8 @@
 %
 % Changelog:
 %
-% 1.10 (2002/09/27) Initial release
+% 1.12 (2007/01/11) Initial release
 %
-% 1.11 (2003/04/02)
-%  1. Fixed bug with URLs containing underscores when using url.sty. Thanks
-%     to Ming Kin Lai for reporting this.
-%
-% 1.12 (2007/01/11)
-%  1. Fixed bug with unwanted comma before "et al." when an entry contained
-%     more than two author names. Thanks to Pallav Gupta for reporting this.
-%  2. Fixed bug with anomalous closing quote in tech reports that have a
-%     type, but without a number or address. Thanks to Mehrdad Mirreza for
-%     reporting this.
-%  3. Use braces in \providecommand in begin.bib to better support
-%     latex2html. TeX style length assignments OK with recent versions
-%     of latex2html - 1.71 (2002/2/1) or later is strongly recommended.
-%     Use of the language field still causes trouble with latex2html.
-%     Thanks to Federico Beffa for reporting this.
-%  4. Added IEEEtran.bst ID and version comment string to .bbl output.
-%  5. Provide a \BIBdecl hook that allows the user to execute commands
-%     just prior to the first entry.
-%  6. Use default urlstyle (is using url.sty) of "same" rather than rm to
-%     better work with a wider variety of bibliography styles.
-%  7. Changed month abbreviations from Sept., July and June to Sep., Jul.,
-%     and Jun., respectively, as IEEE now does. Thanks to Moritz Borgmann
-%     for reporting this.
-%  8. Control entry types should not be considered when calculating longest
-%     label width.
-%  9. Added alias www for electronic/online.
-% 10. Added CTLname_url_prefix control entry type.
-% 
 % 1.13 (2008/09/30)
 %  1. Fixed bug with edition number to ordinal conversion. Thanks to
 %     Michael Roland for reporting this and correcting the algorithm.
@@ -197,14 +171,14 @@ FUNCTION{bst.file.website} { "http://www.michaelshell.org/tex/ieeetran/bibtex/" 
 
 FUNCTION {banner.message}
 { is.print.banners.to.terminal
-     { "-- IEEEtranS.bst version" " " * bst.file.version *
+     { "-- IEEEtranSN.bst version" " " * bst.file.version *
        " (" * bst.file.date * ") " * "by Michael Shell." *
        top$
        "-- " bst.file.website *
        top$
        "-- See the " quote$ * "IEEEtran_bst_HOWTO.pdf" * quote$ * " manual for usage information." *
        top$
-       "** Sorting version - not for normal IEEE work."
+       "** Sorting Natbib version - not for normal IEEE work."
        top$
      }
      { skip$ }
@@ -340,7 +314,7 @@ ENTRY
     CTLname_url_prefix
   }
   {}
-  { label }
+  { label extra.label sort.label short.list}
 
 
 
@@ -1055,9 +1029,89 @@ FUNCTION {convert.edition}
 %% LATEX BIBLIOGRAPHY CODE %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% from plainnat.bst
+FUNCTION {format.full.names}
+{'s :=
+  #1 'nameptr :=
+  s num.names$ 'numnames :=
+  numnames 'namesleft :=
+    { namesleft #0 > }
+    { s nameptr
+      "{vv~}{ll}" format.name$ 't :=
+      nameptr #1 >
+        {
+          namesleft #1 >
+            { ", " * t * }
+            {
+              numnames #2 >
+                { "," * }
+                'skip$
+              if$
+              t "others" =
+                { " et~al." * }
+                { " and " * t * }
+              if$
+            }
+          if$
+        }
+        't
+      if$
+      nameptr #1 + 'nameptr :=
+      namesleft #1 - 'namesleft :=
+    }
+  while$
+}
+
+FUNCTION {author.editor.full}
+{ author empty$
+    { editor empty$
+        { "" }
+        { editor format.full.names }
+      if$
+    }
+    { author format.full.names }
+  if$
+}
+
+FUNCTION {author.full}
+{ author empty$
+    { "" }
+    { author format.full.names }
+  if$
+}
+
+FUNCTION {editor.full}
+{ editor empty$
+    { "" }
+    { editor format.full.names }
+  if$
+}
+
+FUNCTION {make.full.names}
+{ type$ "book" =
+  type$ "inbook" =
+  or
+    { author.editor.full }
+    { type$ "proceedings" =
+      type$ "periodical" =
+      or
+        { editor.full }
+        { author.full }
+      if$
+    }
+  if$
+}
+% END from plainnat.bst
+
 FUNCTION {start.entry}
 { newline$
-  "\bibitem{" write$
+  "\bibitem[" write$
+  label write$
+  ")" make.full.names duplicate$ short.list =
+     { pop$ }
+     { * }
+   if$
+  "]{" * write$
   cite$ write$
   "}" write$
   newline$
@@ -1073,12 +1127,14 @@ FUNCTION {start.entry}
 % the other gurus on comp.text.tex for their help and advice on the topic of
 % \selectlanguage, Babel and BibTeX.
 FUNCTION {begin.bib}
-{ "% Generated by IEEEtranS.bst, version: " bst.file.version * " (" * bst.file.date * ")" *
+{ "% Generated by IEEEtranSN.bst, version: " bst.file.version * " (" * bst.file.date * ")" *
   write$ newline$
   preamble$ empty$ 'skip$
     { preamble$ write$ newline$ }
   if$
-  "\begin{thebibliography}{"  longest.label  * "}" *
+  "\begin{thebibliography}{" number.label int.to.str$ * "}" *
+  write$ newline$
+  "\providecommand{\natexlab}[1]{#1}"
   write$ newline$
   "\providecommand{\url}[1]{#1}"
   write$ newline$
@@ -1101,7 +1157,7 @@ FUNCTION {begin.bib}
   write$ newline$
   "\expandafter\ifx\csname l@#1\endcsname\relax"
   write$ newline$
-  "\typeout{** WARNING: IEEEtranS.bst: No hyphenation pattern has been}%"
+  "\typeout{** WARNING: IEEEtranSN.bst: No hyphenation pattern has been}%"
   write$ newline$
   "\typeout{** loaded for the language `#1'. Using the pattern for}%"
   write$ newline$
@@ -1136,34 +1192,6 @@ FUNCTION {if.url.std.interword.spacing}
      {url empty$ 'skip$ {"\BIBentrySTDinterwordspacing" write$ newline$} if$}
      { skip$ }
    if$
-}
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%
-%% LONGEST LABEL PASS %%
-%%%%%%%%%%%%%%%%%%%%%%%%
-
-FUNCTION {initialize.longest.label}
-{ "" 'longest.label :=
-  #1 'number.label :=
-  #0 'longest.label.width :=
-}
-
-FUNCTION {longest.label.pass}
-{ type$ "ieeetranbstctl" =
-    { skip$ }
-    { number.label int.to.str$ 'label :=
-      number.label #1 + 'number.label :=
-      label width$ longest.label.width >
-        { label 'longest.label :=
-          label width$ 'longest.label.width :=
-        }
-        { skip$ }
-      if$
-    }
-  if$
 }
 
 
@@ -2414,8 +2442,7 @@ EXECUTE {banner.message}
 
 
 
-% BEGIN sort code based on that of plain.bst
-
+% BEGIN sort code based on plainnat.bst
 FUNCTION {sortify}
 { purify$
   "l" change.case$
@@ -2439,13 +2466,31 @@ FUNCTION {sort.format.names}
   s num.names$ 'numnames :=
   numnames 'namesleft :=
     { namesleft #0 > }
-    { nameptr #1 >
-        { "   " * }
-        { skip$ }
-      if$
+    {
       s nameptr "{vv{ } }{ll{ }}{  ff{ }}{  jj{ }}" format.name$ 't :=
-      nameptr numnames = t "others" = and
-        { "et al" * }
+      nameptr #1 >
+        {
+          "   "  *
+          namesleft #1 = t "others" = and
+            { "zzzzz" * }
+            { numnames #2 > nameptr #2 = and
+                { "zz" * 
+                  type$ "patent" =
+                     { year empty$
+                         { yearfiled }
+                         { year }
+                       if$
+                    }
+                    { year }
+                  if$
+                  empty.field.to.null.string * "   " *
+                }
+                { skip$ }
+              if$
+              t sortify *
+            }
+          if$
+        }
         { t sortify * }
       if$
       nameptr #1 + 'nameptr :=
@@ -2541,14 +2586,166 @@ FUNCTION {author.organization.institution.sort}
 }
 
 
+
+
+STRINGS { last.label next.extra }
+
+INTEGERS { last.extra.num }
+
+FUNCTION {format.lab.names}
+{ 's :=
+  s #1 "{vv~}{ll}" format.name$
+  s num.names$ duplicate$
+  #2 >
+    { pop$ " et~al." * }
+    { #2 <
+        'skip$
+        { s #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =
+            { " et~al." * }
+            { " and " * s #2 "{vv~}{ll}" format.name$ * }
+          if$
+        }
+      if$
+    }
+  if$
+}
+
+FUNCTION {author.key.label}
+{ author empty$
+    { key empty$
+        { cite$ #1 #3 substring$ }
+        { key }
+      if$
+    }
+    { author format.lab.names }
+  if$
+}
+
+FUNCTION {author.editor.key.label}
+{ author empty$
+    { editor empty$
+        { key empty$
+            { cite$ #1 #3 substring$ }
+            { key }
+          if$
+        }
+        { editor format.lab.names }
+      if$
+    }
+    { author format.lab.names }
+  if$
+}
+
+FUNCTION {author.key.organization.label}
+{ author empty$
+    { key empty$
+        { organization empty$
+            { cite$ #1 #3 substring$ }
+            { "The " #4 organization chop.word #3 text.prefix$ }
+          if$
+        }
+        { key }
+      if$
+    }
+    { author format.lab.names }
+  if$
+}
+
+FUNCTION {author.key.organization.institution.label}
+{ author empty$
+    { key empty$
+        { organization empty$
+            { institution empty$
+              { cite$ #1 #3 substring$ }
+              { "The " #4 institution chop.word #3 text.prefix$ }
+            if$
+            }
+            { "The " #4 organization chop.word #3 text.prefix$ }
+          if$
+        }
+        { key }
+      if$
+    }
+    { author format.lab.names }
+  if$
+}
+
+FUNCTION {editor.key.organization.label}
+{ editor empty$
+    { key empty$
+        { organization empty$
+            { cite$ #1 #3 substring$ }
+            { "The " #4 organization chop.word #3 text.prefix$ }
+          if$
+        }
+        { key }
+      if$
+    }
+    { editor format.lab.names }
+  if$
+}
+
+FUNCTION {calc.label}
+{ type$ "book" =
+  type$ "inbook" =
+  or 
+    { author.editor.key.label }
+    { type$ "proceedings" =
+      type$ "periodical" =
+      or
+        { editor.key.organization.label }
+        { type$ "manual" =
+          type$ "electronic" =
+          type$ "misc" =
+          or or
+            { author.key.organization.label }
+            { type$ "standard" =
+               { author.key.organization.institution.label }
+               { author.key.label }
+             if$ 
+            }
+          if$
+        }
+      if$
+    }
+  if$
+  duplicate$
+  'short.list :=
+  "("
+  *
+  type$ "patent" =
+    { year empty$
+      { yearfiled }
+      { year }
+    if$
+    }
+    { year }
+  if$
+  duplicate$
+  empty$
+  short.list key empty.field.to.null.string = or
+    { pop$ "" }
+    { skip$   }
+  if$
+  *
+  'label :=
+}
+
+
+
 FUNCTION {presort}
 { type$ "ieeetranbstctl" =
     { key empty$
         { "_" }
         { key sortify }
       if$
+      duplicate$
     }
-    { type$ "book" =
+    { calc.label
+      label sortify
+      "    "
+      *
+      type$ "book" =
       type$ "inbook" =
       or 
         { author.editor.sort }
@@ -2573,37 +2770,82 @@ FUNCTION {presort}
       if$
       "    "
       *
-      type$ "patent" =
-        { year empty$
-          { yearfiled }
-          { year }
-        if$
-        }
-        { year }
-      if$
-      empty.field.to.null.string sortify
-      *
-      "    "
-      *
-      title empty.field.to.null.string
-      sort.format.title
+      cite$
       *
     }
   if$
   #1 entry.max$ substring$
+  'sort.label :=
+  #1 entry.max$ substring$
   'sort.key$ :=
 }
+
+
+FUNCTION {initialize.longest.label}
+{  "" 'longest.label :=
+  #0 int.to.chr$ 'last.label :=
+  "" 'next.extra :=
+  #0 'longest.label.width :=
+  #0 'last.extra.num :=
+  #0 'number.label :=
+}
+
+FUNCTION {forward.pass}
+{ type$ "ieeetranbstctl" =
+    { skip$ }
+    { last.label label =
+        { last.extra.num #1 + 'last.extra.num :=
+          last.extra.num int.to.chr$ 'extra.label :=
+        }
+        {  "a" chr.to.int$ 'last.extra.num :=
+          "" 'extra.label :=
+          label 'last.label :=
+        }
+      if$
+      number.label #1 + 'number.label :=
+    }
+  if$
+}
+
+FUNCTION {reverse.pass}
+{ type$ "ieeetranbstctl" =
+    { skip$ }
+    {  next.extra "b" =
+       { "a" 'extra.label := }
+       { skip$ }
+     if$
+     extra.label 'next.extra :=
+     extra.label
+     duplicate$ empty$
+       { skip$ }
+       { "{\natexlab{" swap$ * "}}" * }
+     if$
+     'extra.label :=
+     label extra.label * 'label :=
+    }
+  if$
+}
+
+FUNCTION {bib.sort.order}
+{ sort.label  'sort.key$ :=
+}
+% END sort code based on plainnat.bst
+
+
+
 
 ITERATE {presort}
 
 SORT
 
-% END sort code based on that of plain.bst
-
-
-
 EXECUTE {initialize.longest.label}
-ITERATE {longest.label.pass}
+
+ITERATE {forward.pass}
+REVERSE {reverse.pass}
+
+ITERATE {bib.sort.order}
+
+SORT
 
 EXECUTE {begin.bib}
 ITERATE {call.type$}
