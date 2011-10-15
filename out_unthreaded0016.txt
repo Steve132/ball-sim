@@ -1,0 +1,12 @@
+Run statistics:
+total_timesteps	320
+total_real_world_time	0.00186528
+total_collisions	44
+wall_collisions	44
+sphere_collisions	0
+total_checks	69120
+average_checks/timestep	216
+average_timesteps/second	171556
+average_milliseconds/timestep	0.00582901
+time_dilation	2680.56
+total_max_threads	8

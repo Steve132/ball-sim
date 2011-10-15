@@ -179,8 +179,8 @@ void Simulation::run(double seconds,const std::function<bool (const Simulation&)
 	std::cout << "total_checks\t" << checks <<std::endl;
 	std::cout << "average_checks/timestep\t" << double(checks)/double(timesteps) << std::endl;
 
-	std::cout << "average timesteps/second\t" << double(current_timestamp)/(tend-tinit)<<std::endl;
-	std::cout << "average milliseconds/timestep\t" << (tend-tinit)/double(current_timestamp/1000.0) << std::endl;
+	std::cout << "average_timesteps/second\t" << double(current_timestamp)/(tend-tinit)<<std::endl;
+	std::cout << "average_milliseconds/timestep\t" << (tend-tinit)/double(current_timestamp/1000.0) << std::endl;
 	std::cout << "time_dilation\t" << (current_timestamp*dt)/(tend-tinit) << std::endl;
 	
 	std::cout << "total_max_threads\t" << omp_get_max_threads() << std::endl;
