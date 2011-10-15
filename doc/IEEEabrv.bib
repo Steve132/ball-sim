@@ -1,7 +1,7 @@
 
 IEEEabrv.bib
-V1.12 (2007/01/11)
-Copyright (c) 2002-2007 by Michael Shell
+V1.13 (2008/09/30)
+Copyright (c) 2002-2008 by Michael Shell
 See: http://www.michaelshell.org/
 for current contact information.
 
@@ -89,28 +89,23 @@ titles provided in the companion file, IEEEfull.bib.
  4. Older, out-of-print IEEE titles are included (but not including titles
     dating prior to IEEE's formation from the IRE and AIEE in 1963).
 
- 5. The following NEW/current journal definitions have been disabled because
-    their abbreviations have not yet been verified:
+ 5. The following string definitions have been disabled because their
+    abbreviations have not yet been verified:
     
-    STRING{IEEE_J_CBB        = "{IEEE/ACM} Trans. Comput. Biology Bioinformatics"}
-    STRING{IEEE_J_CJECE      = "Canadian J. Elect. Comput. Eng."}
-    STRING{IEEE_J_DSC        = "{IEEE} Trans. Dependable Secure Comput."}
-    STRING{IEEE_O_DSO        = "{IEEE} Distrib. Syst. Online"}
+    STRING{IEEE_J_LT         = "{IEEE} Trans. Learning Technol."}
+    STRING{IEEE_J_NSM        = "{IEEE} Trans. Netw. Service Manag."}
+    STRING{IEEE_J_SC         = "{IEEE} Trans. Services Comput."}
+    STRING{IEEE_J_STARS      = "{IEEE} J. Sel. Topics Appl. Earth Observations Remote Sens."}
     
- 6. The following OLD journal definitions have been disabled because
-    their abbreviations have not yet been found/verified:
 
-    STRING{IEEE_J_BCTV       = "{IEEE} Trans. Broadcast Television Receivers"}
-    STRING{IEEE_J_EWS        = "{IEEE} Trans. Eng. Writing Speech"}
-
-If you know what the proper abbreviation is for a string in #5 or #6 above,
-email me and I will correct them in the next release.
+    If you know what the proper abbreviation is for a string above,
+    email me and I will correct them in the next release.
 
 
 
 
 
-IEEE Journals 
+IEEE Journals
 
 
 
@@ -149,6 +144,8 @@ in 2004 CASI and CASII renamed part title to CASI_RP and CASII_EB, respectively.
 @STRING{IEEE_J_SP         = "{IEEE} Trans. Signal Process."}
 @STRING{IEEE_J_SU         = "{IEEE} Trans. Sonics Ultrason."}
 @STRING{IEEE_J_SAP        = "{IEEE} Trans. Speech Audio Process."}
+@STRING{IEEE_J_STSP       = "{IEEE} J. Sel. Topics Signal Process."}
+@STRING{IEEE_J_SYST       = "{IEEE} Syst. J."}
 @STRING{IEEE_J_UE         = "{IEEE} Trans. Ultrason. Eng."}
 @STRING{IEEE_J_UFFC       = "{IEEE} Trans. Ultrason., Ferroelectr., Freq. Control"}
 
@@ -194,8 +191,7 @@ coding, data, information, knowledge
 computers, computation, networking and software
 @STRING{IEEE_J_C          = "{IEEE} Trans. Comput."}
 @STRING{IEEE_J_CAL        = "{IEEE} Comput. Archit. Lett."}
-disabled till definition is verified
-STRING{IEEE_J_DSC         = "{IEEE} Trans. Dependable Secure Comput."}
+@STRING{IEEE_J_DSC        = "{IEEE} Trans. Dependable Secure Comput."}
 @STRING{IEEE_J_ECOMP      = "{IEEE} Trans. Electron. Comput."}
 @STRING{IEEE_J_EVC        = "{IEEE} Trans. Evol. Comput."}
 @STRING{IEEE_J_FUZZ       = "{IEEE} Trans. Fuzzy Syst."}
@@ -203,7 +199,11 @@ STRING{IEEE_J_DSC         = "{IEEE} Trans. Dependable Secure Comput."}
 @STRING{IEEE_J_MC         = "{IEEE} Trans. Mobile Comput."}
 @STRING{IEEE_J_NET        = "{IEEE/ACM} Trans. Netw."}
 @STRING{IEEE_J_NN         = "{IEEE} Trans. Neural Netw."}
+disabled until abbreviation verified
+STRING{IEEE_J_NSM        = "{IEEE} Trans. Netw. Service Manag."}
 @STRING{IEEE_J_PDS        = "{IEEE} Trans. Parallel Distrib. Syst."}
+disabled until abbreviation verified
+STRING{IEEE_J_SC         = "{IEEE} Trans. Services Comput."}
 @STRING{IEEE_J_SE         = "{IEEE} Trans. Softw. Eng."}
 
 
@@ -219,6 +219,7 @@ computer graphics, imaging, and multimedia
 cybernetics, ergonomics, robots, man-machine, and automation
 @STRING{IEEE_J_ASE        = "{IEEE} Trans. Autom. Sci. Eng."}
 @STRING{IEEE_J_JRA        = "{IEEE} J. Robot. Autom."}
+@STRING{IEEE_J_H          = "{IEEE} Trans. Haptics"}
 @STRING{IEEE_J_HFE        = "{IEEE} Trans. Hum. Factors Electron."}
 @STRING{IEEE_J_MMS        = "{IEEE} Trans. Man-Mach. Syst."}
 @STRING{IEEE_J_PAMI       = "{IEEE} Trans. Pattern Anal. Mach. Intell."}
@@ -239,17 +240,18 @@ earth, wind, fire and water
 @STRING{IEEE_J_GRS        = "{IEEE} Trans. Geosci. Remote Sens."}
 @STRING{IEEE_J_GRSL       = "{IEEE} Geosci. Remote Sens. Lett."}
 @STRING{IEEE_J_OE         = "{IEEE} J. Ocean. Eng."}
-
+disabled until abbreviation verified
+STRING{IEEE_J_STARS      = "{IEEE} J. Sel. Topics Appl. Earth Observations Remote Sens."}
 
 
 education, engineering, history, IEEE, professional
-disabled till definition is verified
-STRING{IEEE_J_CJECE       = "Canadian J. Elect. Comput. Eng."}
+@STRING{IEEE_J_CJECE      = "Canadian J. Elect. Comput. Eng."}
 @STRING{IEEE_J_PROC       = "Proc. {IEEE}"}
 @STRING{IEEE_J_EDU        = "{IEEE} Trans. Educ."}
 @STRING{IEEE_J_EM         = "{IEEE} Trans. Eng. Manag."}
-disabled till definition is verified
-STRING{IEEE_J_EWS         = "{IEEE} Trans. Eng. Writing Speech"}
+@STRING{IEEE_J_EWS        = "{IEEE} Trans. Eng. Writing Speech"}
+disabled until abbreviation verified
+STRING{IEEE_J_LT         = "{IEEE} Trans. Learning Technol."}
 @STRING{IEEE_J_PC         = "{IEEE} Trans. Prof. Commun."}
 
 
@@ -281,8 +283,7 @@ energy and power
 industrial, commercial and consumer
 @STRING{IEEE_J_APPIND     = "{IEEE} Trans. Appl. Ind."}
 @STRING{IEEE_J_BC         = "{IEEE} Trans. Broadcast."}
-disabled till definition is verified
-STRING{IEEE_J_BCTV        = "{IEEE} Trans. Broadcast Television Receivers"}
+@STRING{IEEE_J_BCTV       = "{IEEE} Trans. Broadcast Television Receivers"}
 @STRING{IEEE_J_CE         = "{IEEE} Trans. Consum. Electron."}
 @STRING{IEEE_J_IE         = "{IEEE} Trans. Ind. Electron."}
 @STRING{IEEE_J_IECI       = "{IEEE} Trans. Ind. Electron. Contr. Instrum."}
@@ -312,17 +313,18 @@ mechanical
 
 
 medical and biological
+@STRING{IEEE_J_BCAS       = "{IEEE} Trans. Biomed. Circuits Syst."}
 @STRING{IEEE_J_BME        = "{IEEE} Trans. Biomed. Eng."}
 Note: The B-ME journal later dropped the hyphen and became the BME.
 @STRING{IEEE_J_B-ME       = "{IEEE} Trans. Bio-Med. Eng."}
 @STRING{IEEE_J_BMELC      = "{IEEE} Trans. Bio-Med. Electron."}
-disabled till definition is verified
-STRING{IEEE_J_CBB         = "{IEEE/ACM} Trans. Comput. Biology Bioinformatics"}
+@STRING{IEEE_J_CBB        = "{IEEE/ACM} Trans. Comput. Biol. Bioinformatics"}
 @STRING{IEEE_J_ITBM       = "{IEEE} Trans. Inf. Technol. Biomed."}
 @STRING{IEEE_J_ME         = "{IEEE} Trans. Med. Electron."}
 @STRING{IEEE_J_MI         = "{IEEE} Trans. Med. Imag."}
 @STRING{IEEE_J_NB         = "{IEEE} Trans. Nanobiosci."}
 @STRING{IEEE_J_NSRE       = "{IEEE} Trans. Neural Syst. Rehabil. Eng."}
+@STRING{IEEE_J_RBME       = "{IEEE} Rev. Biomed. Eng."}
 @STRING{IEEE_J_RE         = "{IEEE} Trans. Rehabil. Eng."}
 
 
@@ -400,13 +402,16 @@ CSEM changed to CSE in 1999
 @STRING{IEEE_M_EMR        = "{IEEE} Eng. Manag. Rev."}
 @STRING{IEEE_M_EXP        = "{IEEE} Expert"}
 @STRING{IEEE_M_IA         = "{IEEE} Ind. Appl. Mag."}
+@STRING{IEEE_M_IE         = "{IEEE} Ind. Electron. Mag."}
 @STRING{IEEE_M_IM         = "{IEEE} Instrum. Meas. Mag."}
 @STRING{IEEE_M_IS         = "{IEEE} Intell. Syst."}
+@STRING{IEEE_M_ITS        = "{IEEE} Intell. Transp. Syst. Mag."}
 @STRING{IEEE_M_IC         = "{IEEE} Internet Comput."}
 @STRING{IEEE_M_ITP        = "{IEEE} {IT} Prof."}
 @STRING{IEEE_M_MICRO      = "{IEEE} Micro"}
 @STRING{IEEE_M_MW         = "{IEEE} Microw. Mag."}
 @STRING{IEEE_M_MM         = "{IEEE} Multimedia"}
+@STRING{IEEE_M_NANO       = "{IEEE} Nanotechnol. Mag."}
 @STRING{IEEE_M_NET        = "{IEEE} Netw."}
 IEEE's editorial manual lists "Pers. Commun.", 
 but "Personal Commun. Mag." seems to be what is used in the journals
@@ -431,13 +436,12 @@ CAP and PER merged to form PE in 2003
 
 
 
-IEEE Online Publications 
+IEEE Online Publications
 
 
 
 @STRING{IEEE_O_CSTO        = "{IEEE} Commun. Surveys Tuts."}
-disabled till definition is verified
-STRING{IEEE_O_DSO          = "{IEEE} Distrib. Syst. Online"}
+@STRING{IEEE_O_DSO         = "{IEEE} Distrib. Syst. Online"}
 
 
 
