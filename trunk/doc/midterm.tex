@@ -64,6 +64,7 @@
 \usepackage{moreverb}
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage{url}
 
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
@@ -103,11 +104,9 @@ The general simulation of n-body systems often requires the simulation of pairwi
 
 \section{Introduction}
 
-Our group has a great deal of interest in discrete event simulation as it applies to video-games and real-time simulation. Particularly, we are interested in the application of physics simulations.  This kind of discrete event simulation is traditionally performed on large-scale parallel clusters for film and scientific applications, or on massively parallel GPU architectures \cite{grape,uberflow}.  Specifically, we wish to explore the simulation and evolution of systems of dynamic and static objects where all the dynamic objects interact with all of the other objects, as happens when the dynamic objects physically collide with other objects.  In order to do this, we need to be able to model and react to collisions and interactions between objects. 
+There is a great deal of interest in discrete event simulation as it applies to video games and real time simulation. One interest in particular is the application of realistic physics in these simulations.  This kind of discrete event simulation is traditionally performed on large scale parallel clusters for film and scientific applications, or on massively parallel GPU architectures \cite{grape,uberflow}.  Specifically, we wish to explore the simulation and evolution of systems of dynamic and static objects where all the dynamic objects interact with all of the other objects, as happens when the dynamic objects physically collide with other objects.  In order to do this, we need to be able to model and react to collisions and interactions between objects. 
 
-Although the naive and semi-naive implementations of this kind of simulation are embarassingly parallel, they are also exceedingly wasteful.  The method used to evaluate the interactions between objects is similar to a busy-wait loop, where all objects are continually polled, waiting for collisions to occur as the simulation progresses \cite{nbodycollisions,Moore88collisiondetection}.   As we will describe in the next sections, we are interested in using a novel predictive model along with a lock-free priority queue and other parallel techniques to attempt to make a new kind of economical collision simulation system that does not perform wasteful checks when checks are unlikely.
-
-We hope to demonstrate a novel technique that does no un-needed collision checking and yet maintains much of the parallelism of the naive and semi-naive solutions.
+Although the naive and semi-naive implementations of this kind of simulation are embarassingly parallel, they are also exceedingly wasteful.  The method used to evaluate the interactions between objects is similar to a busy-wait loop, where all objects are continually polled, waiting for collisions to occur as the simulation progresses \cite{nbodycollisions,Moore88collisiondetection}.   As we will describe in the next sections, we are interested in using a novel predictive model along with a lock-free priority queue and other parallel techniques to attempt to make a new kind of economical collision simulation system.  Our hope is that this system does not perform wasteful checks when checks are unlikely and maintains much of the parallelism of the naive and semi-naive solutions.
 
 \section{Problem Definition}
 
@@ -117,7 +116,7 @@ For each object $o$ in the system, a subroutine is defined \texttt{update($o$,$d
 
 \subsection{Naive Algorithm}
 
-The brute-force all-pairs solution is the naive solution to this problem as it is commonly implemented in games.   This technique is known as a 'detection' technique because it relies on the idea of detecting a collision when it occurs instead of predicting a collision.  
+The brute force all-pairs solution is the naive solution to this problem as it is commonly implemented in games. This technique is known as a 'detection' technique because it relies on the idea of detecting a collision when it occurs instead of predicting a collision.  
 
 \begin{verbatimtab}[3]
 for each timestep ti
@@ -138,7 +137,7 @@ throughput of our simulation.
 
 \subsection{Semi-Naive Algorithm}
 
-A similar algorithm that we refer to as the 'semi-naive' algorithm also has found great use in practical applications as well \cite{Bittner02hierarchicaltechniques}.  The semi-naive algorithm differs only from the naive algorithm in that it exploits a bounding-volume hierarchy to spatially partition the dynamic objects and pre-filter the collision checks.  This algorithm is equally wasteful, but only has $O(n log n)$ checks if the objects are relatively equally distributed.
+A similar algorithm that we refer to as the 'semi-naive' algorithm has also found great use in practical applications \cite{Bittner02hierarchicaltechniques}.  The semi-naive algorithm differs only from the naive algorithm in that it exploits a bounding volume hierarchy to spatially partition the dynamic objects and pre-filter the collision checks.  This algorithm is equally wasteful, but only has $O(n log n)$ checks if the objects are relatively equally distributed.
 
 \section{Contribution}
 \subsection{Predictive Algorithm}
@@ -177,15 +176,15 @@ behaviors simply activating different Newtonian trajectories and velocities \cit
 For our simulation, since we are using dynamic spheres, we use the following calculations for the collision reaction\cite{wheatchex}:
 
 \begin{math}
-c = n * (v_{1i} - v_{2i})
+c = n \cdot (v_{1i} - v_{2i})
 \end{math}
 
 \begin{math}
-v_{1f} = v_{1i} - \frac{m_2 * c}{m_1 + m_2} * (1 + e)n
+v_{1f} = v_{1i} - \frac{m_2 \cdot c}{m_1 + m_2} \cdot (1 + e)n
 \end{math}
 
 \begin{math}
-v_{2f} = v_{2i} + \frac{m_1 * c}{m_1 + m_2} * (1 + e)n
+v_{2f} = v_{2i} + \frac{m_1 \cdot c}{m_1 + m_2} \cdot (1 + e)n
 \end{math}
 
 where:
@@ -219,9 +218,7 @@ The performance of these systems is typically evaluated in terms of a throughput
 
 \subsection{Naive Implementation}
 
-The implementation of the naive solution is relatively straightforward, as a naive approach should be.  First, all of the dynamic objects must be updated for each timestamp to their new positions, using their previously calculated velocity vectors.  Then, because we are handling the spheres and planes separately, we have two sets of nested for loops to perform the collision checks.  The first loops over the spheres and checks each with all of the planes, and the second loops over the spheres and checks each with all of the spheres that are after it in the list.  We do this to avoid checking each pair twice (\texttt{collide($o1$,$o2$)} would evaluate the same as \texttt{collide($o2$,$o1$)}).
-
-For the threaded version of this algorithm, we used OpenMP controlled parallel for loops:
+The implementation of the naive solution is relatively straightforward, as a naive approach should be.  First, all of the dynamic objects must be updated for each timestamp to their new positions, using their previously calculated velocity vectors.  Then, because we are handling the spheres and planes separately, we have two sets of nested for loops to perform the collision checks.  The first loops over the spheres and checks each with all of the planes, and the second loops over the spheres and checks each with all of the spheres that are after it in the list.  We do this to avoid checking each pair twice (\texttt{collide($o1$,$o2$)} would evaluate the same as \texttt{collide($o2$,$o1$)}). For the threaded version of this algorithm, we used OpenMP controlled parallel for loops:
 \begin{verbatimtab}[3]
 	int i;
 	#pragma omp parallel for
@@ -242,7 +239,7 @@ Data
 This project is progressing well.  Save several hiccups in the implementation, we now have a very large and stable mature codebase that implements the naive implementations of the algorithm and allows
 us to visualize the result.
 \subsection{Challenges Encountered}
-We encountered several challenges when implementing this project.  Although the simulation algorithm is simple in theory, debugging and implementing the physics behind the spheres caused a few small problems we did not forsee.
+We encountered several challenges when implementing this project.  Although the simulation algorithm is simple in theory, debugging and implementing the physics behind the spheres caused a few small problems we did not foresee.
 
 \subsubsection{Visualizer}
 We had a great deal of small bugs that needed to be solved.  The primary method of solving this problem from a debugging perspective was the implementation of a real-time visualization in OpenGL.
