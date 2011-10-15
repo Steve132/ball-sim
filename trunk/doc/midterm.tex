@@ -166,8 +166,16 @@ is based on the necessity of competing with the highly-scalable naive algorithm.
 \subsection{Completed Tasks}
 \subsubsection{Simulation Framework}
 We completed a simulation framework capable of interactively running our simulation in multiple different configurations from the command line.  Our simulation framework correctly
-creates a simulation in a memory and cpu-efficiant way, and allows us to extend the important parts of 
+creates a simulation in a memory and cpu-efficiant way, and allows us to extend the implementation of the update step without changing the rest of the codebase.
+\subsubsection{Visualization Framework}
+In order to debug and to visualize the state of the simulation at a given timestep, a visualization in opengl was produced.
+\subsubsection{Threaded and Non-Threaded Naive Implementation}
+The implementation of our Naive algorithm is complete for the threaded and the non-threaded implementation.  However, as previously described, our implementation does not scale.  However, it is verified to function
+correctly in both implementatons.
+
 \subsection{Remaining Tasks}
+There are 3 major tasks remaining 
+Remaining tasks are to improve the scalability of the naive algo
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
