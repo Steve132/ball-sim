@@ -91,7 +91,11 @@ Email: narnold@knights.ucf.edu}
 
 
 \begin{abstract} %Steven
-The abstract goes here.
+The general simulation of n-body systems often requires the simulation of pairwise interaction between the objects.  
+The naive method of simulation is $O(n^2)$ operations per timestep in the number of objects.  However, this method scales very well to multiple cores.
+In this paper, we propose a novel method of pairwise simulation that saves a significant amount of computation time by predicting possible future outcomes rather
+than reacting to them.  We demonstrate the implementation of this method, as well as prove that it has amortized $O(n)$ complexity per timestep.  We also demonstrate
+a lock-free method to allow this algorithm to scale to multiple cores of a shared memory machine.
 \end{abstract}
 
 \IEEEpeerreviewmaketitle
