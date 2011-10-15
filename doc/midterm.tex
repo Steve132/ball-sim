@@ -1,14 +1,13 @@
-
-% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
-% should be used if it is desired that the figures are to be displayed in
-% draft mode.
+% Nicholas Arnold
+% Steven Braeger
+% COP 6616
 %
+% Project Progress Report
+%
+% We used the template from IEEE website, linked from
+% http://www.ieee.org/conferences_events/conferences/publishing/templates.html	
+
 \documentclass[conference]{IEEEtran}
-
-% If IEEEtran.cls has not been installed into the LaTeX system files,
-% manually specify the path to it like:
-% \documentclass[conference]{../sty/IEEEtran}
-
 
 % *** CITATION PACKAGES ***
 %
@@ -61,6 +60,9 @@
 % to enable the placement of footnotes below bottom floats (the standard
 % LaTeX2e kernel puts them above bottom floats). This is an invasive package
 
+% Other Packages
+\usepackage{moreverb}
+
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
@@ -69,7 +71,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Bare Demo of IEEEtran.cls for Conferences}
+\title{Predictive Object Collision Using Lock-Free Priority Queue}
 
 
 % author names and affiliations
@@ -91,11 +93,7 @@ Email: narnold@knights.ucf.edu}
 
 
 \begin{abstract} %Steven
-The general simulation of n-body systems often requires the simulation of pairwise interaction between the objects.  
-The naive method of simulation is $O(n^2)$ operations per timestep in the number of objects.  However, this method scales very well to multiple cores.
-In this paper, we propose a novel method of pairwise simulation that saves a significant amount of computation time by predicting possible future outcomes rather
-than reacting to them.  We demonstrate the implementation of this method, as well as prove that it has amortized $O(n)$ complexity per timestep.  We also demonstrate
-a lock-free method to allow this algorithm to scale to multiple cores of a shared memory machine.
+The general simulation of n-body systems often requires the simulation of pairwise interaction between the objects.  The naive method of simulation is $O(n^2)$ operations per timestep in the number of objects.  However, this method scales very well to multiple cores. In this paper, we propose a novel method of pairwise simulation that saves a significant amount of computation time by predicting possible future outcomes rather than reacting to them.  We demonstrate the implementation of this method, as well as prove that it has amortized $O(n)$ complexity per timestep.  We also demonstrate a lock-free method to allow this algorithm to scale to multiple cores of a shared memory machine.
 \end{abstract}
 
 \IEEEpeerreviewmaketitle
@@ -103,26 +101,136 @@ a lock-free method to allow this algorithm to scale to multiple cores of a share
 
 \section{Introduction}
 
-This demo file is intended to serve as a ``starter file''
-for IEEE conference papers produced under \LaTeX\ using
-IEEEtran.cls version 1.7 and later.
-% You must have at least 2 lines in the paragraph with the drop letter
-% (should never be an issue)
-I wish you the best of success.
+Our group has a great deal of interest in discrete event simulation as it applies to video-games and real-time simulation. Particularly, we are interested in the application of physics simulations.  This kind of discrete event simulation is traditionally performed on large-scale parallel clusters for film and scientific applications, or on massively parallel GPU architectures \cite{grape,uberflow}.  Specifically, we wish to explore the simulation and evolution of systems of dynamic and static objects where all the dynamic objects interact with all of the other objects, as happens when the dynamic objects physically collide with other objects.  In order to do this, we need to be able to model and react to collisions and interactions between objects. 
 
-\section{Prior Work}
+Although the naive and semi-naive implementations of this kind of simulation are embarassingly parallel, they are also exceedingly wasteful.  The method used to evaluate the interactions between objects is similar to a busy-wait loop, where all objects are continually polled, waiting for collisions to occur as the simulation progresses \cite{nbodycollisions,Moore88collisiondetection}.   As we will describe in the next sections, we are interested in using a novel predictive model along with a lock-free priority queue and other parallel techniques to attempt to make a new kind of economical collision simulation system that does not perform wasteful checks when checks are unlikely.
+
+We hope to demonstrate a novel technique that does no un-needed collision checking and yet maintains much of the parallelism of the naive and semi-naive solutions.
+
+\section{Problem Definition}
+
+As input, we are given a description of static objects, dynamic objects, and the geometry defining their boundaries.  We are also given initial states like position, acceleration and velocity of the objects in the system, and a set of rules to update those objects.  As output, we wish to compute the exact state of each object in the system for each of the $n$ timestamps $t_0, t_1, t_2, \ldots, t_n$.
+
+For each object $o$ in the system, a subroutine is defined \texttt{update($o$,$dt$)}, which computes the state of the object in the next timestamp, given the object state in the current timestamp and a time $dt$ between timestamps.  For each pair of objects $o1$ and $o2$, an additional subroutine is defined \texttt{collide($o1$,$o2$)} which computes the state of both $o1$ and $o2$ in the next timestamp, assuming that the objects have collided during the current timestamp.
+
 \subsection{Naive Algorithm}
+
+The brute-force all-pairs solution is the naive solution to this problem as it is commonly implemented in games.   This technique is known as a 'detection' technique because it relies on the idea of detecting a collision when it occurs instead of predicting a collision.  
+
+\begin{verbatimtab}[3]
+for each timestep ti
+	dt is the constant timestep difference
+	for each dynamic object "do"
+		update(do,dt)		
+		for each object  o
+			if(check(do,o))
+				collide(do, o, dt)
+\end{verbatimtab}
+
+This technique is embarassingly parallel, allowing a thread per dynamic object or even a thread per pair with minimal overhead.  However, it is extremely
+wasteful, because there are $O(n^2)$ checks being made every single timestamp, even if the likelihood of a collision has changed little since the last timestep \cite{Seningood}.  
+
+Each of these $O(n^2)$ checks per timestep is computationally cheap individually, but when the number of objects is very great the computational overhead of performing all of them becomes
+unmanagable. Considering that an extreme majority of the checks will fail, most of them do not need to be computed, and avoiding their computation has the ability to dramatically increase the 
+throughput of our simulation.
+
+\subsection{Semi-Naive Algorithm}
+
+A similar algorithm that we refer to as the 'semi-naive' algorithm also has found great use in practical applications as well \cite{Bittner02hierarchicaltechniques}.  The semi-naive algorithm differs only from the naive algorithm in that it exploits a bounding-volume hierarchy to spatially partition the dynamic objects and pre-filter the collision checks.  This algorithm is equally wasteful, but only has $O(n log n)$ checks if the objects are relatively equally distributed.
 
 \section{Contribution}
 \subsection{Predictive Algorithm}
 
+In our desired solution, we take a completely different approach.  In contrast to the naive and semi-naive algorithms, our solution avoids computing any unneeded checks on timestamps that do not change the solution by \textit{predicting} the intersections before they occur, rather than checking for them when they do not.  Our algorithm will use a slightly more complex subroutine \texttt{predict($o1$,$o2$)} that returns the time an intersection is likely to occur, and enters it into a priority queue.  When an intersection occurs, it is recomputed and removed from the queue at that timestamp.
+
+\begin{verbatimtab}[3]
+events=priority_queue()
+#initialize events from initial states.
+
+for each timestep ti
+	dt is the constant timestep difference
+	for each dynamic object "do"
+		update(do,dt)
+
+	#while there are events 
+	#occuring in this timestep
+	while(events.pop() == ti)
+		e=event.pop()  
+		for each object o
+			if(check(e.o,o))
+				collide(e.o, o, dt)
+				#predict next collision event
+				push(predict(e.o,o)) 
+\end{verbatimtab}
+
+It is worth noting that although our solution is the same runtime complextiy as the naive solution in the worst case (and, in fact, the initial population of the priority queue will need to preform $n^2$ predictions), it is unlikely to compute ANY checks that are unlikely to occur, thus saving tremendous computation time.  
+
+However, our work is not done.  This algorithm is difficult to parallelize when compared to the naive algorithm, as it depends implicitly on the calculation of a message passing system in which events take priority over other events about to take place. If we split the evaluation of the simulation into threads, then each thread must somehow synchronize which events it will prioritize and avoid collisions.  Furthermore, threads must be able to communicate events to each other globally as collisions are predicted into the future.  This communication overhead is difficult to parallelize correctly, and will be the focus of our project in this course.
+
 \section{Experimental Setup}%Nick
-introduction (C++, OpenMP, linux)
-description of simulation
+
+In typical instances of this problem in the real world, the type of simulation varies dramatically. In many applications, the objects obey complex interaction patterns such as flocking behavior and user interaction.  However, these interactions are almost always built around a simple framework for simulation that obeys Newtonian physics as the primary motion characteristic, with the more complex
+behaviors simply activating different Newtonian trajectories and velocities \cite{Jadbabaie02coordinationof}.  Therefore, without loss of generality, we will simplifiy our simulation by limiting the object behaviors to simulate Newtonian physical interactions of objects under Earth-like gravity.
+
+For our simulation, since we are using dynamic spheres, we use the following calculations for the collision reaction\cite{wheatchex}:
+
+\begin{math}
+c = n * (v_{1i} - v_{2i})
+\end{math}
+
+\begin{math}
+v_{1f} = v_{1i} - \frac{m_2 * c}{m_1 + m_2} * (1 + e)n
+\end{math}
+
+\begin{math}
+v_{2f} = v_{2i} + \frac{m_1 * c}{m_1 + m_2} * (1 + e)n
+\end{math}
+
+where:
+
+$v_{1i}$ = the initial velocity of object 1
+
+$v_{2i}$ = the initial velocity of object 2
+
+$m_1$ = the mass of object 1
+
+$m_2$ = the mass of object 2
+
+$e$ = the coefficient of restitution ($e$ = 1 for completely elastic)
+
+$n$ = normal unit vector drawn from object 1 to object 2
+
+
+Real simulations may also involve extremely complicated geometry, such as the convex shapes of human faces, vehicles, and buildings.  However, 
+all of these simulations generalize objects by a first pass of a 'bounding volume' for the more complex object.  The bounding volume is a simple shape (e.g., a sphere)
+that forms a tight bounds on the object.  Real applications solve the first-pass collision checks for the simple 'bounding volume', and only fall back to a more complex
+collision check on convex shapes if the bounding volumes intersect.  Thus, we can solve the problem without loss of generality by solving the problem
+for simple bounding-volume shapes \cite{uberflow,cloth}.  In our case, we choose to use dynamic objects made of simple spheres, and static objects made of planes.
+
+In order to program the simulation, we will use C++, as it is a good language for high performance simulation applications.  In order to facilitate our 
+3D geometry and numerical libraries, we will write our own simulation system and geometry routines based on the C++ Numerical Vector library Eigen.  
+
+We wish to test performance economy as well as parallizability.  For our parallization tests, we will use thread-level parallelism constructs from the C++ compiler
+extension OpenMP, if applicable.  We may also experiment with using the new thread systems included with the new C++11 standard library.
+
+The performance of these systems is typically evaluated in terms of a throughput measurement that measures the number of timestamps per second the system is capable of producing.  Equivalently, one can measure the average wall-clock time that passes while evaluating one timestamp.
+
 \subsection{Naive Implementation}
-naive algorithm implementation details?
+
+The implementation of the naive solution is relatively straightforward, as a naive approach should be.  First, all of the dynamic objects must be updated for each timestamp to their new positions, using their previously calculated velocity vectors.  Then, because we are handling the spheres and planes separately, we have two sets of nested for loops to perform the collision checks.  The first loops over the spheres and checks each with all of the planes, and the second loops over the spheres and checks each with all of the spheres that are after it in the list.  We do this to avoid checking each pair twice (\texttt{collide($o1$,$o2$)} would evaluate the same as \texttt{collide($o2$,$o1$)}).
+
+For the threaded version of this algorithm, we used OpenMP controlled parallel for loops:
+\begin{verbatimtab}[3]
+	int i;
+	#pragma omp parallel for
+	for(i = 0; i < num_spheres; i++)
+	{
+		dynamic_spheres[i].update(dt);
+	}
+\end{verbatimtab}
+
 \subsection{Predictive Implementation}
-Priority queue details
+Future Work to be written for Final Paper.
 \section{Results} %Steven
 Data
 \section{Conclusion} 
@@ -277,7 +385,7 @@ Remaining tasks are to improve the scalability of the naive algo
 % http://www.michaelshell.org/tex/ieeetran/bibtex/
 %\bibliographystyle{IEEEtran}
 % argument is your BibTeX string definitions and bibliography database(s)
-%\bibliography{IEEEabrv,./midterm.bib}
+%\bibliography{IEEEabrv,midterm.bib}
 %
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
