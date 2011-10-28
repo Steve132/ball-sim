@@ -4,7 +4,7 @@
 #include<Eigen/Core>
 #include "AxisPlane.h"
 
-/** A sphere ball object
+/** A sphere object
 *
 */
 class Sphere

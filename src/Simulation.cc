@@ -5,8 +5,26 @@
 #include <vector>
 #include <cstring>
 #include <iostream>
+#include <thread>
 #include <omp.h>
 
+Simulation::Statistics::Statistics():
+	current_timestamp(0),
+	collisions(0),
+	wall_collisions(0),
+	sphere_collisions(0),
+	checks(0)
+{}
+
+Simulation::Statistics& Simulation::Statistics::operator+=(const Statistics& st)
+{
+	current_timestamp+=st.current_timestamp;
+	collisions+=st.collisions;
+	wall_collisions+=st.wall_collisions;
+	sphere_collisions+=st.sphere_collisions;
+	checks+=st.checks;
+	return *this;
+}
 void Simulation::print_help(const char* arg0)
 {
 	std::cout << "Usage: " << arg0 << "[options]" << std::endl;
@@ -19,12 +37,7 @@ void Simulation::print_help(const char* arg0)
 	std::cout << "\t-p | --predictive\t Enables predictive mode.  Disabled by default" << std::endl;
 
 }
-Simulation::Simulation(int argc,char** argv):
-	current_timestamp(0),
-	collisions(0),
-	wall_collisions(0),
-	sphere_collisions(0),
-	checks(0)
+Simulation::Simulation(int argc,char** argv)
 {
 //Make defaults for the simulation
 	Eigen::Vector3d dimensions(5.0,3.0,5.0);
@@ -139,7 +152,7 @@ void Simulation::initialize_sphere(Sphere& s) const
 	s.mass = s.radius * s.radius * s.radius * 4.0 / 3.0 * M_PI * density;
 
 	//average cor (bounciness) is bouncy.
-	s.cor=randfloat(.7,.9);
+	s.cor=randfloat(.9,.96);
 	//apply gravity and shoot it in a random direction.
 	s.acceleration=Eigen::Vector3d(0.0,-9.8,0.0);
 	s.velocity[0]=randfloat(-20.0,20.0);
@@ -148,41 +161,75 @@ void Simulation::initialize_sphere(Sphere& s) const
 	
 }
 
+void Simulation::wait_stats(std::uint64_t ts0)
+{
+	bool waiting=false;
+	while(waiting)
+	{
+		waiting=false;
+		for(int i=0;i<stats.size();i++)
+		{
+			if(stats[i].current_timestamp != ts0)
+			{
+				waiting=true;
+				break;
+			}
+		}
+	}
+}
+
 void Simulation::run(double seconds,const std::function<bool (const Simulation&)>& callback)
 {
+	std::uint64_t current_timestamp=0;
 	//Calculate the real-world time
 	double tinit=omp_get_wtime();
 	//Calculate the number of timesteps
 	std::uint64_t timesteps=seconds/dt;
 
 	//While the callback doesn't trigger a quit, keep going.
-	bool quit=false;
-	for(current_timestamp=0;(current_timestamp < timesteps) && (!quit);current_timestamp++)
+	running=true;
+	unsigned int num_threads;
+	
+	if(threaded)
+		num_threads=omp_get_max_threads();
+	else
+		num_threads=1;
+	
+	stats.resize(num_threads);
+	
+	spawn_sim_threads(num_threads,timesteps);
+	
+	for(current_timestamp=0;(current_timestamp < timesteps) && (running);current_timestamp++)
 	{
-		
-		if(threaded)
-			update_threaded(dt);
-		else
-			update(dt);
-		quit=!callback(*this);
-		
+		wait_stats(current_timestamp+1);
+		running=callback(*this);
 	}
+	
+	join_sim_threads();
+	
 	double tend=omp_get_wtime();
+	
+	Statistics gstats;
+	
+	for(int i=0;i<num_threads;i++)
+	{
+		gstats+=stats[i];
+	}
 
 	std::cout << "Run statistics:" << std::endl;
-	std::cout << "total_timesteps\t" << current_timestamp << std::endl;
+	std::cout << "total_timesteps\t" << gstats.current_timestamp << std::endl;
 	std::cout << "total_real_world_time\t"      << tend-tinit << std::endl;	
 
-	std::cout << "total_collisions\t" << collisions << std::endl;
-	std::cout << "wall_collisions\t" << wall_collisions << std::endl;
-	std::cout << "sphere_collisions\t" << sphere_collisions << std::endl;
-	std::cout << "total_checks\t" << checks <<std::endl;
-	std::cout << "average_checks/timestep\t" << double(checks)/double(timesteps) << std::endl;
+	std::cout << "total_collisions\t" << gstats.collisions << std::endl;
+	std::cout << "wall_collisions\t" << gstats.wall_collisions << std::endl;
+	std::cout << "sphere_collisions\t" << gstats.sphere_collisions << std::endl;
+	std::cout << "total_checks\t" << gstats.checks <<std::endl;
+	std::cout << "average_checks/timestep\t" << double(gstats.checks)/double(timesteps) << std::endl;
 
 	std::cout << "average_timesteps/second\t" << double(current_timestamp)/(tend-tinit)<<std::endl;
 	std::cout << "average_milliseconds/timestep\t" << (tend-tinit)/double(current_timestamp/1000.0) << std::endl;
 	std::cout << "time_dilation\t" << (current_timestamp*dt)/(tend-tinit) << std::endl;
 	
-	std::cout << "total_max_threads\t" << omp_get_max_threads() << std::endl;
+	std::cout << "total_threads\t" << num_threads << std::endl;
 }
 
