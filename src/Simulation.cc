@@ -80,9 +80,9 @@ Simulation::Simulation(int argc,char** argv)
 				}
 			case 't':
 				{
-					if(argv[i+1][0]=='-')
+					if((i != (argc-1)) && argv[i+1][0]!='-')
 					{
-						num_threads=1;
+						num_threads=atoi(argv[++i]);
 					}
 					else
 					{
