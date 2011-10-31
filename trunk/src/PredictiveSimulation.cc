@@ -1,6 +1,6 @@
 #include "PredictiveSimulation.h"
 
-void PredictiveSimulation::spawn_sim_threads(unsigned int num_threads,std::uint64_t timesteps)
+void PredictiveSimulation::spawn_sim_threads(std::uint64_t timesteps,Simulation::barrier& bar)
 {
 }
 void PredictiveSimulation::join_sim_threads()

@@ -18,7 +18,7 @@ Simulation::Statistics::Statistics():
 
 Simulation::Statistics& Simulation::Statistics::operator+=(const Statistics& st)
 {
-	current_timestamp+=st.current_timestamp;
+	current_timestamp=st.current_timestamp;
 	collisions+=st.collisions;
 	wall_collisions+=st.wall_collisions;
 	sphere_collisions+=st.sphere_collisions;
@@ -30,7 +30,7 @@ void Simulation::print_help(const char* arg0)
 	std::cout << "Usage: " << arg0 << "[options]" << std::endl;
 	std::cout << "\t-x <float> -y <float> -z <float>\tSets the dimensions of the room of interest.  Defaults to {5,3,5}" << std::endl;
 	std::cout << "\t-n <int> | --num_spheres <int>\t Sets the number of spheres to generate.  Defaults to 100" << std::endl;
-	std::cout << "\t-t | --threaded\t Enables threaded mode.  Disabled by default" << std::endl;
+	std::cout << "\t-t <int>| --threaded\t Enables threaded mode with some threads.  Disabled by default, if no arg is given then the number of threads is the maximum " << std::endl;
 	std::cout << "\t-h | --help\t Prints this help message." << std::endl;
 	std::cout << "\t-f <float> | --fps <float>\tSets the simulation timedelta as frames per second. Defaults to 64.0" << std::endl;
 	std::cout << "\t-l <float> | --length <float>\tSets the length of the simulation to run in seconds.  Defaults to 30.0" << std::endl;
@@ -41,7 +41,7 @@ Simulation::Simulation(int argc,char** argv)
 {
 //Make defaults for the simulation
 	Eigen::Vector3d dimensions(5.0,3.0,5.0);
-	threaded=false;
+	num_threads=1;
 	unsigned int seedhash=0;
 	num_spheres=100;
 	dt=1.0/64.0;
@@ -80,7 +80,14 @@ Simulation::Simulation(int argc,char** argv)
 				}
 			case 't':
 				{
-					threaded=true;
+					if(argv[i+1][0]=='-')
+					{
+						num_threads=1;
+					}
+					else
+					{
+						num_threads=omp_get_max_threads();
+					}
 					break;
 				}
 			case 'f':
@@ -188,21 +195,26 @@ void Simulation::run(double seconds,const std::function<bool (const Simulation&)
 
 	//While the callback doesn't trigger a quit, keep going.
 	running=true;
-	unsigned int num_threads;
+	//unsigned int num_threads;
 	
-	if(threaded)
+	/*if(threaded)
 		num_threads=omp_get_max_threads();
 	else
-		num_threads=1;
+		num_threads=1;*/
+	//if(num_threads > 1)
+	//	num_threads-=1;
 	
 	stats.resize(num_threads);
 	
-	spawn_sim_threads(num_threads,timesteps);
+	barrier b(num_threads+1);
+	
+	spawn_sim_threads(timesteps,b);
 	
 	for(current_timestamp=0;(current_timestamp < timesteps) && (running);current_timestamp++)
 	{
 		wait_stats(current_timestamp+1);
 		running=callback(*this);
+		//b.wait();
 	}
 	
 	join_sim_threads();
@@ -226,9 +238,9 @@ void Simulation::run(double seconds,const std::function<bool (const Simulation&)
 	std::cout << "total_checks\t" << gstats.checks <<std::endl;
 	std::cout << "average_checks/timestep\t" << double(gstats.checks)/double(timesteps) << std::endl;
 
-	std::cout << "average_timesteps/second\t" << double(current_timestamp)/(tend-tinit)<<std::endl;
-	std::cout << "average_milliseconds/timestep\t" << (tend-tinit)/double(current_timestamp/1000.0) << std::endl;
-	std::cout << "time_dilation\t" << (current_timestamp*dt)/(tend-tinit) << std::endl;
+	std::cout << "average_timesteps/second\t" << double(gstats.current_timestamp)/(tend-tinit)<<std::endl;
+	std::cout << "average_milliseconds/timestep\t" << (tend-tinit)/double(gstats.current_timestamp/1000.0) << std::endl;
+	std::cout << "time_dilation\t" << (gstats.current_timestamp*dt)/(tend-tinit) << std::endl;
 	
 	std::cout << "total_threads\t" << num_threads << std::endl;
 }

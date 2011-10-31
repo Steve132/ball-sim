@@ -9,11 +9,13 @@ class NaiveSimulation: public Simulation
 public:
 	NaiveSimulation(int,char**);
 	
-	void sim_thread(unsigned int thread_id,unsigned int num_threads,std::uint64_t timesteps);
-	
-	virtual void spawn_sim_threads(unsigned int num_threads,std::uint64_t timesteps);
-	virtual void join_sim_threads();
 protected:
+	
+	void sim_thread(unsigned int thread_id,std::uint64_t timesteps,barrier& b);
+	
+	virtual void spawn_sim_threads(std::uint64_t timesteps,barrier& b);
+	virtual void join_sim_threads();
+
 	std::vector<std::thread> threadpool;
 };
 

@@ -1,7 +1,7 @@
 #include "NaiveSimulation.h"
 #include<functional>
 
-void NaiveSimulation::sim_thread(unsigned int thread_id,unsigned int num_threads,std::uint64_t timesteps)
+void NaiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t timesteps,Simulation::barrier& bar)
 {
 	Simulation::Statistics& cstats=stats[thread_id];
 	for(cstats.current_timestamp=0;(cstats.current_timestamp<timesteps) && running;)
@@ -49,6 +49,7 @@ void NaiveSimulation::sim_thread(unsigned int thread_id,unsigned int num_threads
 
 		cstats.current_timestamp++;
 		wait_stats(cstats.current_timestamp);
+		//bar.wait();
 	}
 }
 
@@ -60,11 +61,11 @@ void NaiveSimulation::join_sim_threads()
 	}
 }
 
-void NaiveSimulation::spawn_sim_threads(unsigned int num_threads,std::uint64_t timesteps)
+void NaiveSimulation::spawn_sim_threads(std::uint64_t timesteps,Simulation::barrier& bar)
 {
 	for(unsigned int i=0;i<num_threads;i++)
 	{
-		threadpool.push_back(std::thread(std::bind(&NaiveSimulation::sim_thread,this,i,num_threads,timesteps)));
+		threadpool.push_back(std::thread(std::bind(&NaiveSimulation::sim_thread,this,i,timesteps,bar)));
 	}
 }
 
