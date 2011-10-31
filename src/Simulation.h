@@ -6,6 +6,7 @@
 #include <vector>
 #include <cstdint>
 #include <functional>
+#include <atomic>
 
 /**  This class represents an abstract configuration of a single simulation run.
  *
@@ -24,18 +25,36 @@ protected:
 		Statistics();
 		Statistics& operator+=(const Statistics&);
 	};
-	
+	struct barrier
+	{
+		std::atomic_uint_fast16_t cur_threads;
+		std::uint_fast16_t total_waitthreads;
+		barrier(const std::uint_fast16_t& twt):cur_threads(0),total_waitthreads(twt)
+		{
+		}
+		barrier(const barrier& bother)
+		{
+			cur_threads.store(bother.cur_threads);
+			total_waitthreads=bother.total_waitthreads;
+		}
+		void wait()
+		{
+			cur_threads.fetch_add(1);
+			while(cur_threads!=total_waitthreads);
+			cur_threads.store(0);
+		}
+	};
 	std::vector<Statistics> stats;
 
 	//all 6 bounding planes in the walls.
 	
 	//true if the simulation is configured to run in a thread
-	bool threaded;
+	int num_threads;
 	//true if the simulation is still running;
 	bool running;
 
 	//These are implemented by the particular kind of simulation
-	virtual void spawn_sim_threads(unsigned int num_threads,std::uint64_t timesteps)=0;
+	virtual void spawn_sim_threads(std::uint64_t timesteps,Simulation::barrier& bar)=0;
 	virtual void join_sim_threads()=0;
 	//virtual void run_sim_threaded(double dt)=0;
 
