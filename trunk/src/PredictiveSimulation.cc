@@ -3,7 +3,7 @@
 using namespace Eigen;
 
 
-void PredictiveSimulation::spawn_sim_threads(std::uint64_t timesteps,Simulation::barrier* bar)
+void PredictiveSimulation::spawn_sim_threads(std::uint64_t timesteps,barrier* bar)
 {
 }
 void PredictiveSimulation::join_sim_threads()

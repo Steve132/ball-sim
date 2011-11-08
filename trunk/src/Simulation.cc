@@ -17,32 +17,6 @@ Simulation::Statistics::Statistics():
 	checks(0)
 {}
 
-Simulation::barrier::barrier(const std::uint_fast32_t& twt)
-	:cur_threads(twt),total_waitthreads(twt)
-{
-	std:fill(cur_threads.begin(),cur_threads.end(),0);
-}
-
-void Simulation::barrier::wait(const std::uint_fast32_t& id)
-{
-	//static std::atomic_uint_fast16_t ct(0);
-	std::uint_fast32_t tc=++cur_threads[id];
-	
-	std::atomic_bool broken(false);
-	while(!broken)
-	{
-		broken=true;
-		for(auto ci=cur_threads.begin();ci!=cur_threads.end();++ci)
-		{
-			//std::cerr << "ci[ " << id << "]==" << *ci;
-			broken=broken && (*ci==tc);
-		}
-		//std::cerr << std::endl;
-	}
-	//std::cerr << "Now resetting:" << (std::uint_fast32_t)cur_threads<< std::endl;
-	//cur_threads=0;
-}
-
 Simulation::Statistics& Simulation::Statistics::operator+=(const Statistics& st)
 {
 	current_timestamp=st.current_timestamp;
@@ -241,9 +215,9 @@ void Simulation::run(double seconds,const std::function<bool (const Simulation&)
 	{
 		//wait_stats(current_timestamp+1);
 		running=callback(*this);
-		std::cerr << "Running timestep" << current_timestamp << std::endl;
-		std::cerr << "Ball1 position:\n" <<  dynamic_spheres[0].position << std::endl;
-		b.wait(num_threads);
+		//std::cerr << "Running timestep" << current_timestamp << std::endl;
+		//std::cerr << "Ball1 position:\n" <<  dynamic_spheres[0].position << std::endl;
+		b.wait();
 	}
 	
 	join_sim_threads();
