@@ -7,12 +7,20 @@
 #include <cstdint>
 #include <functional>
 #include <atomic>
-
+#include <iostream>
 /**  This class represents an abstract configuration of a single simulation run.
  *
  */
 class Simulation
 {
+public:
+	struct barrier
+	{
+		std::vector<std::atomic_uint_fast32_t> cur_threads;
+		std::uint_fast32_t total_waitthreads;
+		barrier(const std::uint_fast32_t& twt);
+		void wait(const std::uint_fast32_t& twt);
+	};
 protected:
 	//The difference between two timestamps in time.
 	struct Statistics
@@ -25,25 +33,6 @@ protected:
 		Statistics();
 		Statistics& operator+=(const Statistics&);
 	};
-	struct barrier
-	{
-		std::atomic_uint_fast16_t cur_threads;
-		std::uint_fast16_t total_waitthreads;
-		barrier(const std::uint_fast16_t& twt):cur_threads(0),total_waitthreads(twt)
-		{
-		}
-		barrier(const barrier& bother)
-		{
-			cur_threads.store(bother.cur_threads);
-			total_waitthreads=bother.total_waitthreads;
-		}
-		void wait()
-		{
-			cur_threads.fetch_add(1);
-			while(cur_threads!=total_waitthreads);
-			cur_threads.store(0);
-		}
-	};
 	std::vector<Statistics> stats;
 
 	//all 6 bounding planes in the walls.
@@ -54,7 +43,7 @@ protected:
 	bool running;
 
 	//These are implemented by the particular kind of simulation
-	virtual void spawn_sim_threads(std::uint64_t timesteps,Simulation::barrier& bar)=0;
+	virtual void spawn_sim_threads(std::uint64_t timesteps,Simulation::barrier* bar)=0;
 	virtual void join_sim_threads()=0;
 	//virtual void run_sim_threaded(double dt)=0;
 
@@ -65,6 +54,7 @@ protected:
 	//Creates one sphere randomly in the scene with some default physics
 //	void initialize_sphere(Sphere& s);
 public:
+
 	//Construct a sphere on the command line
 	Simulation(int argc,char**);
 	virtual ~Simulation();

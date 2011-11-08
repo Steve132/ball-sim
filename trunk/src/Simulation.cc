@@ -7,6 +7,7 @@
 #include <iostream>
 #include <thread>
 #include <omp.h>
+#include <algorithm>
 
 Simulation::Statistics::Statistics():
 	current_timestamp(0),
@@ -15,6 +16,32 @@ Simulation::Statistics::Statistics():
 	sphere_collisions(0),
 	checks(0)
 {}
+
+Simulation::barrier::barrier(const std::uint_fast32_t& twt)
+	:cur_threads(twt),total_waitthreads(twt)
+{
+	std:fill(cur_threads.begin(),cur_threads.end(),0);
+}
+
+void Simulation::barrier::wait(const std::uint_fast32_t& id)
+{
+	//static std::atomic_uint_fast16_t ct(0);
+	std::uint_fast32_t tc=++cur_threads[id];
+	
+	std::atomic_bool broken(false);
+	while(!broken)
+	{
+		broken=true;
+		for(auto ci=cur_threads.begin();ci!=cur_threads.end();++ci)
+		{
+			//std::cerr << "ci[ " << id << "]==" << *ci;
+			broken=broken && (*ci==tc);
+		}
+		//std::cerr << std::endl;
+	}
+	//std::cerr << "Now resetting:" << (std::uint_fast32_t)cur_threads<< std::endl;
+	//cur_threads=0;
+}
 
 Simulation::Statistics& Simulation::Statistics::operator+=(const Statistics& st)
 {
@@ -170,7 +197,7 @@ void Simulation::initialize_sphere(Sphere& s) const
 
 void Simulation::wait_stats(std::uint64_t ts0)
 {
-	bool waiting=false;
+	bool waiting=true;
 	while(waiting)
 	{
 		waiting=false;
@@ -208,13 +235,15 @@ void Simulation::run(double seconds,const std::function<bool (const Simulation&)
 	
 	barrier b(num_threads+1);
 	
-	spawn_sim_threads(timesteps,b);
+	spawn_sim_threads(timesteps,&b);
 	
 	for(current_timestamp=0;(current_timestamp < timesteps) && (running);current_timestamp++)
 	{
-		wait_stats(current_timestamp+1);
+		//wait_stats(current_timestamp+1);
 		running=callback(*this);
-		//b.wait();
+		std::cerr << "Running timestep" << current_timestamp << std::endl;
+		std::cerr << "Ball1 position:\n" <<  dynamic_spheres[0].position << std::endl;
+		b.wait(num_threads);
 	}
 	
 	join_sim_threads();
