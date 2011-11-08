@@ -1,11 +1,15 @@
 #include "NaiveSimulation.h"
 #include<functional>
 
-void NaiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t timesteps,Simulation::barrier& bar)
+void NaiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t timesteps,Simulation::barrier* bar)
 {
 	Simulation::Statistics& cstats=stats[thread_id];
+			
+
 	for(cstats.current_timestamp=0;(cstats.current_timestamp<timesteps) && running;)
 	{
+		//std::cerr << "H:" << thread_id << " C:" << num_spheres << " T:" << num_threads;
+	
 		for(unsigned int i = thread_id; i < num_spheres; i+=num_threads)
 		{
 			// Now that all spheres have been updated, we are interested in checking
@@ -43,13 +47,13 @@ void NaiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t timesteps,
 				//increment check counter
 				cstats.checks++;
 			}
-			
+			//std::cerr << "Now doing update" << std::endl;
 			dynamic_spheres[i].update(dt);
 		}
 
 		cstats.current_timestamp++;
-		wait_stats(cstats.current_timestamp);
-		//bar.wait();
+		//wait_stats(cstats.current_timestamp);
+		bar->wait(thread_id);
 	}
 }
 
@@ -61,11 +65,11 @@ void NaiveSimulation::join_sim_threads()
 	}
 }
 
-void NaiveSimulation::spawn_sim_threads(std::uint64_t timesteps,Simulation::barrier& bar)
+void NaiveSimulation::spawn_sim_threads(std::uint64_t timesteps,barrier* b)
 {
 	for(unsigned int i=0;i<num_threads;i++)
 	{
-		threadpool.push_back(std::thread(std::bind(&NaiveSimulation::sim_thread,this,i,timesteps,bar)));
+		threadpool.push_back(std::thread(std::bind(&NaiveSimulation::sim_thread,this,i,timesteps,b)));
 	}
 }
 

@@ -11,9 +11,9 @@ public:
 	
 protected:
 	
-	void sim_thread(unsigned int thread_id,std::uint64_t timesteps,barrier& b);
+	void sim_thread(unsigned int thread_id,std::uint64_t timesteps,barrier* b);
 	
-	virtual void spawn_sim_threads(std::uint64_t timesteps,barrier& b);
+	virtual void spawn_sim_threads(std::uint64_t timesteps,barrier* b);
 	virtual void join_sim_threads();
 
 	std::vector<std::thread> threadpool;

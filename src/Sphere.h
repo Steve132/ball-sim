@@ -31,5 +31,12 @@ public:
 	static void collide(Sphere& c1,const AxisPlane& t);
 };
 
+struct PredictionResult
+{
+	bool collided;
+	double timeoffset;
+};
+PredictionResult predict(const Sphere& a,const Sphere& b);
+PredictionResult predict(const Sphere& a,const AxisPlane& axis);
 #include "Sphere.inl"
 #endif
