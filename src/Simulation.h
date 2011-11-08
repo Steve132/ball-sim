@@ -8,19 +8,12 @@
 #include <functional>
 #include <atomic>
 #include <iostream>
+#include "Barrier.h"
 /**  This class represents an abstract configuration of a single simulation run.
  *
  */
 class Simulation
 {
-public:
-	struct barrier
-	{
-		std::vector<std::atomic_uint_fast32_t> cur_threads;
-		std::uint_fast32_t total_waitthreads;
-		barrier(const std::uint_fast32_t& twt);
-		void wait(const std::uint_fast32_t& twt);
-	};
 protected:
 	//The difference between two timestamps in time.
 	struct Statistics
@@ -43,7 +36,7 @@ protected:
 	bool running;
 
 	//These are implemented by the particular kind of simulation
-	virtual void spawn_sim_threads(std::uint64_t timesteps,Simulation::barrier* bar)=0;
+	virtual void spawn_sim_threads(std::uint64_t timesteps,barrier* bar)=0;
 	virtual void join_sim_threads()=0;
 	//virtual void run_sim_threaded(double dt)=0;
 

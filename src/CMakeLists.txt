@@ -13,7 +13,8 @@ set(SOURCES
 	NaiveSimulation.cc
 	PredictiveSimulation.h
 	PredictiveSimulation.cc
-	
+	Barrier.h
+	Barrier.cc
 )
 
 add_library(sphere_sim ${SOURCES})

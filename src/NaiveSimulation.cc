@@ -1,7 +1,7 @@
 #include "NaiveSimulation.h"
 #include<functional>
 
-void NaiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t timesteps,Simulation::barrier* bar)
+void NaiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t timesteps,barrier* bar)
 {
 	Simulation::Statistics& cstats=stats[thread_id];
 			
@@ -53,7 +53,7 @@ void NaiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t timesteps,
 
 		cstats.current_timestamp++;
 		//wait_stats(cstats.current_timestamp);
-		bar->wait(thread_id);
+		bar->wait();
 	}
 }
 
