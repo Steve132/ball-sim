@@ -1,0 +1,6528 @@
+Threads = 1
+Scale = 1
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0144887
+total_collisions	121
+wall_collisions	121
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	132517
+average_milliseconds/timestep	0.00754617
+time_dilation	2070.59
+total_threads	1
+
+Threads = 1
+Scale = 1
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0119834
+total_collisions	274
+wall_collisions	260
+sphere_collisions	14
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	160221
+average_milliseconds/timestep	0.00624138
+time_dilation	2503.45
+total_threads	1
+
+Threads = 1
+Scale = 1
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0124728
+total_collisions	493
+wall_collisions	477
+sphere_collisions	16
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	153935
+average_milliseconds/timestep	0.00649625
+time_dilation	2405.23
+total_threads	1
+
+Threads = 1
+Scale = 1
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0136127
+total_collisions	1118
+wall_collisions	940
+sphere_collisions	178
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	141045
+average_milliseconds/timestep	0.00708995
+time_dilation	2203.82
+total_threads	1
+
+Threads = 1
+Scale = 1
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0129874
+total_collisions	3207
+wall_collisions	2231
+sphere_collisions	976
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	147836
+average_milliseconds/timestep	0.00676426
+time_dilation	2309.94
+total_threads	1
+
+Threads = 1
+Scale = 1
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0178456
+total_collisions	8935
+wall_collisions	4987
+sphere_collisions	3948
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	107590
+average_milliseconds/timestep	0.00929458
+time_dilation	1681.09
+total_threads	1
+
+Threads = 1
+Scale = 1
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0935429
+total_collisions	36858
+wall_collisions	14930
+sphere_collisions	21928
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	20525.3
+average_milliseconds/timestep	0.0487203
+time_dilation	320.708
+total_threads	1
+
+Threads = 1
+Scale = 1
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.230475
+total_collisions	159787
+wall_collisions	45184
+sphere_collisions	114603
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	8330.63
+average_milliseconds/timestep	0.120039
+time_dilation	130.166
+total_threads	1
+
+Threads = 1
+Scale = 1
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.81737
+total_collisions	760826
+wall_collisions	167197
+sphere_collisions	593629
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2349
+average_milliseconds/timestep	0.425713
+time_dilation	36.7031
+total_threads	1
+
+Threads = 1
+Scale = 1
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	3.19167
+total_collisions	3018394
+wall_collisions	411621
+sphere_collisions	2606773
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	601.566
+average_milliseconds/timestep	1.66233
+time_dilation	9.39947
+total_threads	1
+
+Threads = 1
+Scale = 1
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	12.419
+total_collisions	9321276
+wall_collisions	933543
+sphere_collisions	8387733
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	154.602
+average_milliseconds/timestep	6.46824
+time_dilation	2.41565
+total_threads	1
+
+Threads = 1
+Scale = 1
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	49.1079
+total_collisions	29623198
+wall_collisions	2253003
+sphere_collisions	27370195
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	39.0976
+average_milliseconds/timestep	25.577
+time_dilation	0.6109
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0145781
+total_collisions	72
+wall_collisions	72
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	131704
+average_milliseconds/timestep	0.00759278
+time_dilation	2057.88
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0119212
+total_collisions	118
+wall_collisions	117
+sphere_collisions	1
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	161058
+average_milliseconds/timestep	0.00620895
+time_dilation	2516.53
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0119898
+total_collisions	303
+wall_collisions	301
+sphere_collisions	2
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	160136
+average_milliseconds/timestep	0.00624471
+time_dilation	2502.12
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0133355
+total_collisions	535
+wall_collisions	506
+sphere_collisions	29
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	143977
+average_milliseconds/timestep	0.00694555
+time_dilation	2249.64
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0143887
+total_collisions	1472
+wall_collisions	1331
+sphere_collisions	141
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	133438
+average_milliseconds/timestep	0.0074941
+time_dilation	2084.97
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0373501
+total_collisions	3079
+wall_collisions	2630
+sphere_collisions	449
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	51405.5
+average_milliseconds/timestep	0.0194532
+time_dilation	803.212
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0591919
+total_collisions	7531
+wall_collisions	5476
+sphere_collisions	2055
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	32436.9
+average_milliseconds/timestep	0.0308291
+time_dilation	506.826
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.213918
+total_collisions	24865
+wall_collisions	13051
+sphere_collisions	11814
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	8975.39
+average_milliseconds/timestep	0.111416
+time_dilation	140.24
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.772703
+total_collisions	110679
+wall_collisions	38313
+sphere_collisions	72366
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2484.78
+average_milliseconds/timestep	0.40245
+time_dilation	38.8247
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	3.01105
+total_collisions	477572
+wall_collisions	106237
+sphere_collisions	371335
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	637.651
+average_milliseconds/timestep	1.56825
+time_dilation	9.9633
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	11.9853
+total_collisions	1795069
+wall_collisions	276828
+sphere_collisions	1518241
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	160.197
+average_milliseconds/timestep	6.24232
+time_dilation	2.50308
+total_threads	1
+
+Threads = 1
+Scale = 2
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	47.5809
+total_collisions	7351035
+wall_collisions	778754
+sphere_collisions	6572281
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	40.3523
+average_milliseconds/timestep	24.7817
+time_dilation	0.630505
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00743755
+total_collisions	37
+wall_collisions	37
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	258149
+average_milliseconds/timestep	0.00387373
+time_dilation	4033.58
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00513168
+total_collisions	78
+wall_collisions	78
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	374146
+average_milliseconds/timestep	0.00267275
+time_dilation	5846.04
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00532905
+total_collisions	218
+wall_collisions	218
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	360290
+average_milliseconds/timestep	0.00277555
+time_dilation	5629.52
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00727349
+total_collisions	375
+wall_collisions	365
+sphere_collisions	10
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	263972
+average_milliseconds/timestep	0.00378828
+time_dilation	4124.57
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00755012
+total_collisions	676
+wall_collisions	649
+sphere_collisions	27
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	254301
+average_milliseconds/timestep	0.00393235
+time_dilation	3973.45
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0207802
+total_collisions	1564
+wall_collisions	1482
+sphere_collisions	82
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	92395.5
+average_milliseconds/timestep	0.010823
+time_dilation	1443.68
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.065972
+total_collisions	3202
+wall_collisions	2888
+sphere_collisions	314
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	29103.2
+average_milliseconds/timestep	0.0343604
+time_dilation	454.738
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.215616
+total_collisions	7418
+wall_collisions	6073
+sphere_collisions	1345
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	8904.71
+average_milliseconds/timestep	0.1123
+time_dilation	139.136
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.763661
+total_collisions	19060
+wall_collisions	13305
+sphere_collisions	5755
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2514.2
+average_milliseconds/timestep	0.39774
+time_dilation	39.2844
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.99356
+total_collisions	68921
+wall_collisions	35639
+sphere_collisions	33282
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	641.377
+average_milliseconds/timestep	1.55915
+time_dilation	10.0215
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	11.8625
+total_collisions	306639
+wall_collisions	100732
+sphere_collisions	205907
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	161.855
+average_milliseconds/timestep	6.17838
+time_dilation	2.52898
+total_threads	1
+
+Threads = 1
+Scale = 4
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	47.0127
+total_collisions	1492325
+wall_collisions	285083
+sphere_collisions	1207242
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	40.84
+average_milliseconds/timestep	24.4858
+time_dilation	0.638125
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00565007
+total_collisions	20
+wall_collisions	20
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	339819
+average_milliseconds/timestep	0.00294275
+time_dilation	5309.66
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00522941
+total_collisions	46
+wall_collisions	46
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	367154
+average_milliseconds/timestep	0.00272365
+time_dilation	5736.79
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00526016
+total_collisions	148
+wall_collisions	148
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	365008
+average_milliseconds/timestep	0.00273967
+time_dilation	5703.25
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00783538
+total_collisions	243
+wall_collisions	241
+sphere_collisions	2
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	245042
+average_milliseconds/timestep	0.00408093
+time_dilation	3828.79
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0125
+total_collisions	437
+wall_collisions	431
+sphere_collisions	6
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	153600
+average_milliseconds/timestep	0.0065104
+time_dilation	2400.01
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0247298
+total_collisions	917
+wall_collisions	903
+sphere_collisions	14
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	77639.2
+average_milliseconds/timestep	0.0128801
+time_dilation	1213.11
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0589359
+total_collisions	1769
+wall_collisions	1711
+sphere_collisions	58
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	32577.8
+average_milliseconds/timestep	0.0306958
+time_dilation	509.027
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.217127
+total_collisions	3827
+wall_collisions	3621
+sphere_collisions	206
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	8842.76
+average_milliseconds/timestep	0.113087
+time_dilation	138.168
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.766417
+total_collisions	8055
+wall_collisions	7207
+sphere_collisions	848
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2505.16
+average_milliseconds/timestep	0.399175
+time_dilation	39.1432
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.99584
+total_collisions	18575
+wall_collisions	15000
+sphere_collisions	3575
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	640.888
+average_milliseconds/timestep	1.56033
+time_dilation	10.0139
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	11.7655
+total_collisions	47550
+wall_collisions	32491
+sphere_collisions	15059
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	163.189
+average_milliseconds/timestep	6.12788
+time_dilation	2.54982
+total_threads	1
+
+Threads = 1
+Scale = 8
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	47.0576
+total_collisions	149923
+wall_collisions	78526
+sphere_collisions	71397
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	40.8011
+average_milliseconds/timestep	24.5092
+time_dilation	0.637516
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00885077
+total_collisions	11
+wall_collisions	11
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	216930
+average_milliseconds/timestep	0.00460978
+time_dilation	3389.54
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0115658
+total_collisions	27
+wall_collisions	27
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	166007
+average_milliseconds/timestep	0.00602384
+time_dilation	2593.86
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.011872
+total_collisions	105
+wall_collisions	105
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	161725
+average_milliseconds/timestep	0.00618332
+time_dilation	2526.96
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0128754
+total_collisions	168
+wall_collisions	167
+sphere_collisions	1
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	149122
+average_milliseconds/timestep	0.00670591
+time_dilation	2330.03
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0165654
+total_collisions	280
+wall_collisions	279
+sphere_collisions	1
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	115904
+average_milliseconds/timestep	0.00862782
+time_dilation	1811
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0287126
+total_collisions	578
+wall_collisions	576
+sphere_collisions	2
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	66869.6
+average_milliseconds/timestep	0.0149545
+time_dilation	1044.84
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0622153
+total_collisions	1132
+wall_collisions	1122
+sphere_collisions	10
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	30860.6
+average_milliseconds/timestep	0.0324038
+time_dilation	482.196
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.227736
+total_collisions	2292
+wall_collisions	2259
+sphere_collisions	33
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	8430.8
+average_milliseconds/timestep	0.118613
+time_dilation	131.731
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.773915
+total_collisions	4838
+wall_collisions	4681
+sphere_collisions	157
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2480.89
+average_milliseconds/timestep	0.403081
+time_dilation	38.7639
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	3.01195
+total_collisions	9854
+wall_collisions	9303
+sphere_collisions	551
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	637.461
+average_milliseconds/timestep	1.56872
+time_dilation	9.96033
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	11.8301
+total_collisions	20462
+wall_collisions	18333
+sphere_collisions	2129
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	162.298
+average_milliseconds/timestep	6.16152
+time_dilation	2.5359
+total_threads	1
+
+Threads = 1
+Scale = 16
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	46.9747
+total_collisions	48731
+wall_collisions	39103
+sphere_collisions	9628
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	40.873
+average_milliseconds/timestep	24.466
+time_dilation	0.638641
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00536333
+total_collisions	6
+wall_collisions	6
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	357986
+average_milliseconds/timestep	0.0027934
+time_dilation	5593.54
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00550299
+total_collisions	15
+wall_collisions	15
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	348901
+average_milliseconds/timestep	0.00286614
+time_dilation	5451.58
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00516177
+total_collisions	69
+wall_collisions	69
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	371966
+average_milliseconds/timestep	0.00268842
+time_dilation	5811.96
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00770774
+total_collisions	108
+wall_collisions	108
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	249100
+average_milliseconds/timestep	0.00401445
+time_dilation	3892.19
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0151959
+total_collisions	178
+wall_collisions	178
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	126350
+average_milliseconds/timestep	0.00791454
+time_dilation	1974.22
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.023293
+total_collisions	361
+wall_collisions	361
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	82428.3
+average_milliseconds/timestep	0.0121317
+time_dilation	1287.94
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0689625
+total_collisions	697
+wall_collisions	697
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	27841.2
+average_milliseconds/timestep	0.035918
+time_dilation	435.019
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.212856
+total_collisions	1404
+wall_collisions	1399
+sphere_collisions	5
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	9020.17
+average_milliseconds/timestep	0.110863
+time_dilation	140.94
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.767262
+total_collisions	2934
+wall_collisions	2916
+sphere_collisions	18
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2502.41
+average_milliseconds/timestep	0.399615
+time_dilation	39.1001
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.97884
+total_collisions	5917
+wall_collisions	5830
+sphere_collisions	87
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	644.547
+average_milliseconds/timestep	1.55148
+time_dilation	10.071
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	11.9938
+total_collisions	12008
+wall_collisions	11699
+sphere_collisions	309
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	160.083
+average_milliseconds/timestep	6.24678
+time_dilation	2.50129
+total_threads	1
+
+Threads = 1
+Scale = 32
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	48.3818
+total_collisions	25682
+wall_collisions	24194
+sphere_collisions	1488
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	39.6843
+average_milliseconds/timestep	25.1989
+time_dilation	0.620067
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00767098
+total_collisions	5
+wall_collisions	5
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	250294
+average_milliseconds/timestep	0.0039953
+time_dilation	3910.84
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.011645
+total_collisions	10
+wall_collisions	10
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	164877
+average_milliseconds/timestep	0.00606513
+time_dilation	2576.2
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0125403
+total_collisions	47
+wall_collisions	47
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	153106
+average_milliseconds/timestep	0.0065314
+time_dilation	2392.29
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0129808
+total_collisions	72
+wall_collisions	72
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	147911
+average_milliseconds/timestep	0.00676081
+time_dilation	2311.11
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0154867
+total_collisions	112
+wall_collisions	112
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	123977
+average_milliseconds/timestep	0.008066
+time_dilation	1937.14
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0282747
+total_collisions	233
+wall_collisions	233
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	67905.2
+average_milliseconds/timestep	0.0147264
+time_dilation	1061.02
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0588133
+total_collisions	444
+wall_collisions	444
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	32645.7
+average_milliseconds/timestep	0.0306319
+time_dilation	510.089
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.213758
+total_collisions	879
+wall_collisions	878
+sphere_collisions	1
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	8982.13
+average_milliseconds/timestep	0.111332
+time_dilation	140.346
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.775222
+total_collisions	1876
+wall_collisions	1873
+sphere_collisions	3
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2476.71
+average_milliseconds/timestep	0.403761
+time_dilation	38.6986
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.98447
+total_collisions	3638
+wall_collisions	3622
+sphere_collisions	16
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	643.331
+average_milliseconds/timestep	1.55441
+time_dilation	10.052
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	11.8087
+total_collisions	7390
+wall_collisions	7338
+sphere_collisions	52
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	162.592
+average_milliseconds/timestep	6.15036
+time_dilation	2.5405
+total_threads	1
+
+Threads = 1
+Scale = 64
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	47.0285
+total_collisions	15174
+wall_collisions	14976
+sphere_collisions	198
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	40.8263
+average_milliseconds/timestep	24.494
+time_dilation	0.637912
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0082277
+total_collisions	2
+wall_collisions	2
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	233358
+average_milliseconds/timestep	0.00428526
+time_dilation	3646.22
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.00861352
+total_collisions	5
+wall_collisions	5
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	222905
+average_milliseconds/timestep	0.00448621
+time_dilation	3482.9
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0132048
+total_collisions	30
+wall_collisions	30
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	145402
+average_milliseconds/timestep	0.0068775
+time_dilation	2271.9
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0166741
+total_collisions	45
+wall_collisions	45
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	115149
+average_milliseconds/timestep	0.00868443
+time_dilation	1799.2
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0104286
+total_collisions	71
+wall_collisions	71
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	184109
+average_milliseconds/timestep	0.00543157
+time_dilation	2876.7
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0184583
+total_collisions	150
+wall_collisions	150
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	104018
+average_milliseconds/timestep	0.00961369
+time_dilation	1625.29
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0636259
+total_collisions	285
+wall_collisions	285
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	30176.4
+average_milliseconds/timestep	0.0331385
+time_dilation	471.506
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.212282
+total_collisions	549
+wall_collisions	548
+sphere_collisions	1
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	9044.57
+average_milliseconds/timestep	0.110564
+time_dilation	141.321
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.78373
+total_collisions	1206
+wall_collisions	1204
+sphere_collisions	2
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2449.82
+average_milliseconds/timestep	0.408193
+time_dilation	38.2785
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	3.04191
+total_collisions	2340
+wall_collisions	2337
+sphere_collisions	3
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	631.183
+average_milliseconds/timestep	1.58433
+time_dilation	9.86224
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	12.008
+total_collisions	4734
+wall_collisions	4726
+sphere_collisions	8
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	159.893
+average_milliseconds/timestep	6.25419
+time_dilation	2.49833
+total_threads	1
+
+Threads = 1
+Scale = 128
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	48.2676
+total_collisions	9544
+wall_collisions	9524
+sphere_collisions	20
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	39.7782
+average_milliseconds/timestep	25.1394
+time_dilation	0.621535
+total_threads	1
+
+Threads = 2
+Scale = 1
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0249115
+total_collisions	121
+wall_collisions	121
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	77072.9
+average_milliseconds/timestep	0.0129747
+time_dilation	1204.26
+total_threads	2
+
+Threads = 2
+Scale = 1
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0230433
+total_collisions	290
+wall_collisions	284
+sphere_collisions	6
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	83321.4
+average_milliseconds/timestep	0.0120017
+time_dilation	1301.9
+total_threads	2
+
+Threads = 2
+Scale = 1
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0242112
+total_collisions	480
+wall_collisions	455
+sphere_collisions	25
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	79302
+average_milliseconds/timestep	0.01261
+time_dilation	1239.09
+total_threads	2
+
+Threads = 2
+Scale = 1
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0226819
+total_collisions	1130
+wall_collisions	950
+sphere_collisions	180
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	84649.1
+average_milliseconds/timestep	0.0118135
+time_dilation	1322.64
+total_threads	2
+
+Threads = 2
+Scale = 1
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0246696
+total_collisions	2958
+wall_collisions	2035
+sphere_collisions	923
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	77828.7
+average_milliseconds/timestep	0.0128487
+time_dilation	1216.07
+total_threads	2
+
+Threads = 2
+Scale = 1
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0435708
+total_collisions	9676
+wall_collisions	5410
+sphere_collisions	4266
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	44066.2
+average_milliseconds/timestep	0.0226931
+time_dilation	688.534
+total_threads	2
+
+Threads = 2
+Scale = 1
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.111377
+total_collisions	37478
+wall_collisions	14725
+sphere_collisions	22753
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	17238.7
+average_milliseconds/timestep	0.058009
+time_dilation	269.355
+total_threads	2
+
+Threads = 2
+Scale = 1
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.438872
+total_collisions	157685
+wall_collisions	43930
+sphere_collisions	113755
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4374.85
+average_milliseconds/timestep	0.228579
+time_dilation	68.357
+total_threads	2
+
+Threads = 2
+Scale = 1
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.38203
+total_collisions	737207
+wall_collisions	165019
+sphere_collisions	572188
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1389.26
+average_milliseconds/timestep	0.719805
+time_dilation	21.7073
+total_threads	2
+
+Threads = 2
+Scale = 1
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.13073
+total_collisions	2984175
+wall_collisions	408195
+sphere_collisions	2575980
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	901.098
+average_milliseconds/timestep	1.10976
+time_dilation	14.0797
+total_threads	2
+
+Threads = 2
+Scale = 1
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	7.98489
+total_collisions	9320110
+wall_collisions	933840
+sphere_collisions	8386270
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	240.454
+average_milliseconds/timestep	4.1588
+time_dilation	3.7571
+total_threads	2
+
+Threads = 2
+Scale = 1
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	30.8805
+total_collisions	29638353
+wall_collisions	2250675
+sphere_collisions	27387678
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	62.1751
+average_milliseconds/timestep	16.0836
+time_dilation	0.971486
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0158357
+total_collisions	72
+wall_collisions	72
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	121245
+average_milliseconds/timestep	0.00824776
+time_dilation	1894.45
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0181981
+total_collisions	121
+wall_collisions	120
+sphere_collisions	1
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	105506
+average_milliseconds/timestep	0.00947817
+time_dilation	1648.53
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.021902
+total_collisions	311
+wall_collisions	305
+sphere_collisions	6
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	87663.1
+average_milliseconds/timestep	0.0114073
+time_dilation	1369.74
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0234015
+total_collisions	654
+wall_collisions	628
+sphere_collisions	26
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	82046
+average_milliseconds/timestep	0.0121883
+time_dilation	1281.97
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0275717
+total_collisions	1251
+wall_collisions	1126
+sphere_collisions	125
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	69636.7
+average_milliseconds/timestep	0.0143602
+time_dilation	1088.07
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0440118
+total_collisions	3090
+wall_collisions	2495
+sphere_collisions	595
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	43624.7
+average_milliseconds/timestep	0.0229228
+time_dilation	681.636
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.129247
+total_collisions	8102
+wall_collisions	5882
+sphere_collisions	2220
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	14855.2
+average_milliseconds/timestep	0.0673163
+time_dilation	232.113
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.339597
+total_collisions	25675
+wall_collisions	13619
+sphere_collisions	12056
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	5653.76
+average_milliseconds/timestep	0.176874
+time_dilation	88.3399
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.531144
+total_collisions	112266
+wall_collisions	38705
+sphere_collisions	73561
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	3614.84
+average_milliseconds/timestep	0.276637
+time_dilation	56.4819
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.96577
+total_collisions	486711
+wall_collisions	107807
+sphere_collisions	378904
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	976.718
+average_milliseconds/timestep	1.02384
+time_dilation	15.2612
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	7.54023
+total_collisions	1797502
+wall_collisions	275320
+sphere_collisions	1522182
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	254.634
+average_milliseconds/timestep	3.9272
+time_dilation	3.97866
+total_threads	2
+
+Threads = 2
+Scale = 2
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	29.6373
+total_collisions	7335630
+wall_collisions	775304
+sphere_collisions	6560326
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	64.7832
+average_milliseconds/timestep	15.4361
+time_dilation	1.01224
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0245958
+total_collisions	37
+wall_collisions	37
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	78062.1
+average_milliseconds/timestep	0.0128103
+time_dilation	1219.72
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0236639
+total_collisions	78
+wall_collisions	78
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	81136.3
+average_milliseconds/timestep	0.0123249
+time_dilation	1267.75
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0231779
+total_collisions	218
+wall_collisions	218
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	82837.4
+average_milliseconds/timestep	0.0120718
+time_dilation	1294.33
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0245146
+total_collisions	365
+wall_collisions	356
+sphere_collisions	9
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	78320.8
+average_milliseconds/timestep	0.012768
+time_dilation	1223.76
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0268227
+total_collisions	733
+wall_collisions	706
+sphere_collisions	27
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	71581.2
+average_milliseconds/timestep	0.0139701
+time_dilation	1118.46
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0436372
+total_collisions	1559
+wall_collisions	1472
+sphere_collisions	87
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	43999.2
+average_milliseconds/timestep	0.0227277
+time_dilation	687.487
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.109633
+total_collisions	3233
+wall_collisions	2948
+sphere_collisions	285
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	17512.9
+average_milliseconds/timestep	0.0571007
+time_dilation	273.639
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.435828
+total_collisions	7585
+wall_collisions	6162
+sphere_collisions	1423
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4405.41
+average_milliseconds/timestep	0.226994
+time_dilation	68.8345
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.31294
+total_collisions	19215
+wall_collisions	13325
+sphere_collisions	5890
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1462.36
+average_milliseconds/timestep	0.683825
+time_dilation	22.8494
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.00345
+total_collisions	69935
+wall_collisions	35987
+sphere_collisions	33948
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	958.348
+average_milliseconds/timestep	1.04346
+time_dilation	14.9742
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	7.64872
+total_collisions	304583
+wall_collisions	100399
+sphere_collisions	204184
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	251.022
+average_milliseconds/timestep	3.98371
+time_dilation	3.92223
+total_threads	2
+
+Threads = 2
+Scale = 4
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	29.5658
+total_collisions	1497590
+wall_collisions	288343
+sphere_collisions	1209247
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	64.94
+average_milliseconds/timestep	15.3988
+time_dilation	1.01469
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0138761
+total_collisions	20
+wall_collisions	20
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	138368
+average_milliseconds/timestep	0.00722712
+time_dilation	2161.99
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0211824
+total_collisions	46
+wall_collisions	46
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	90641.2
+average_milliseconds/timestep	0.0110325
+time_dilation	1416.27
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.024792
+total_collisions	148
+wall_collisions	148
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	77444.4
+average_milliseconds/timestep	0.0129125
+time_dilation	1210.07
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0226267
+total_collisions	243
+wall_collisions	241
+sphere_collisions	2
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	84855.4
+average_milliseconds/timestep	0.0117848
+time_dilation	1325.87
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0257726
+total_collisions	429
+wall_collisions	425
+sphere_collisions	4
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	74497.7
+average_milliseconds/timestep	0.0134232
+time_dilation	1164.03
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0428152
+total_collisions	930
+wall_collisions	910
+sphere_collisions	20
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	44843.9
+average_milliseconds/timestep	0.0222996
+time_dilation	700.687
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.142355
+total_collisions	1836
+wall_collisions	1770
+sphere_collisions	66
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	13487.4
+average_milliseconds/timestep	0.0741435
+time_dilation	210.74
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.411046
+total_collisions	3864
+wall_collisions	3614
+sphere_collisions	250
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4671.01
+average_milliseconds/timestep	0.214086
+time_dilation	72.9845
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.515509
+total_collisions	8054
+wall_collisions	7221
+sphere_collisions	833
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	3724.47
+average_milliseconds/timestep	0.268494
+time_dilation	58.1949
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.97179
+total_collisions	18545
+wall_collisions	14872
+sphere_collisions	3673
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	973.735
+average_milliseconds/timestep	1.02697
+time_dilation	15.2146
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	7.28351
+total_collisions	46835
+wall_collisions	32015
+sphere_collisions	14820
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	263.609
+average_milliseconds/timestep	3.7935
+time_dilation	4.11889
+total_threads	2
+
+Threads = 2
+Scale = 8
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	29.3793
+total_collisions	150617
+wall_collisions	78554
+sphere_collisions	72063
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	65.3521
+average_milliseconds/timestep	15.3017
+time_dilation	1.02113
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0272653
+total_collisions	11
+wall_collisions	11
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	70419.2
+average_milliseconds/timestep	0.0142007
+time_dilation	1100.3
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0247848
+total_collisions	27
+wall_collisions	27
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	77466.7
+average_milliseconds/timestep	0.0129088
+time_dilation	1210.42
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0206418
+total_collisions	105
+wall_collisions	105
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	93015.2
+average_milliseconds/timestep	0.0107509
+time_dilation	1453.36
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.023709
+total_collisions	170
+wall_collisions	168
+sphere_collisions	2
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	80982
+average_milliseconds/timestep	0.0123484
+time_dilation	1265.34
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0260155
+total_collisions	284
+wall_collisions	282
+sphere_collisions	2
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	73802.1
+average_milliseconds/timestep	0.0135498
+time_dilation	1153.16
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0444413
+total_collisions	577
+wall_collisions	574
+sphere_collisions	3
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	43203.1
+average_milliseconds/timestep	0.0231465
+time_dilation	675.048
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0629057
+total_collisions	1120
+wall_collisions	1111
+sphere_collisions	9
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	30521.9
+average_milliseconds/timestep	0.0327634
+time_dilation	476.904
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.401643
+total_collisions	2191
+wall_collisions	2157
+sphere_collisions	34
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4780.37
+average_milliseconds/timestep	0.209189
+time_dilation	74.6932
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.680559
+total_collisions	4731
+wall_collisions	4581
+sphere_collisions	150
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2821.21
+average_milliseconds/timestep	0.354458
+time_dilation	44.0814
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.1129
+total_collisions	9933
+wall_collisions	9339
+sphere_collisions	594
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	908.702
+average_milliseconds/timestep	1.10047
+time_dilation	14.1985
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	7.53315
+total_collisions	20967
+wall_collisions	18687
+sphere_collisions	2280
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	254.873
+average_milliseconds/timestep	3.92352
+time_dilation	3.9824
+total_threads	2
+
+Threads = 2
+Scale = 16
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	29.2825
+total_collisions	48395
+wall_collisions	38772
+sphere_collisions	9623
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	65.5683
+average_milliseconds/timestep	15.2513
+time_dilation	1.0245
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0278638
+total_collisions	6
+wall_collisions	6
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	68906.7
+average_milliseconds/timestep	0.0145124
+time_dilation	1076.67
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0268158
+total_collisions	15
+wall_collisions	15
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	71599.7
+average_milliseconds/timestep	0.0139665
+time_dilation	1118.75
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0215237
+total_collisions	69
+wall_collisions	69
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	89203.9
+average_milliseconds/timestep	0.0112103
+time_dilation	1393.81
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0222995
+total_collisions	108
+wall_collisions	108
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	86100.7
+average_milliseconds/timestep	0.0116143
+time_dilation	1345.32
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0245005
+total_collisions	178
+wall_collisions	178
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	78365.7
+average_milliseconds/timestep	0.0127607
+time_dilation	1224.46
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0454608
+total_collisions	361
+wall_collisions	361
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	42234.2
+average_milliseconds/timestep	0.0236775
+time_dilation	659.91
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.107597
+total_collisions	697
+wall_collisions	697
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	17844.4
+average_milliseconds/timestep	0.0560399
+time_dilation	278.819
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.364822
+total_collisions	1404
+wall_collisions	1399
+sphere_collisions	5
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	5262.84
+average_milliseconds/timestep	0.190011
+time_dilation	82.2319
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.60737
+total_collisions	2935
+wall_collisions	2917
+sphere_collisions	18
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	3161.17
+average_milliseconds/timestep	0.316339
+time_dilation	49.3933
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.79336
+total_collisions	5917
+wall_collisions	5830
+sphere_collisions	87
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	1070.61
+average_milliseconds/timestep	0.934043
+time_dilation	16.7284
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	7.28419
+total_collisions	12021
+wall_collisions	11699
+sphere_collisions	322
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	263.585
+average_milliseconds/timestep	3.79385
+time_dilation	4.11851
+total_threads	2
+
+Threads = 2
+Scale = 32
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	28.2588
+total_collisions	25636
+wall_collisions	24152
+sphere_collisions	1484
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	67.9435
+average_milliseconds/timestep	14.7181
+time_dilation	1.06162
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0147669
+total_collisions	5
+wall_collisions	5
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	130020
+average_milliseconds/timestep	0.0076911
+time_dilation	2031.57
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0158241
+total_collisions	10
+wall_collisions	10
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	121334
+average_milliseconds/timestep	0.00824173
+time_dilation	1895.84
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0238092
+total_collisions	47
+wall_collisions	47
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	80641.2
+average_milliseconds/timestep	0.0124006
+time_dilation	1260.02
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0252174
+total_collisions	72
+wall_collisions	72
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	76137.8
+average_milliseconds/timestep	0.0131341
+time_dilation	1189.65
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0233092
+total_collisions	112
+wall_collisions	112
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	82371
+average_milliseconds/timestep	0.0121402
+time_dilation	1287.05
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0423089
+total_collisions	233
+wall_collisions	233
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	45380.5
+average_milliseconds/timestep	0.0220359
+time_dilation	709.07
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.107481
+total_collisions	444
+wall_collisions	444
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	17863.6
+average_milliseconds/timestep	0.0559797
+time_dilation	279.119
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.409655
+total_collisions	879
+wall_collisions	878
+sphere_collisions	1
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4686.87
+average_milliseconds/timestep	0.213362
+time_dilation	73.2323
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.477389
+total_collisions	1881
+wall_collisions	1877
+sphere_collisions	4
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	4021.88
+average_milliseconds/timestep	0.24864
+time_dilation	62.8418
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.97398
+total_collisions	3642
+wall_collisions	3625
+sphere_collisions	17
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	972.657
+average_milliseconds/timestep	1.02811
+time_dilation	15.1978
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	7.1824
+total_collisions	7396
+wall_collisions	7342
+sphere_collisions	54
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	267.32
+average_milliseconds/timestep	3.74083
+time_dilation	4.17688
+total_threads	2
+
+Threads = 2
+Scale = 64
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	28.2172
+total_collisions	15151
+wall_collisions	14957
+sphere_collisions	194
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	68.0436
+average_milliseconds/timestep	14.6965
+time_dilation	1.06318
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0143948
+total_collisions	2
+wall_collisions	2
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	133381
+average_milliseconds/timestep	0.00749729
+time_dilation	2084.09
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0229347
+total_collisions	5
+wall_collisions	5
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	83715.8
+average_milliseconds/timestep	0.0119452
+time_dilation	1308.06
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.024737
+total_collisions	30
+wall_collisions	30
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	77616.7
+average_milliseconds/timestep	0.0128838
+time_dilation	1212.76
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0263204
+total_collisions	45
+wall_collisions	45
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	72947.2
+average_milliseconds/timestep	0.0137085
+time_dilation	1139.8
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0256283
+total_collisions	71
+wall_collisions	71
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	74917.1
+average_milliseconds/timestep	0.0133481
+time_dilation	1170.58
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.043818
+total_collisions	150
+wall_collisions	150
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	43817.6
+average_milliseconds/timestep	0.0228219
+time_dilation	684.65
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.109356
+total_collisions	285
+wall_collisions	285
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	17557.3
+average_milliseconds/timestep	0.0569565
+time_dilation	274.332
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.434955
+total_collisions	549
+wall_collisions	548
+sphere_collisions	1
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4414.25
+average_milliseconds/timestep	0.226539
+time_dilation	68.9726
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.27961
+total_collisions	1206
+wall_collisions	1204
+sphere_collisions	2
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1500.45
+average_milliseconds/timestep	0.666466
+time_dilation	23.4446
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.00584
+total_collisions	2340
+wall_collisions	2337
+sphere_collisions	3
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	957.207
+average_milliseconds/timestep	1.04471
+time_dilation	14.9564
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	7.37153
+total_collisions	4734
+wall_collisions	4726
+sphere_collisions	8
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	260.461
+average_milliseconds/timestep	3.83934
+time_dilation	4.06971
+total_threads	2
+
+Threads = 2
+Scale = 128
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	28.684
+total_collisions	9545
+wall_collisions	9525
+sphere_collisions	20
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	66.9363
+average_milliseconds/timestep	14.9396
+time_dilation	1.04588
+total_threads	2
+
+Threads = 4
+Scale = 1
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0379455
+total_collisions	121
+wall_collisions	121
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	50598.8
+average_milliseconds/timestep	0.0197633
+time_dilation	790.607
+total_threads	4
+
+Threads = 4
+Scale = 1
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0480428
+total_collisions	174
+wall_collisions	169
+sphere_collisions	5
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	39964.3
+average_milliseconds/timestep	0.0250223
+time_dilation	624.443
+total_threads	4
+
+Threads = 4
+Scale = 1
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.045585
+total_collisions	420
+wall_collisions	393
+sphere_collisions	27
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	42119.1
+average_milliseconds/timestep	0.0237422
+time_dilation	658.111
+total_threads	4
+
+Threads = 4
+Scale = 1
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0566141
+total_collisions	1167
+wall_collisions	1017
+sphere_collisions	150
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	33913.8
+average_milliseconds/timestep	0.0294865
+time_dilation	529.904
+total_threads	4
+
+Threads = 4
+Scale = 1
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.059652
+total_collisions	2959
+wall_collisions	2030
+sphere_collisions	929
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	32186.7
+average_milliseconds/timestep	0.0310688
+time_dilation	502.917
+total_threads	4
+
+Threads = 4
+Scale = 1
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0588537
+total_collisions	9410
+wall_collisions	5231
+sphere_collisions	4179
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	32623.2
+average_milliseconds/timestep	0.030653
+time_dilation	509.738
+total_threads	4
+
+Threads = 4
+Scale = 1
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0779316
+total_collisions	38810
+wall_collisions	15780
+sphere_collisions	23030
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	24637
+average_milliseconds/timestep	0.0405894
+time_dilation	384.953
+total_threads	4
+
+Threads = 4
+Scale = 1
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.205302
+total_collisions	159096
+wall_collisions	45079
+sphere_collisions	114017
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	9352.09
+average_milliseconds/timestep	0.106928
+time_dilation	146.126
+total_threads	4
+
+Threads = 4
+Scale = 1
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.834598
+total_collisions	738055
+wall_collisions	165522
+sphere_collisions	572533
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2300.51
+average_milliseconds/timestep	0.434686
+time_dilation	35.9455
+total_threads	4
+
+Threads = 4
+Scale = 1
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.40003
+total_collisions	2966367
+wall_collisions	408870
+sphere_collisions	2557497
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	799.991
+average_milliseconds/timestep	1.25001
+time_dilation	12.4999
+total_threads	4
+
+Threads = 4
+Scale = 1
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	9.12196
+total_collisions	9233455
+wall_collisions	935493
+sphere_collisions	8297962
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	210.481
+average_milliseconds/timestep	4.75102
+time_dilation	3.28877
+total_threads	4
+
+Threads = 4
+Scale = 1
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	35.2176
+total_collisions	29565317
+wall_collisions	2267644
+sphere_collisions	27297673
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	54.5182
+average_milliseconds/timestep	18.3425
+time_dilation	0.851846
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0703474
+total_collisions	72
+wall_collisions	72
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	27293.1
+average_milliseconds/timestep	0.0366393
+time_dilation	426.455
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0522654
+total_collisions	121
+wall_collisions	120
+sphere_collisions	1
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	36735.6
+average_milliseconds/timestep	0.0272215
+time_dilation	573.994
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0490345
+total_collisions	298
+wall_collisions	297
+sphere_collisions	1
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	39156.1
+average_milliseconds/timestep	0.0255388
+time_dilation	611.814
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0916187
+total_collisions	658
+wall_collisions	624
+sphere_collisions	34
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	20956.4
+average_milliseconds/timestep	0.0477181
+time_dilation	327.444
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0677128
+total_collisions	1303
+wall_collisions	1170
+sphere_collisions	133
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	28355.1
+average_milliseconds/timestep	0.0352671
+time_dilation	443.048
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0610917
+total_collisions	3064
+wall_collisions	2498
+sphere_collisions	566
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	31428.2
+average_milliseconds/timestep	0.0318186
+time_dilation	491.065
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.141999
+total_collisions	7832
+wall_collisions	5655
+sphere_collisions	2177
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	13521.2
+average_milliseconds/timestep	0.0739578
+time_dilation	211.269
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.347355
+total_collisions	24444
+wall_collisions	12813
+sphere_collisions	11631
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	5527.49
+average_milliseconds/timestep	0.180914
+time_dilation	86.3671
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.719583
+total_collisions	115884
+wall_collisions	40743
+sphere_collisions	75141
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2668.21
+average_milliseconds/timestep	0.374783
+time_dilation	41.6908
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.3122
+total_collisions	484099
+wall_collisions	107535
+sphere_collisions	376564
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	830.378
+average_milliseconds/timestep	1.20427
+time_dilation	12.9747
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	9.04284
+total_collisions	1802075
+wall_collisions	274238
+sphere_collisions	1527837
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	212.323
+average_milliseconds/timestep	4.70981
+time_dilation	3.31754
+total_threads	4
+
+Threads = 4
+Scale = 2
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	34.6984
+total_collisions	7324800
+wall_collisions	774438
+sphere_collisions	6550362
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	55.334
+average_milliseconds/timestep	18.0721
+time_dilation	0.864593
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0469804
+total_collisions	37
+wall_collisions	37
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	40868.1
+average_milliseconds/timestep	0.024469
+time_dilation	638.564
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0462386
+total_collisions	78
+wall_collisions	78
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	41523.8
+average_milliseconds/timestep	0.0240826
+time_dilation	648.809
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0491584
+total_collisions	218
+wall_collisions	218
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	39057.4
+average_milliseconds/timestep	0.0256033
+time_dilation	610.273
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0504956
+total_collisions	370
+wall_collisions	364
+sphere_collisions	6
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	38023.1
+average_milliseconds/timestep	0.0262998
+time_dilation	594.111
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.052723
+total_collisions	765
+wall_collisions	736
+sphere_collisions	29
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	36416.7
+average_milliseconds/timestep	0.0274599
+time_dilation	569.011
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0612697
+total_collisions	1429
+wall_collisions	1334
+sphere_collisions	95
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	31336.9
+average_milliseconds/timestep	0.0319113
+time_dilation	489.639
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.136404
+total_collisions	3384
+wall_collisions	3042
+sphere_collisions	342
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	14075.9
+average_milliseconds/timestep	0.0710436
+time_dilation	219.935
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.43145
+total_collisions	7429
+wall_collisions	5975
+sphere_collisions	1454
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4450.11
+average_milliseconds/timestep	0.224713
+time_dilation	69.533
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.20352
+total_collisions	19993
+wall_collisions	13798
+sphere_collisions	6195
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1595.32
+average_milliseconds/timestep	0.626832
+time_dilation	24.9269
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.28892
+total_collisions	69170
+wall_collisions	35775
+sphere_collisions	33395
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	838.824
+average_milliseconds/timestep	1.19215
+time_dilation	13.1066
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	8.31393
+total_collisions	312621
+wall_collisions	101897
+sphere_collisions	210724
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	230.938
+average_milliseconds/timestep	4.33017
+time_dilation	3.6084
+total_threads	4
+
+Threads = 4
+Scale = 4
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	35.3162
+total_collisions	1496922
+wall_collisions	288501
+sphere_collisions	1208421
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	54.366
+average_milliseconds/timestep	18.3939
+time_dilation	0.849468
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0469485
+total_collisions	20
+wall_collisions	20
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	40895.9
+average_milliseconds/timestep	0.0244523
+time_dilation	638.998
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0419021
+total_collisions	46
+wall_collisions	46
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	45821.1
+average_milliseconds/timestep	0.021824
+time_dilation	715.954
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0471845
+total_collisions	148
+wall_collisions	148
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	40691.4
+average_milliseconds/timestep	0.0245752
+time_dilation	635.803
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0536292
+total_collisions	243
+wall_collisions	241
+sphere_collisions	2
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	35801.4
+average_milliseconds/timestep	0.0279319
+time_dilation	559.396
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0483869
+total_collisions	429
+wall_collisions	425
+sphere_collisions	4
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	39680.2
+average_milliseconds/timestep	0.0252015
+time_dilation	620.003
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0548682
+total_collisions	937
+wall_collisions	917
+sphere_collisions	20
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	34992.9
+average_milliseconds/timestep	0.0285772
+time_dilation	546.764
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.127135
+total_collisions	1867
+wall_collisions	1814
+sphere_collisions	53
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	15102.1
+average_milliseconds/timestep	0.0662161
+time_dilation	235.97
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.350071
+total_collisions	4012
+wall_collisions	3754
+sphere_collisions	258
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	5484.61
+average_milliseconds/timestep	0.182328
+time_dilation	85.697
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.12478
+total_collisions	8099
+wall_collisions	7286
+sphere_collisions	813
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1707
+average_milliseconds/timestep	0.585824
+time_dilation	26.6718
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.72301
+total_collisions	18569
+wall_collisions	14793
+sphere_collisions	3776
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	705.102
+average_milliseconds/timestep	1.41823
+time_dilation	11.0172
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	8.35647
+total_collisions	47249
+wall_collisions	32542
+sphere_collisions	14707
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	229.762
+average_milliseconds/timestep	4.35233
+time_dilation	3.59003
+total_threads	4
+
+Threads = 4
+Scale = 8
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	33.7586
+total_collisions	151083
+wall_collisions	78309
+sphere_collisions	72774
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	56.8744
+average_milliseconds/timestep	17.5826
+time_dilation	0.888663
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0631082
+total_collisions	11
+wall_collisions	11
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	30423.9
+average_milliseconds/timestep	0.0328689
+time_dilation	475.374
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0532139
+total_collisions	27
+wall_collisions	27
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	36080.8
+average_milliseconds/timestep	0.0277156
+time_dilation	563.762
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.04878
+total_collisions	105
+wall_collisions	105
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	39360.4
+average_milliseconds/timestep	0.0254062
+time_dilation	615.006
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0531418
+total_collisions	172
+wall_collisions	170
+sphere_collisions	2
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	36129.7
+average_milliseconds/timestep	0.027678
+time_dilation	564.527
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0479128
+total_collisions	284
+wall_collisions	282
+sphere_collisions	2
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	40072.8
+average_milliseconds/timestep	0.0249546
+time_dilation	626.137
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0562759
+total_collisions	573
+wall_collisions	570
+sphere_collisions	3
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	34117.7
+average_milliseconds/timestep	0.0293103
+time_dilation	533.088
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.121351
+total_collisions	1124
+wall_collisions	1115
+sphere_collisions	9
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	15821.9
+average_milliseconds/timestep	0.0632036
+time_dilation	247.217
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.394195
+total_collisions	2216
+wall_collisions	2168
+sphere_collisions	48
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4870.69
+average_milliseconds/timestep	0.20531
+time_dilation	76.1045
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.718486
+total_collisions	4814
+wall_collisions	4670
+sphere_collisions	144
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2672.29
+average_milliseconds/timestep	0.374211
+time_dilation	41.7545
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.66109
+total_collisions	9672
+wall_collisions	9068
+sphere_collisions	604
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	721.508
+average_milliseconds/timestep	1.38599
+time_dilation	11.2736
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	8.89794
+total_collisions	20583
+wall_collisions	18412
+sphere_collisions	2171
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	215.78
+average_milliseconds/timestep	4.63434
+time_dilation	3.37157
+total_threads	4
+
+Threads = 4
+Scale = 16
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	32.9093
+total_collisions	48635
+wall_collisions	39062
+sphere_collisions	9573
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	58.3422
+average_milliseconds/timestep	17.1402
+time_dilation	0.911597
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0406417
+total_collisions	6
+wall_collisions	6
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	47242.1
+average_milliseconds/timestep	0.0211675
+time_dilation	738.158
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0502842
+total_collisions	15
+wall_collisions	15
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	38182.9
+average_milliseconds/timestep	0.0261897
+time_dilation	596.608
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0479436
+total_collisions	69
+wall_collisions	69
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	40047
+average_milliseconds/timestep	0.0249706
+time_dilation	625.735
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0648826
+total_collisions	108
+wall_collisions	108
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	29591.9
+average_milliseconds/timestep	0.033793
+time_dilation	462.374
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0886645
+total_collisions	178
+wall_collisions	178
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	21654.7
+average_milliseconds/timestep	0.0461794
+time_dilation	338.354
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0693668
+total_collisions	361
+wall_collisions	361
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	27678.9
+average_milliseconds/timestep	0.0361286
+time_dilation	432.483
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.139157
+total_collisions	697
+wall_collisions	697
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	13797.4
+average_milliseconds/timestep	0.0724776
+time_dilation	215.584
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.416805
+total_collisions	1404
+wall_collisions	1399
+sphere_collisions	5
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4606.47
+average_milliseconds/timestep	0.217086
+time_dilation	71.9761
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.800285
+total_collisions	2927
+wall_collisions	2910
+sphere_collisions	17
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2399.14
+average_milliseconds/timestep	0.416815
+time_dilation	37.4866
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.40281
+total_collisions	5913
+wall_collisions	5829
+sphere_collisions	84
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	799.065
+average_milliseconds/timestep	1.25146
+time_dilation	12.4854
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	8.18815
+total_collisions	11933
+wall_collisions	11607
+sphere_collisions	326
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	234.485
+average_milliseconds/timestep	4.26466
+time_dilation	3.66383
+total_threads	4
+
+Threads = 4
+Scale = 32
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	34.8118
+total_collisions	25422
+wall_collisions	24033
+sphere_collisions	1389
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	55.1538
+average_milliseconds/timestep	18.1311
+time_dilation	0.861778
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0570588
+total_collisions	5
+wall_collisions	5
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	33649.5
+average_milliseconds/timestep	0.0297181
+time_dilation	525.774
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0393196
+total_collisions	10
+wall_collisions	10
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	48830.6
+average_milliseconds/timestep	0.020479
+time_dilation	762.977
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0555023
+total_collisions	47
+wall_collisions	47
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	34593.2
+average_milliseconds/timestep	0.0289074
+time_dilation	540.518
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0509415
+total_collisions	72
+wall_collisions	72
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	37690.3
+average_milliseconds/timestep	0.0265321
+time_dilation	588.91
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0514658
+total_collisions	112
+wall_collisions	112
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	37306.4
+average_milliseconds/timestep	0.0268051
+time_dilation	582.912
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0882163
+total_collisions	233
+wall_collisions	233
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	21764.7
+average_milliseconds/timestep	0.045946
+time_dilation	340.073
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.090039
+total_collisions	444
+wall_collisions	444
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	21324.1
+average_milliseconds/timestep	0.0468953
+time_dilation	333.189
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.163802
+total_collisions	879
+wall_collisions	878
+sphere_collisions	1
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	11721.4
+average_milliseconds/timestep	0.0853137
+time_dilation	183.148
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.728369
+total_collisions	1878
+wall_collisions	1874
+sphere_collisions	4
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2636.03
+average_milliseconds/timestep	0.379359
+time_dilation	41.1879
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.27849
+total_collisions	3639
+wall_collisions	3623
+sphere_collisions	16
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	842.663
+average_milliseconds/timestep	1.18671
+time_dilation	13.1666
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	8.52972
+total_collisions	7401
+wall_collisions	7350
+sphere_collisions	51
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	225.095
+average_milliseconds/timestep	4.44256
+time_dilation	3.51711
+total_threads	4
+
+Threads = 4
+Scale = 64
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	34.2562
+total_collisions	15145
+wall_collisions	14954
+sphere_collisions	191
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	56.0483
+average_milliseconds/timestep	17.8417
+time_dilation	0.875755
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0374763
+total_collisions	2
+wall_collisions	2
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	51232.4
+average_milliseconds/timestep	0.0195189
+time_dilation	800.506
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.046353
+total_collisions	5
+wall_collisions	5
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	41421.3
+average_milliseconds/timestep	0.0241422
+time_dilation	647.207
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0322738
+total_collisions	30
+wall_collisions	30
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	59490.9
+average_milliseconds/timestep	0.0168093
+time_dilation	929.545
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0560245
+total_collisions	45
+wall_collisions	45
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	34270.7
+average_milliseconds/timestep	0.0291794
+time_dilation	535.48
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0468726
+total_collisions	71
+wall_collisions	71
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	40962.1
+average_milliseconds/timestep	0.0244128
+time_dilation	640.033
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0524134
+total_collisions	150
+wall_collisions	150
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	36631.9
+average_milliseconds/timestep	0.0272986
+time_dilation	572.373
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.120371
+total_collisions	285
+wall_collisions	285
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	15950.7
+average_milliseconds/timestep	0.0626932
+time_dilation	249.23
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.412642
+total_collisions	549
+wall_collisions	548
+sphere_collisions	1
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4652.94
+average_milliseconds/timestep	0.214918
+time_dilation	72.7022
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.29438
+total_collisions	1206
+wall_collisions	1204
+sphere_collisions	2
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1483.34
+average_milliseconds/timestep	0.674156
+time_dilation	23.1771
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.24419
+total_collisions	2340
+wall_collisions	2337
+sphere_collisions	3
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	855.543
+average_milliseconds/timestep	1.16885
+time_dilation	13.3679
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	8.77268
+total_collisions	4734
+wall_collisions	4726
+sphere_collisions	8
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	218.861
+average_milliseconds/timestep	4.5691
+time_dilation	3.41971
+total_threads	4
+
+Threads = 4
+Scale = 128
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	34.484
+total_collisions	9539
+wall_collisions	9520
+sphere_collisions	19
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	55.678
+average_milliseconds/timestep	17.9604
+time_dilation	0.869969
+total_threads	4
+
+Threads = 8
+Scale = 1
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0658321
+total_collisions	121
+wall_collisions	121
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	29165.1
+average_milliseconds/timestep	0.0342875
+time_dilation	455.705
+total_threads	8
+
+Threads = 8
+Scale = 1
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.102889
+total_collisions	293
+wall_collisions	284
+sphere_collisions	9
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	18661
+average_milliseconds/timestep	0.0535878
+time_dilation	291.577
+total_threads	8
+
+Threads = 8
+Scale = 1
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.102553
+total_collisions	548
+wall_collisions	528
+sphere_collisions	20
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	18722.1
+average_milliseconds/timestep	0.0534129
+time_dilation	292.532
+total_threads	8
+
+Threads = 8
+Scale = 1
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.103719
+total_collisions	1178
+wall_collisions	1024
+sphere_collisions	154
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	18511.5
+average_milliseconds/timestep	0.0540204
+time_dilation	289.243
+total_threads	8
+
+Threads = 8
+Scale = 1
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.119718
+total_collisions	3183
+wall_collisions	2234
+sphere_collisions	949
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	16037.6
+average_milliseconds/timestep	0.0623533
+time_dilation	250.588
+total_threads	8
+
+Threads = 8
+Scale = 1
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.11232
+total_collisions	9374
+wall_collisions	4901
+sphere_collisions	4473
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	17094.1
+average_milliseconds/timestep	0.0584999
+time_dilation	267.095
+total_threads	8
+
+Threads = 8
+Scale = 1
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.180015
+total_collisions	39864
+wall_collisions	16017
+sphere_collisions	23847
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	10665.8
+average_milliseconds/timestep	0.0937578
+time_dilation	166.653
+total_threads	8
+
+Threads = 8
+Scale = 1
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.394595
+total_collisions	157239
+wall_collisions	44744
+sphere_collisions	112495
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4865.75
+average_milliseconds/timestep	0.205518
+time_dilation	76.0274
+total_threads	8
+
+Threads = 8
+Scale = 1
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.05849
+total_collisions	718830
+wall_collisions	160612
+sphere_collisions	558218
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1813.91
+average_milliseconds/timestep	0.551296
+time_dilation	28.3423
+total_threads	8
+
+Threads = 8
+Scale = 1
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.32688
+total_collisions	2935838
+wall_collisions	407555
+sphere_collisions	2528283
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	825.141
+average_milliseconds/timestep	1.21191
+time_dilation	12.8928
+total_threads	8
+
+Threads = 8
+Scale = 1
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	6.97976
+total_collisions	9212958
+wall_collisions	930973
+sphere_collisions	8281985
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	275.081
+average_milliseconds/timestep	3.63529
+time_dilation	4.29814
+total_threads	8
+
+Threads = 8
+Scale = 1
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	30.604
+total_collisions	29501597
+wall_collisions	2262602
+sphere_collisions	27238995
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	62.737
+average_milliseconds/timestep	15.9396
+time_dilation	0.980265
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.097032
+total_collisions	72
+wall_collisions	72
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	19787.3
+average_milliseconds/timestep	0.0505375
+time_dilation	309.176
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.120005
+total_collisions	118
+wall_collisions	117
+sphere_collisions	1
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	15999.4
+average_milliseconds/timestep	0.0625025
+time_dilation	249.99
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0974509
+total_collisions	306
+wall_collisions	299
+sphere_collisions	7
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	19702.2
+average_milliseconds/timestep	0.0507557
+time_dilation	307.847
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.110941
+total_collisions	667
+wall_collisions	639
+sphere_collisions	28
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	17306.5
+average_milliseconds/timestep	0.0577816
+time_dilation	270.415
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.151409
+total_collisions	1386
+wall_collisions	1238
+sphere_collisions	148
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	12680.9
+average_milliseconds/timestep	0.0788587
+time_dilation	198.139
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.098114
+total_collisions	2879
+wall_collisions	2369
+sphere_collisions	510
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	19569.1
+average_milliseconds/timestep	0.0511011
+time_dilation	305.767
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.133878
+total_collisions	8004
+wall_collisions	5611
+sphere_collisions	2393
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	14341.4
+average_milliseconds/timestep	0.069728
+time_dilation	224.085
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.406047
+total_collisions	26604
+wall_collisions	13698
+sphere_collisions	12906
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4728.52
+average_milliseconds/timestep	0.211483
+time_dilation	73.8831
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.981724
+total_collisions	111529
+wall_collisions	38780
+sphere_collisions	72749
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1955.74
+average_milliseconds/timestep	0.511315
+time_dilation	30.5585
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.79985
+total_collisions	484508
+wall_collisions	104624
+sphere_collisions	379884
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	685.751
+average_milliseconds/timestep	1.45826
+time_dilation	10.7149
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	6.37821
+total_collisions	1801362
+wall_collisions	276415
+sphere_collisions	1524947
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	301.025
+average_milliseconds/timestep	3.32198
+time_dilation	4.70351
+total_threads	8
+
+Threads = 8
+Scale = 2
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	28.6902
+total_collisions	7330778
+wall_collisions	772651
+sphere_collisions	6558127
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	66.9218
+average_milliseconds/timestep	14.9428
+time_dilation	1.04565
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.130511
+total_collisions	37
+wall_collisions	37
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	14711.4
+average_milliseconds/timestep	0.0679747
+time_dilation	229.865
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0819603
+total_collisions	78
+wall_collisions	78
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	23426
+average_milliseconds/timestep	0.0426876
+time_dilation	366.031
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.102
+total_collisions	218
+wall_collisions	218
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	18823.5
+average_milliseconds/timestep	0.0531251
+time_dilation	294.117
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.106441
+total_collisions	359
+wall_collisions	348
+sphere_collisions	11
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	18038.2
+average_milliseconds/timestep	0.0554378
+time_dilation	281.847
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.107787
+total_collisions	747
+wall_collisions	718
+sphere_collisions	29
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	17812.9
+average_milliseconds/timestep	0.056139
+time_dilation	278.327
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0897036
+total_collisions	1558
+wall_collisions	1470
+sphere_collisions	88
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	21403.8
+average_milliseconds/timestep	0.0467206
+time_dilation	334.435
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0776085
+total_collisions	3083
+wall_collisions	2760
+sphere_collisions	323
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	24739.6
+average_milliseconds/timestep	0.0404211
+time_dilation	386.556
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.280599
+total_collisions	7127
+wall_collisions	5822
+sphere_collisions	1305
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	6842.51
+average_milliseconds/timestep	0.146145
+time_dilation	106.914
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.998048
+total_collisions	19991
+wall_collisions	13730
+sphere_collisions	6261
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1923.75
+average_milliseconds/timestep	0.519817
+time_dilation	30.0587
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.29435
+total_collisions	69447
+wall_collisions	35568
+sphere_collisions	33879
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	836.838
+average_milliseconds/timestep	1.19497
+time_dilation	13.0756
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	6.70453
+total_collisions	304694
+wall_collisions	100356
+sphere_collisions	204338
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	286.373
+average_milliseconds/timestep	3.49194
+time_dilation	4.47459
+total_threads	8
+
+Threads = 8
+Scale = 4
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	29.5409
+total_collisions	1492634
+wall_collisions	284805
+sphere_collisions	1207829
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	64.9947
+average_milliseconds/timestep	15.3859
+time_dilation	1.01554
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.101275
+total_collisions	20
+wall_collisions	20
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	18958.3
+average_milliseconds/timestep	0.0527474
+time_dilation	296.223
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0967458
+total_collisions	46
+wall_collisions	46
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	19845.8
+average_milliseconds/timestep	0.0503884
+time_dilation	310.091
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.106781
+total_collisions	148
+wall_collisions	148
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	17980.7
+average_milliseconds/timestep	0.0556153
+time_dilation	280.948
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.100875
+total_collisions	243
+wall_collisions	242
+sphere_collisions	1
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	19033.5
+average_milliseconds/timestep	0.052539
+time_dilation	297.398
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.161458
+total_collisions	426
+wall_collisions	422
+sphere_collisions	4
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	11891.7
+average_milliseconds/timestep	0.0840926
+time_dilation	185.807
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.114438
+total_collisions	925
+wall_collisions	911
+sphere_collisions	14
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	16777.7
+average_milliseconds/timestep	0.0596031
+time_dilation	262.151
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.140624
+total_collisions	1779
+wall_collisions	1734
+sphere_collisions	45
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	13653.4
+average_milliseconds/timestep	0.0732418
+time_dilation	213.334
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.407766
+total_collisions	3779
+wall_collisions	3551
+sphere_collisions	228
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4708.58
+average_milliseconds/timestep	0.212378
+time_dilation	73.5716
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.949588
+total_collisions	8081
+wall_collisions	7214
+sphere_collisions	867
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2021.93
+average_milliseconds/timestep	0.494577
+time_dilation	31.5926
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.17803
+total_collisions	19076
+wall_collisions	15175
+sphere_collisions	3901
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	881.532
+average_milliseconds/timestep	1.13439
+time_dilation	13.7739
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	6.64516
+total_collisions	47932
+wall_collisions	32882
+sphere_collisions	15050
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	288.932
+average_milliseconds/timestep	3.46102
+time_dilation	4.51456
+total_threads	8
+
+Threads = 8
+Scale = 8
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	29.0832
+total_collisions	153904
+wall_collisions	79867
+sphere_collisions	74037
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	66.0174
+average_milliseconds/timestep	15.1475
+time_dilation	1.03152
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0940236
+total_collisions	11
+wall_collisions	11
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	20420.4
+average_milliseconds/timestep	0.0489706
+time_dilation	319.069
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.100429
+total_collisions	27
+wall_collisions	27
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	19117.9
+average_milliseconds/timestep	0.052307
+time_dilation	298.717
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.106719
+total_collisions	105
+wall_collisions	105
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	17991.1
+average_milliseconds/timestep	0.0555829
+time_dilation	281.111
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.103255
+total_collisions	168
+wall_collisions	166
+sphere_collisions	2
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	18594.7
+average_milliseconds/timestep	0.0537787
+time_dilation	290.542
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.121857
+total_collisions	282
+wall_collisions	278
+sphere_collisions	4
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	15756.2
+average_milliseconds/timestep	0.0634672
+time_dilation	246.19
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.111899
+total_collisions	569
+wall_collisions	567
+sphere_collisions	2
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	17158.3
+average_milliseconds/timestep	0.0582808
+time_dilation	268.099
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.182435
+total_collisions	1134
+wall_collisions	1126
+sphere_collisions	8
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	10524.3
+average_milliseconds/timestep	0.095018
+time_dilation	164.443
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.390338
+total_collisions	2282
+wall_collisions	2241
+sphere_collisions	41
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4918.81
+average_milliseconds/timestep	0.203301
+time_dilation	76.8565
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.988385
+total_collisions	4779
+wall_collisions	4635
+sphere_collisions	144
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1942.56
+average_milliseconds/timestep	0.514784
+time_dilation	30.3525
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	3.51575
+total_collisions	9770
+wall_collisions	9175
+sphere_collisions	595
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	546.113
+average_milliseconds/timestep	1.83112
+time_dilation	8.53302
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	6.54635
+total_collisions	20521
+wall_collisions	18306
+sphere_collisions	2215
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	293.293
+average_milliseconds/timestep	3.40956
+time_dilation	4.5827
+total_threads	8
+
+Threads = 8
+Scale = 16
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	28.5243
+total_collisions	48781
+wall_collisions	38978
+sphere_collisions	9803
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	67.311
+average_milliseconds/timestep	14.8564
+time_dilation	1.05173
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.100842
+total_collisions	6
+wall_collisions	6
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	19039.7
+average_milliseconds/timestep	0.0525219
+time_dilation	297.495
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.096139
+total_collisions	15
+wall_collisions	15
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	19971.1
+average_milliseconds/timestep	0.0500724
+time_dilation	312.048
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.104321
+total_collisions	69
+wall_collisions	69
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	18404.6
+average_milliseconds/timestep	0.0543341
+time_dilation	287.573
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0960608
+total_collisions	108
+wall_collisions	108
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	19987.3
+average_milliseconds/timestep	0.0500316
+time_dilation	312.302
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.104167
+total_collisions	178
+wall_collisions	178
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	18431.9
+average_milliseconds/timestep	0.0542539
+time_dilation	287.998
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.10391
+total_collisions	361
+wall_collisions	361
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	18477.6
+average_milliseconds/timestep	0.0541196
+time_dilation	288.712
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.131943
+total_collisions	697
+wall_collisions	697
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	14551.7
+average_milliseconds/timestep	0.0687204
+time_dilation	227.371
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.419959
+total_collisions	1393
+wall_collisions	1388
+sphere_collisions	5
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4571.88
+average_milliseconds/timestep	0.218729
+time_dilation	71.4356
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.95553
+total_collisions	2926
+wall_collisions	2908
+sphere_collisions	18
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	2009.36
+average_milliseconds/timestep	0.497672
+time_dilation	31.3962
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.33501
+total_collisions	5881
+wall_collisions	5786
+sphere_collisions	95
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	822.266
+average_milliseconds/timestep	1.21615
+time_dilation	12.8479
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	6.49478
+total_collisions	11953
+wall_collisions	11653
+sphere_collisions	300
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	295.622
+average_milliseconds/timestep	3.3827
+time_dilation	4.61909
+total_threads	8
+
+Threads = 8
+Scale = 32
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	29.6628
+total_collisions	25463
+wall_collisions	24031
+sphere_collisions	1432
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	64.7276
+average_milliseconds/timestep	15.4494
+time_dilation	1.01137
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.107155
+total_collisions	5
+wall_collisions	5
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	17917.9
+average_milliseconds/timestep	0.05581
+time_dilation	279.968
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.111978
+total_collisions	10
+wall_collisions	10
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	17146.3
+average_milliseconds/timestep	0.0583217
+time_dilation	267.91
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.102429
+total_collisions	47
+wall_collisions	47
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	18744.7
+average_milliseconds/timestep	0.0533483
+time_dilation	292.886
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.13634
+total_collisions	72
+wall_collisions	72
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	14082.4
+average_milliseconds/timestep	0.0710106
+time_dilation	220.038
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.143308
+total_collisions	112
+wall_collisions	112
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	13397.7
+average_milliseconds/timestep	0.0746396
+time_dilation	209.339
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.138327
+total_collisions	233
+wall_collisions	233
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	13880.2
+average_milliseconds/timestep	0.0720452
+time_dilation	216.878
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.221033
+total_collisions	444
+wall_collisions	444
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	8686.5
+average_milliseconds/timestep	0.115121
+time_dilation	135.727
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.438387
+total_collisions	879
+wall_collisions	878
+sphere_collisions	1
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4379.69
+average_milliseconds/timestep	0.228327
+time_dilation	68.4326
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	1.02386
+total_collisions	1877
+wall_collisions	1874
+sphere_collisions	3
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1875.27
+average_milliseconds/timestep	0.533258
+time_dilation	29.301
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	3.2454
+total_collisions	3642
+wall_collisions	3625
+sphere_collisions	17
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	591.607
+average_milliseconds/timestep	1.69031
+time_dilation	9.24386
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	6.91779
+total_collisions	7397
+wall_collisions	7343
+sphere_collisions	54
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	277.545
+average_milliseconds/timestep	3.60302
+time_dilation	4.33664
+total_threads	8
+
+Threads = 8
+Scale = 64
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	29.4294
+total_collisions	15153
+wall_collisions	14953
+sphere_collisions	200
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	65.2408
+average_milliseconds/timestep	15.3278
+time_dilation	1.01939
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 1
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0939376
+total_collisions	2
+wall_collisions	2
+sphere_collisions	0
+total_checks	11520
+average_checks/timestep	6
+average_timesteps/second	20439.1
+average_milliseconds/timestep	0.0489259
+time_dilation	319.361
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 2
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0943668
+total_collisions	5
+wall_collisions	5
+sphere_collisions	0
+total_checks	24960
+average_checks/timestep	13
+average_timesteps/second	20346.1
+average_milliseconds/timestep	0.0491494
+time_dilation	317.909
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 4
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.0974921
+total_collisions	30
+wall_collisions	30
+sphere_collisions	0
+total_checks	57600
+average_checks/timestep	30
+average_timesteps/second	19693.9
+average_milliseconds/timestep	0.0507771
+time_dilation	307.717
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 8
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.123528
+total_collisions	45
+wall_collisions	45
+sphere_collisions	0
+total_checks	145920
+average_checks/timestep	76
+average_timesteps/second	15543
+average_milliseconds/timestep	0.0643376
+time_dilation	242.859
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 16
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.128309
+total_collisions	71
+wall_collisions	71
+sphere_collisions	0
+total_checks	414720
+average_checks/timestep	216
+average_timesteps/second	14963.9
+average_milliseconds/timestep	0.0668274
+time_dilation	233.811
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 32
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.130066
+total_collisions	150
+wall_collisions	150
+sphere_collisions	0
+total_checks	1320960
+average_checks/timestep	688
+average_timesteps/second	14761.7
+average_milliseconds/timestep	0.0677427
+time_dilation	230.652
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 64
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.143073
+total_collisions	285
+wall_collisions	285
+sphere_collisions	0
+total_checks	4608000
+average_checks/timestep	2400
+average_timesteps/second	13419.7
+average_milliseconds/timestep	0.0745171
+time_dilation	209.683
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 128
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.41132
+total_collisions	549
+wall_collisions	548
+sphere_collisions	1
+total_checks	17080320
+average_checks/timestep	8896
+average_timesteps/second	4667.9
+average_milliseconds/timestep	0.214229
+time_dilation	72.9359
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 256
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	0.968321
+total_collisions	1212
+wall_collisions	1208
+sphere_collisions	4
+total_checks	65617920
+average_checks/timestep	34176
+average_timesteps/second	1982.81
+average_milliseconds/timestep	0.504334
+time_dilation	30.9815
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 512
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	2.86372
+total_collisions	2344
+wall_collisions	2340
+sphere_collisions	4
+total_checks	257064960
+average_checks/timestep	133888
+average_timesteps/second	670.457
+average_milliseconds/timestep	1.49152
+time_dilation	10.4759
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 1024
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	6.50353
+total_collisions	4740
+wall_collisions	4730
+sphere_collisions	10
+total_checks	1017446400
+average_checks/timestep	529920
+average_timesteps/second	295.224
+average_milliseconds/timestep	3.38725
+time_dilation	4.61288
+total_threads	8
+
+Threads = 8
+Scale = 128
+NumSpheres = 2048
+
+Run statistics:
+total_timesteps	1920
+total_real_world_time	29.7137
+total_collisions	9543
+wall_collisions	9522
+sphere_collisions	21
+total_checks	4048158720
+average_checks/timestep	2.10842e+06
+average_timesteps/second	64.6166
+average_milliseconds/timestep	15.4759
+time_dilation	1.00963
+total_threads	8
+
