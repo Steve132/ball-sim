@@ -2,12 +2,14 @@
 #include<Eigen/Eigenvalues>
 using namespace Eigen;
 
-static PredictionResult polymin(double* coeffs)
+#define  EPS 10e-7 
+
+static PredictionResult polymin4(double* coeffs)
 {
 	PredictionResult pr;
 	pr.collided=false;
 	pr.timeoffset=0.0;
-	
+
 	//form the monic polynomial companion matrix
 	//this would be more complex under 0g, which a corner case oddly, but it is fine in this case
 	
@@ -31,6 +33,68 @@ static PredictionResult polymin(double* coeffs)
 	for(int i=0;i<4;i++) //5 maybe?
 	{
 		std::complex<double> ev=eig[i];
+		if(ev.real() > 0.0 && (std::abs(ev.imag()) < EPS))
+		{	
+			if(tvalue < 0.0)
+				tvalue=10e11; //to initialize value
+			if(ev.real() < tvalue)
+				tvalue=ev.real();
+		}
+	}
+	if(tvalue < 0.0)
+	{
+		pr.collided=false;
+	}
+	else
+	{
+		pr.collided=true;
+		pr.timeoffset=tvalue;
+	}
+	return pr;
+}
+
+static PredictionResult polymin1(double* coeffs)
+{
+	PredictionResult pr;
+	pr.collided=false;
+	pr.timeoffset=0.0;
+	
+	//0=c0+c1*t
+	//-c0=c1t
+	//-c0/c1t
+	if(abs(coeffs[1]) < EPS)
+	{
+		return pr;
+	}
+	double tv=-coeffs[0]/coeffs[1];
+	if(tv > 0.0)
+	{
+		pr.timeoffset=tv;
+		pr.collided=true;
+		return pr;
+	}
+}
+
+static PredictionResult polymin2(double* coeffs)
+{
+	PredictionResult pr;
+	pr.collided=false;
+	pr.timeoffset=0.0;
+	
+	std::complex<double> root[2];
+	if(std::abs(coeffs[2]) < EPS)
+	{
+		return polymin1(coeffs);
+	}
+	std::complex<double> a(coeffs[2],0.0),b(coeffs[1],0.0),c(coeffs[0],0.0);
+	
+	root[0]=(-b + sqrt(b*b-a*c*4.0))/(a*2.0);
+	root[1]=(-b - sqrt(b*b-a*c*4.0))/(a*2.0);
+
+	double tvalue=-1.0;
+	for(int i=0;i<2;i++) //5 maybe?
+	{
+		std::complex<double> ev=root[i];
 		if(ev.real() > 0.0 && (std::abs(ev.imag()) < 0.00001))
 		{	
 			if(tvalue < 0.0)
@@ -50,6 +114,7 @@ static PredictionResult polymin(double* coeffs)
 	}
 	return pr;
 }
+
 PredictionResult predict(const Sphere& s1,const Sphere& s2)
 {
 	//find roots of 4d polynomial for collision
@@ -86,7 +151,7 @@ PredictionResult predict(const Sphere& s1,const Sphere& s2)
 		ad.dot(vd),
 		ad.dot(ad)*.25
 	};
-	return polymin(coeffs);
+	return polymin4(coeffs);
 }
 
 PredictionResult predict(const Sphere& a,const AxisPlane& axis)
@@ -96,17 +161,15 @@ PredictionResult predict(const Sphere& a,const AxisPlane& axis)
 	pr.timeoffset=0.0;
 	
 	Eigen::Vector3d n=axis.normal();
-	double sd=a.position.dot(n)-axis.offset;
+	double sd=(a.position-axis.offset*Eigen::Vector3d::Ones()).dot(n)-a.radius;
 	double vd=a.velocity.dot(n);
 	double ad=a.acceleration.dot(n);
-	double distance=a.radius;
 	
-	double coeffs[5]={
-		sd*sd-distance*distance,
-		sd*vd*2.0,
-		sd*ad+vd*vd,
-		ad*vd,
-		ad*ad*.25
+	double coeffs[3]={
+		sd,
+		vd,
+		ad/2.0
 	};
-	return polymin(coeffs);
+		
+	return polymin2(coeffs);
 }
