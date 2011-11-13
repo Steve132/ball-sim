@@ -36,6 +36,7 @@ void Simulation::print_help(const char* arg0)
 	std::cout << "\t-f <float> | --fps <float>\tSets the simulation timedelta as frames per second. Defaults to 64.0" << std::endl;
 	std::cout << "\t-l <float> | --length <float>\tSets the length of the simulation to run in seconds.  Defaults to 30.0" << std::endl;
 	std::cout << "\t-p | --predictive\t Enables predictive mode.  Disabled by default" << std::endl;
+	std::cout << "\t-s <int> | --seedhash <int>\tSets the seed hash for the simulation to run." << std::endl;
 
 }
 Simulation::Simulation(int argc,char** argv)
@@ -89,6 +90,11 @@ Simulation::Simulation(int argc,char** argv)
 					{
 						num_threads=omp_get_max_threads();
 					}
+					break;
+				}
+			case 's':
+				{
+					seedhash=atoi(argv[++i]);
 					break;
 				}
 			case 'f':
@@ -166,6 +172,8 @@ void Simulation::initialize_sphere(Sphere& s) const
 	s.velocity[0]=randfloat(-20.0,20.0);
 	s.velocity[1]=randfloat(-20.0,20.0);
 	s.velocity[2]=randfloat(-20.0,20.0);
+	s.position=Eigen::Vector3d::Zero();
+	s.velocity=Eigen::Vector3d::Zero();
 	
 }
 

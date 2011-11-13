@@ -99,6 +99,11 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 			if(!current_collision.valid)
 			{
 				current_collision=repredict(&dynamic_spheres[i],current_time);
+				std::cout << "Prediction made to occur at " << current_collision.time << " between " << i << " and ";
+				if(current_collision.wall)
+					std::cout << "Wall " << (int)(current_collision.wall-&boundingplanes[0]) << std::endl;
+				else
+					std::cout << (int)(current_collision.sphere2-dynamic_spheres) << std::endl;
 			}
 		}
 		//Invariants, no invalids should reach this point.
@@ -127,6 +132,7 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 
 void PredictiveSimulation::spawn_sim_threads(std::uint64_t timesteps,barrier* bar)
 {
+	collisions.resize(num_spheres);
 	for(int i=0;i<num_threads;i++)
 	{
 		threadpool.push_back(std::thread(std::bind(&PredictiveSimulation::sim_thread,this,i,timesteps,bar)));
