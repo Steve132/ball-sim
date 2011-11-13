@@ -64,7 +64,7 @@ PredictiveSimulation::Collision PredictiveSimulation::repredict(Sphere* sh,doubl
 	for(unsigned int i=0;i<boundingplanes.size();i++)
 	{
 		PredictionResult prt=predict(*sh,boundingplanes[i]);
-		std::cout << (prt.collided ? "Valid" : "Invalid") << "Collision detected at time " << c.time << " with wall " << i << std::endl;
+		//std::cout << (prt.collided ? "Valid" : "Invalid") << "Collision detected at time " << c.time << " with wall " << i << std::endl;
 
 		if(prt.collided && prt.timeoffset < pr.timeoffset)
 		{

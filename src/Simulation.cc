@@ -172,8 +172,8 @@ void Simulation::initialize_sphere(Sphere& s) const
 	s.velocity[0]=randfloat(-20.0,20.0);
 	s.velocity[1]=randfloat(-20.0,20.0);
 	s.velocity[2]=randfloat(-20.0,20.0);
-	s.position=Eigen::Vector3d::Zero();
-	s.velocity=Eigen::Vector3d(-10.0,0.0,0.0);
+	//s.position=Eigen::Vector3d::Zero();
+	//s.velocity=Eigen::Vector3d(-10.0,0.0,0.0);
 	
 }
 
