@@ -3,31 +3,41 @@
 using namespace Eigen;
 
 #define  EPS 10e-7 
-
+/*
 static PredictionResult polymin4(double* coeffs)
 {
 	PredictionResult pr;
 	pr.collided=false;
 	pr.timeoffset=0.0;
 
-	//form the monic polynomial companion matrix
-	//this would be more complex under 0g, which a corner case oddly, but it is fine in this case
+	std::complex<double> eig[4];
 	
-	Eigen::Matrix4d companion=Eigen::Matrix4d::Zero(4,4);
-	for(int i=0;i<4;i++)
+	//double alpha,beta,gamma;
+	double a=coeffs[4],b=coeffs[3],c=coeffs[2],d=coeffs[1],e=coeffs[0];
+	double ba=b/a,ca=c/a,da=d/a,ea=e/a;
+	
+	std::complex<double> alpha((3.0/8.0)*ba*ba+ca),
+	beta((1.0/8.0)*ba*ba*ba-(ba*ca)/2.0+da),
+	gamma((-3.0/256.0)*ba*ba*ba*ba+(1.0/16.0)*ca*ba*ba-(1.0/4.0)*ba*da+ea);
+	
+	if(abs(beta) < EPS)
 	{
-		companion(i,3)=-coeffs[i]/coeffs[4];
+		std::complex<double> sd1,sd2,sdi;
+		sdi=sqrt(alpha*alpha-4*gamma);
+		sd1=sqrt((-alpha+sdi)/2.0);
+		sd2=sqrt((-alpha-sdi)/2.0);
+		roots[0]=-sd1-ba/4.0;
+		roots[1]= sd1-ba/4.0;
+		roots[2]=-sd2-ba/4.0;
+		roots[3]= sd2-ba/4.0;
 	}
-	for(int i=1;i<4;i++)
+	else
 	{
-		companion(i,i-1)=1.0;
+		std::complex<double> P(-alpha*alpha/12.0-gamma);
+		std::complex<double> Q(-alpha*alpha*alpha/108.0+alpha*gamma/3.0-beta*beta/8.0);
+		std::complex<double> R=-Q/2.0+sqrt(Q*Q/4.0+P*P*P/27.0);
+		
 	}
-	
-	Eigen::Vector4cd eig=companion.eigenvalues();
-	
-	//Perform roots here.  Use eigenvalues of companion matrix to find all roots (some or all will be complex)
-	//If all roots are complex or negative, return false
-	//otherwise, return the smallest positive root.
 	
 	double tvalue=-1.0;
 	for(int i=0;i<4;i++) //5 maybe?
@@ -51,7 +61,7 @@ static PredictionResult polymin4(double* coeffs)
 		pr.timeoffset=tvalue;
 	}
 	return pr;
-}
+}*/
 
 static PredictionResult polymin1(double* coeffs)
 {
@@ -151,7 +161,9 @@ PredictionResult predict(const Sphere& s1,const Sphere& s2)
 		ad.dot(vd),
 		ad.dot(ad)*.25
 	};
-	return polymin4(coeffs);
+	//The accelerations are shared so ad is ALWAYS 0.  Therefore this is a simple quadratic.
+	//return polymin4(coeffs);
+	return polymin2(coeffs);
 }
 
 PredictionResult predict(const Sphere& a,const AxisPlane& axis)
