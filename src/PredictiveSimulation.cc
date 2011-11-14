@@ -2,7 +2,7 @@
 #include<functional>
 using namespace Eigen;
 
-		
+
 PredictiveSimulation::Collision::Collision()
 {
 	invalidate();
@@ -101,11 +101,11 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 			if(!current_collision.valid)
 			{
 				current_collision=repredict(&dynamic_spheres[i],current_time);
-				std::cout << "Prediction made to occur at " << current_collision.time << " between " << i << " and ";
+				/*std::cout << "Prediction made to occur at " << current_collision.time << " between " << i << " and ";
 				if(current_collision.wall)
 					std::cout << "Wall " << (int)(current_collision.wall-&boundingplanes[0]) << std::endl;
 				else
-					std::cout << (int)(current_collision.sphere2-dynamic_spheres) << std::endl;
+					std::cout << (int)(current_collision.sphere2-dynamic_spheres) << std::endl;*/
 			}
 		}
 		//Invariants, no invalids should reach this point.
