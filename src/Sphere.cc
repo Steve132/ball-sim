@@ -114,7 +114,7 @@ static PredictionResult polymin2(double* coeffs)
 	{
 		tvalue=r1;
 	}
-	if(r2 > 0.0 && r2 < tvalue)
+	if(r2 > 0.0 && (r2 < tvalue || tvalue < 0.0))
 	{
 		tvalue=r2;
 	}
