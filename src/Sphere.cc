@@ -81,8 +81,8 @@ static PredictionResult polymin1(double* coeffs)
 	{
 		pr.timeoffset=tv;
 		pr.collided=true;
-		return pr;
 	}
+	return pr;
 }
 
 static PredictionResult polymin2(double* coeffs)
@@ -91,27 +91,32 @@ static PredictionResult polymin2(double* coeffs)
 	pr.collided=false;
 	pr.timeoffset=0.0;
 	
-	std::complex<double> root[2];
+	//std::complex<double> root[2];
 	if(std::abs(coeffs[2]) < EPS)
 	{
 		return polymin1(coeffs);
 	}
-	std::complex<double> a(coeffs[2],0.0),b(coeffs[1],0.0),c(coeffs[0],0.0);
+	//std::complex<double> a(coeffs[2],0.0),b(coeffs[1],0.0),c(coeffs[0],0.0);
+	double a=coeffs[2],b=coeffs[1],c=coeffs[0];
 	
-	root[0]=(-b + sqrt(b*b-a*c*4.0))/(a*2.0);
-	root[1]=(-b - sqrt(b*b-a*c*4.0))/(a*2.0);
-
-	double tvalue=-1.0;
-	for(int i=0;i<2;i++) //5 maybe?
+	double disc=b*b-a*c*4.0;
+	if(disc < 0.0)
 	{
-		std::complex<double> ev=root[i];
-		if(ev.real() > 0.0 && (std::abs(ev.imag()) < 0.00001))
-		{	
-			if(tvalue < 0.0)
-				tvalue=10e11; //to initialize value
-			if(ev.real() < tvalue)
-				tvalue=ev.real();
-		}
+		return pr;
+	}
+	
+	double sdc=sqrt(disc);
+	double r1=(-b+sdc)/(a*2.0);
+	double r2=(-b-sdc)/(a*2.0);
+	
+	double tvalue=-1.0;
+	if(r1 > 0.0)
+	{
+		tvalue=r1;
+	}
+	if(r2 > 0.0 && r2 < tvalue)
+	{
+		tvalue=r2;
 	}
 	if(tvalue < 0.0)
 	{
