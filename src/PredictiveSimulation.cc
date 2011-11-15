@@ -77,8 +77,7 @@ PredictiveSimulation::Collision PredictiveSimulation::repredict(Sphere* sh,doubl
 	}
 	if(!c.valid)
 	{
-		
-		throw std::runtime_error("No predicted intersection found!  Not possible!");
+		//throw std::runtime_error("No predicted intersection found!  Not possible!");
 	}
 	return c;
 }
@@ -90,15 +89,11 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 	for(cstats.current_timestamp=0;(cstats.current_timestamp<timesteps) && running;)
 	{
 		double current_time=cstats.current_timestamp*dt;
-		std::cout << current_time << std::endl;
+		//std::cout << current_time << std::endl;
 		//Each object updates
 		for(unsigned int i=thread_id;i<num_spheres;i+=num_threads)
 		{
 			dynamic_spheres[i].update(dt);
-			if(dynamic_spheres[i].position.y() < boundingplanes[4].offset)
-			{
-				std::cout << "FAILURE" << std::endl;
-			}
 		}
 
 		//Each invalid collision is re-predicted
@@ -120,7 +115,7 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 		{
 			Collision& current_collision=collisions[i];
 			//if pending
-			if(current_collision.time <= current_time)
+			if(current_collision.valid && current_collision.time <= current_time)
 			{
 				//if it happened, react
 				if(current_collision.verify())
