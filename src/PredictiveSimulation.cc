@@ -11,13 +11,13 @@ void PredictiveSimulation::Collision::invalidate()
 {
 	time=10e15;
 	valid=false;
-	sphere1=nullptr;
-	wall=nullptr;
-	sphere2=nullptr;
+	sphere1=NULL;
+	wall=NULL;
+	sphere2=NULL;
 }
 bool PredictiveSimulation::Collision::verify()
 {
-	if(wall)
+	if(wall != NULL)
 	{
 		return sphere1->collided(*wall);
 	}
@@ -28,7 +28,7 @@ bool PredictiveSimulation::Collision::verify()
 }
 void PredictiveSimulation::Collision::react()
 {
-	if(wall)
+	if(wall != NULL)
 	{
 		Sphere::collide(*sphere1,*wall);
 	}
@@ -52,13 +52,14 @@ PredictiveSimulation::Collision PredictiveSimulation::repredict(Sphere* sh,doubl
 	for(unsigned int i=0;i<num_spheres;i++)
 	{
 		PredictionResult prt=predict(*sh,dynamic_spheres[i]);
-		if(prt.collided && prt.timeoffset < pr.timeoffset && sh!=&dynamic_spheres[i])
+		if(prt.collided && (prt.timeoffset < pr.timeoffset) && sh!=&dynamic_spheres[i])
 		{
 			pr=prt;
 			c.time=pr.timeoffset+current_time;
 			c.valid=true;
 			c.sphere1=sh;
 			c.sphere2=&dynamic_spheres[i];
+			c.wall=NULL;
 		}
 	}
 	for(unsigned int i=0;i<boundingplanes.size();i++)
@@ -66,12 +67,13 @@ PredictiveSimulation::Collision PredictiveSimulation::repredict(Sphere* sh,doubl
 		PredictionResult prt=predict(*sh,boundingplanes[i]);
 		//std::cout << (prt.collided ? "Valid" : "Invalid") << "Collision detected at time " << c.time << " with wall " << i << std::endl;
 
-		if(prt.collided && prt.timeoffset < pr.timeoffset)
+		if(prt.collided && (prt.timeoffset < pr.timeoffset))
 		{
 			pr=prt;
 			c.time=pr.timeoffset+current_time;
 			c.valid=true;
 			c.sphere1=sh;
+			c.sphere2=NULL;
 			c.wall=&boundingplanes[i];
 		}
 	}
