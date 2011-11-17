@@ -2,7 +2,7 @@
 #include<Eigen/Eigenvalues>
 using namespace Eigen;
 
-#define  EPS 10e-7 
+#define  EPS 10e-7
 /*
 static PredictionResult polymin4(double* coeffs)
 {
@@ -114,7 +114,7 @@ static PredictionResult polymin2(double* coeffs)
 	{
 		tvalue=r1;
 	}
-	if(r2 > 0.0 && (r2 < tvalue || tvalue < 0.0))
+	if(r2 > 0.0 && ((r2 < tvalue) || (tvalue < 0.0)))
 	{
 		tvalue=r2;
 	}

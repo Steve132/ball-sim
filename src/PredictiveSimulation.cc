@@ -52,6 +52,19 @@ PredictiveSimulation::Collision PredictiveSimulation::repredict(Sphere* sh,doubl
 
 	for(unsigned int i=0;i<num_spheres;i++)
 	{
+		// check to see if this sphere is already colliding with another sphere
+		if((sh->collided(dynamic_spheres[i])) && (sh!=&dynamic_spheres[i]))
+		{
+			//uh-oh, we are!  quick, cause another collision
+			pr.collided = true;
+			pr.timeoffset = 0.0;
+			c.time=pr.timeoffset+current_time;
+			c.valid=true;
+			c.sphere1=sh;
+			c.sphere2=&dynamic_spheres[i];
+			c.wall=NULL;
+			break;
+		}
 		PredictionResult prt=predict(*sh,dynamic_spheres[i]);
 		if(prt.collided && (prt.timeoffset < pr.timeoffset) && sh!=&dynamic_spheres[i])
 		{
@@ -65,6 +78,19 @@ PredictiveSimulation::Collision PredictiveSimulation::repredict(Sphere* sh,doubl
 	}
 	for(unsigned int i=0;i<boundingplanes.size();i++)
 	{
+		// check to see if this sphere is already colliding with a wall
+		if(sh->collided(boundingplanes[i]))
+		{
+			//uh-oh, we are!  quick, cause another collision
+			pr.collided = true;
+			pr.timeoffset = 0.0;
+			c.time=pr.timeoffset+current_time;
+			c.valid=true;
+			c.sphere1=sh;
+			c.sphere2=NULL;
+			c.wall=&boundingplanes[i];
+			break;
+		}
 		PredictionResult prt=predict(*sh,boundingplanes[i]);
 		//std::cout << (prt.collided ? "Valid" : "Invalid") << "Collision detected at time " << c.time << " with wall " << i << std::endl;
 
@@ -119,26 +145,42 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 		{
 			Collision& current_collision=collisions[i];//there should be a cross-pair check..along with thread protection.
 			//if pending
-			if(current_collision.valid && current_collision.time <= current_time && current_collision.verify())
+			// we're touching a sphere and doing calculations, count this
+			// as a check
+			cstats.checks++;
+			if(current_collision.valid && (current_collision.time <= current_time)) //&& current_collision.verify())
 			{
-				//if it happened, if this is a sphere-sphere collision
-			
-				if(current_collision.wall)
+				//if it happened, react
+				if(current_collision.verify())
 				{
-					current_collision.react();
-					current_collision.reacted=true;
-				}
-				else 
-				{
-					Collision& other_collision=collisions[current_collision.sphere2-&dynamic_spheres[0]];
-					if(	!(other_collision.valid && 
-						other_collision.time <= current_time &&
-						other_collision.sphere2==&dynamic_spheres[i] && 
-					        other_collision.reacted) &&
-						!current_collision.reacted.exchange(true))
+					// we've verified a valid collision, update statistics
+					cstats.collisions++;
+					//if it happened, if this is a sphere-sphere collision
+					if(current_collision.wall)
 					{
-						current_collision.react();//react happens once exactly.  Short circuits
-					}	
+						// this is a wall collision
+						cstats.wall_collisions++;
+						current_collision.react();
+						current_collision.reacted=true;
+					}
+					else
+					{
+						// this is a sphere collision
+						cstats.sphere_collisions++;
+						Collision& other_collision=collisions[current_collision.sphere2-&dynamic_spheres[0]];
+						if(	!(other_collision.valid &&
+							other_collision.time <= current_time &&
+							other_collision.sphere2==&dynamic_spheres[i] &&
+								other_collision.reacted) &&
+							!current_collision.reacted.exchange(true))
+						{
+							current_collision.react();//react happens once exactly.  Short circuits
+						}
+					}
+				}
+				else
+				{
+					// verify failed
 				}
 				//if it didn't happen or it did, the collision is no longer valid
 				current_collision.invalidate();
@@ -152,7 +194,11 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 		{
 			dynamic_spheres[i].update(dt);
 		}
-		
+		if(cstats.current_timestamp == 34)
+		{
+			// breakpoint here
+			int donkey = 10;
+		}
 		cstats.current_timestamp++;
 		//wait_stats(cstats.current_timestamp);
 		bar->wait();
