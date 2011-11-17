@@ -6,6 +6,7 @@ using namespace Eigen;
 PredictiveSimulation::Collision::Collision()
 {
 	invalidate();
+	reacted.exchange(false);
 }
 void PredictiveSimulation::Collision::invalidate()
 {
@@ -107,6 +108,7 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 				else
 					std::cout << (int)(current_collision.sphere2-dynamic_spheres) << std::endl;*/
 			}
+			current_collision.reacted.exchange(false); //this is important
 		}
 		
 		subframe_barrier->wait();
@@ -116,21 +118,35 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 		for(unsigned int i=thread_id;i<num_spheres;i+=num_threads)
 		{
 			Collision& current_collision=collisions[i];//there should be a cross-pair check..along with thread protection.
-			//atomic boolean to see if reacted this frame.
 			//if pending
-			if(current_collision.valid && current_collision.time <= current_time)
+			if(current_collision.valid && current_collision.time <= current_time && current_collision.verify())
 			{
-				//if it happened, react
-				if(current_collision.verify())
+				//if it happened, if this is a sphere-sphere collision
+			
+				if(current_collision.wall)
 				{
 					current_collision.react();
+					current_collision.reacted=true;
+				}
+				else 
+				{
+					Collision& other_collision=collisions[current_collision.sphere2-&dynamic_spheres[0]];
+					if(	!(other_collision.valid && 
+						other_collision.time <= current_time &&
+						other_collision.sphere2==&dynamic_spheres[i] && 
+					        other_collision.reacted) &&
+						!current_collision.reacted.exchange(true))
+					{
+						current_collision.react();//react happens once exactly.  Short circuits
+					}	
 				}
 				//if it didn't happen or it did, the collision is no longer valid
 				current_collision.invalidate();
 			}
 		}
 		
-		subframe_barrier->wait();
+		//Optional subframe barrier?  No, as spheres can update before or after the react phase that modifies them
+		//subframe_barrier->wait();
 		
 		for(unsigned int i=thread_id;i<num_spheres;i+=num_threads)
 		{
