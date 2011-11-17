@@ -93,10 +93,6 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 		double current_time=cstats.current_timestamp*dt;
 		//std::cout << current_time << std::endl;
 		//Each object updates
-		for(unsigned int i=thread_id;i<num_spheres;i+=num_threads)
-		{
-			dynamic_spheres[i].update(dt);
-		}
 
 		//Each invalid collision is re-predicted
 		for(unsigned int i=thread_id;i<num_spheres;i+=num_threads)
@@ -112,10 +108,15 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 					std::cout << (int)(current_collision.sphere2-dynamic_spheres) << std::endl;*/
 			}
 		}
+		
+		subframe_barrier->wait();
+		//subframe barrier here.  Now spheres won't possibly change in the middle of reaction or prediction.
+		
 		//Invariants, no invalids should reach this point.
 		for(unsigned int i=thread_id;i<num_spheres;i+=num_threads)
 		{
-			Collision& current_collision=collisions[i];
+			Collision& current_collision=collisions[i];//there should be a cross-pair check..along with thread protection.
+			//atomic boolean to see if reacted this frame.
 			//if pending
 			if(current_collision.valid && current_collision.time <= current_time)
 			{
@@ -127,8 +128,15 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 				//if it didn't happen or it did, the collision is no longer valid
 				current_collision.invalidate();
 			}
-
 		}
+		
+		subframe_barrier->wait();
+		
+		for(unsigned int i=thread_id;i<num_spheres;i+=num_threads)
+		{
+			dynamic_spheres[i].update(dt);
+		}
+		
 		cstats.current_timestamp++;
 		//wait_stats(cstats.current_timestamp);
 		bar->wait();
@@ -138,6 +146,7 @@ void PredictiveSimulation::sim_thread(unsigned int thread_id,std::uint64_t times
 
 void PredictiveSimulation::spawn_sim_threads(std::uint64_t timesteps,barrier* bar)
 {
+	subframe_barrier.reset(new barrier(num_threads));
 	collisions.resize(num_spheres);
 	for(int i=0;i<num_threads;i++)
 	{
