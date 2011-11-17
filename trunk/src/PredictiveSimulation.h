@@ -2,6 +2,7 @@
 #define _PREDICTIVE_SIMULATION_H
 
 #include "Simulation.h"
+#include<atomic>
 
 class PredictiveSimulation: public Simulation
 {
@@ -18,8 +19,26 @@ protected:
 		Sphere* sphere1;
 		AxisPlane* wall;
 		Sphere* sphere2;
+		std::atomic<bool> reacted;
 		
 		Collision();
+		Collision(const Collision& c):
+			time(c.time),
+			valid(c.valid),
+			sphere1(c.sphere1),
+			wall(c.wall),
+			sphere2(c.sphere2),
+			reacted((bool)c.reacted)
+		{}
+		Collision& operator=(const Collision& c)
+		{
+			time=c.time;
+			valid=c.valid;
+			sphere1=c.sphere1;
+			wall=c.wall;
+			sphere2=c.sphere2;
+			reacted=(bool)c.reacted;
+		}
 		void invalidate();
 		bool verify();
 		void react();
