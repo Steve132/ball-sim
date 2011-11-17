@@ -26,6 +26,7 @@ protected:
 		bool operator<(const Collision& c);
 		
 	};
+	std::shared_ptr<barrier> subframe_barrier;
 	Collision repredict(Sphere* sh,double current_time);
 
 	std::vector<Collision> collisions;
