@@ -20,7 +20,7 @@ do
 	    echo "Scale = $j"
 	    echo "NumSpheres = $k"
 	    echo ""
-            /home/narnold/Classes/COP6616/Project/bin/headless_sim -x $cur_x -y $cur_y -z $cur_z -n $k -t $i
+            /home/narnold/Classes/COP6616/Project/bin/headless_sim -x $cur_x -y $cur_y -z $cur_z -n $k -t $i -p
             echo ""
 	done
     done

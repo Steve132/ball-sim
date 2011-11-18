@@ -7,7 +7,7 @@
 #include<atomic>
 #include<exception>
 
-//#define OLD_BARRIER
+#define OLD_BARRIER
 #ifdef OLD_BARRIER
 
 class barrier

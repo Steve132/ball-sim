@@ -1,7 +1,7 @@
 #!/bin/bash
 
 scale_max=128
-numspheres_max=2048
+numspheres_max=4096
 threads_max=8
 x=5
 y=3
@@ -9,12 +9,12 @@ z=5
 
 for (( i=1; i <= $threads_max; i++))
 do
-    for (( j=1; j <= $scale_max+1; j*=2))
+    for (( j=32; j <= $scale_max+1; j*=2))
     do
 	cur_x=$(($x*$j))
 	cur_y=$(($y*$j))
 	cur_z=$(($z*$j))
-	for (( k=1; k <= $numspheres_max+1; k*=2))
+	for (( k=4096; k <= $numspheres_max+1; k*=2))
 	do
 	    echo "Threads = $i"
 	    echo "Scale = $j"
