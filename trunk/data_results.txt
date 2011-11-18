@@ -1,0 +1,55 @@
+Results of Data
+
+Naive Solution with respect to Run Time (See Naive Plots 1 Thread tab)
+
+* Total time is scale-invariant (it doesn't matter the size of the volume, the runtime is bound by the number of checks being performed) and is constant across varying volume sizes
+* This is despite the reduction of actual collisions in increasing volume sizes
+* Total time shows polynomial growth due to the increasing number of collision checks as sphere count increases (which also shows polynomial growth)
+* Prediction rates were between 1.2x10e-6 and 0.05% correct
+
+Predictive Solution with respect to Run Time (See Predictive Plots 1 Thread tab)
+
+* Total time is not scale-invariant, as predictions rely on calculating physical collisons - which as the volume increases, the likelihood of collision decreases
+* Total time is showing polynomial growth as well, but much slower than the naive algorithm (This may be a result of the extra overhead to perform collision equation calculations in order to reduce the number of unnecessary collision checks)
+* The number of checks performed per timestep is linearly increasing, as opposed to the polynomial growth of the naive solution
+* Prediction rates were between 0.3 and 0.7% correct, which although still low, are enormously more efficient (see table at bottom of tab)
+* (These numbers are low because we do check the entire array every timestep, which do hold potentially valid collisions that just haven't happened yet... these get checked over and over until their collision is detected as current)
+
+Naive Solution with respect to Number of Threads (see Naive Plots - All Threads - S32 tab)
+
+* As the number of spheres increases, multiple threads to offer faster run times
+* Total collisions is thread-invariant (as it should be), and scales linearly with the number of spheres
+* Total checks are also thread-invariant (as it should be), and scales polynomially with the number of spheres
+
+Predictive Solution with respect to Number of Threads (see Predict Plots - All Threads - S32 tab)
+
+* Although single-threaded runs show polynomial growth, it appears that multiple threads begin to exhibit closer to linear growth
+* As the number of spheres increases, the benefit of multiple threads increases
+* Collisions and checks are also thread-invariant (as it should be), and with the predictive algorithm, both scale linearly with the number of spheres
+
+Total Time Comparison between Algorithms
+
+* In comparison, the predictive algorithm appears (at this resolution) to be linear with respect to the naive algorithm.  With the extra data points, we know this is not the case
+* The predictive algorithm can handle 4 times as many spheres (4k naive spheres runs just slightly longer than 16k predictive spheres) to execute in approximately the same runtime as the naive algorithm
+
+Total Checks Comparison between Algorithms
+
+* Naive checks skyrocket rather quickly as the number of spheres increases
+* (I'm not sure specifically what I can say about the log-log plot, it's been a long time, but there it is for you)
+
+Scalability
+
+* Both algorithms benefit from multithreading, in comparison with their single threaded counterpart
+* In addition to the faster runtimes of the predictive algorithm, it also scales better than the naive solution as the number of spheres increases
+* There is, however, a threshold on the predictive algorithm where there is no threading benefit (in our data, this threshold is between 2k and 4k spheres).  This could be caused by some kind of overhead in managing the threads that is a significant portion of the total runtime when there are very few spheres (the predictive algorithm runtime between 2k and 4k spheres is 2-8 seconds on 30 seconds worth of simulation).  As the number of spheres increases, that overhead appears to become less and less dominant, and the performance improvement can be seen.
+
+Variance in collisions calculated
+
+* It might be worth noting that the difference between the algorithms shows on average a 0.2% difference between collisions detected, with a maximum observed variance of 3%.
+
+
+
+
+
+
+
