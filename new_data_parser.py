@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 import sys
 
-f = open('headless_data.txt', 'r')
-out = open('headless_data.csv', 'w')
+f = open('headless_data_morespheres.txt', 'r')
+out = open('headless_data_morespheres.csv', 'w')
 out.write("Threads\tScale\tNumSpheres\tTimesteps\tTotal Time\tTotal Collisions\tWall Collisions\tSphere Collisions\t")
 out.write("Total Checks\tAvg. Checks per Timestep\tAvg. Timesteps per Second\tAvg. Milliseconds per Timestep\t")
 out.write("Time Dilation\tTotal Threads")
