@@ -86,12 +86,12 @@
 \IEEEauthorblockA{Department of Electrical Engineering and\\Computer Science\\
 University of Central Florida\\
 Orlando, Florida 32826\\
-Email: steve@soapforge.com}
+Email: \texttt{steve@soapforge.com}}
 \and\IEEEauthorblockN{Nicholas Arnold}
 \IEEEauthorblockA{Department of Electrical Engineering and\\Computer Science\\
 University of Central Florida\\
 Orlando, Florida 32826\\
-Email: narnold@knights.ucf.edu}
+Email: \texttt{narnold@knights.ucf.edu}}
 }
 
 \maketitle
@@ -398,6 +398,7 @@ In the case of an empty future queue, this phase is $O(n^2)$, because it has to 
 with some other object simultaneously, a case which is exceedingly rare for the simulations we wish to run.
 
 \subsection{Future Event Queue}
+\label{feq}
 The future event queue stores N-body events, and is designed to be used in concert with the sub-phase algorithm as described in Section \ref{sec:subphase}.
 Our implementation uses the following definiton 
 
