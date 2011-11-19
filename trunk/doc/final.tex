@@ -309,36 +309,37 @@ reducing the synchronization concerns to only the implementation of check-react.
 
 The update phase is simple and embarasingly parallel.  It also demonstrates our overall technique to distribute work equally to multiple threads.  In most of our sub-phases,
 we evenly distribute one object to perform operations on to each thread, evenly, one at a time by using a hash function that maps object ids to thread ids evenly. 
-$thread(object_id)=object_id \% num_threads+thread_id$
-\begin{verbatimtab}[3]
-update_simulation()
-{
-   for every object o assigned to current_thread:
-      update(o);
-}
-\end{verbatimtab}
+$thread(object\_id) = object_id \% num\_threads + thread_id$
+\floatname{algorithm}{Procedure}
+\begin{algorithm}
+\caption{Update\_Simulation}
+\begin{algorithmic}
+\FOR {every object $o$ assigned to $current\_thread$}
+	\STATE update($o$)
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 
 Because updating an object only modifies that particular object, this phase is embarrassingly data-parallel and needs no additional synchronization.
 
 \subsubsection{Check-React}
 
-\begin{verbatimtab}[3]
-check_react_collisions()
-{
-   #search event queue for events that are occuring now
-   for e in events.find(current_time)
-   {
-	#if the event happens and this thread is assigned to it
-	if(e.o1 is in current_thread AND check(e.o1,e.o2))
-	{
-		#modify both objects
-		collide(e.o1,e.o2)
-	}
-	#the event is passed, so remove it.
-	events.remove(e)
-   }
-}
-\end{verbatimtab}
+\floatname{algorithm}{Procedure}
+\begin{algorithm}
+\caption{Check\_React\_Collisions}
+\begin{algorithmic}
+\STATE \COMMENT{search event queue for events that are occuring now}
+\FOR{$e$ in $events$.find($current\_time$)}
+	\STATE \COMMENT{if the event happens and this thread is assigned to it}
+	\IF{$e$.$o1$ is in $current\_thread$ and check($e.o1,e.o2$)}
+		\STATE \COMMENT{modify both objects}
+		\STATE collide($e.o1,e.o2$)
+	\ENDIF
+	\STATE \COMMENT{the event is passed, so remove it.}
+	\STATE $events$.remove($e$)
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 This phase does the grunt work of the predictive algorithm.  During this phase, pending events that were predicted to happen in the current timestep are checked to see if they actually occur.  This phase requires additional synchronization overhead for several reasons.
 
 \begin{enumerate}
@@ -379,24 +380,20 @@ check_react_collisions()
 The reprediction phase is slightly more complex, but it is also embarassingly parallel and lock-free, provided that the implementation of our future event queue is thread-safe and scalable as well.  It detects simulation errors of the sort described in section \ref{sec:neq}, and also re-predicts collisions
 that have been removed in check-react.  After finding all of the invalid objects (objects with no known future) that have been recently invalidated by check-react as well as logic errors, it then
 searches for all known predictions that will occur in the future and puts them into the queue.  
-\begin{verbatimtab}[3]
-repredict()
-{
-   #search event queue for objects that
-   #the queue is unaware of
-   for oinvalid in events.find_invalid(current_time)
-   {
-        #if invalid object is assigned to this thread
-        if(oinvalid in current_thread)
-        {
-		for do in dynamic_objects
-		{
-			events.insert(predict(oinvalid,do))
-		}
-	}
-   }
-}
-\end{verbatimtab}
+\begin{algorithm}
+\caption{Repredict()}
+\begin{algorithmic}
+\STATE \COMMENT{search event queue for objects that the queue is unaware of}
+\FOR{$oinvalid$ in $events$.find\_invalid($current\_time$)}
+	\STATE \COMMENT{if invalid object is assigned to this thread}
+        \IF{$oinvalid$ in current\_thread}
+		\FORALL{dynamic\_objects $do$}
+			\STATE $events$.insert(predict($oinvalid,do$))
+		\ENDFOR
+	\ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 This algorithm is thread-safe and lock-free provided that the implementations of events.insert and events.find\_invalid are thread-safe and lock-free, because predict is a read-only method that 
 does not write to non-thread assigned data, even though it reads the current state of all dynamic objects in the scene.
 
@@ -457,13 +454,16 @@ The performance of these systems is typically evaluated in terms of a throughput
 \subsection{Naive Implementation}
 
 The implementation of the naive solution is relatively straightforward, as a naive approach should be.  First, all of the dynamic objects must be updated for each timestamp to their new positions, using their previously calculated velocity vectors.  Then, because we are handling the spheres and planes separately, we have two sets of nested for loops to perform the collision checks.  The first loops over the spheres and checks each with all of the planes, and the second loops over the spheres and checks each with all of the spheres that are after it in the list.  We do this to avoid checking each pair twice (\texttt{collide($o1$,$o2$)} would evaluate the same as \texttt{collide($o2$,$o1$)}). For the threaded version of this algorithm, we used OpenMP controlled parallel for loops:
-\begin{verbatimtab}[3]
-	int i;
-	for(i = 0; i < num_spheres; i++)
-	{
-		dynamic_spheres[i].update(dt);
-	}
-\end{verbatimtab}
+
+\floatname{algorithm}{Algorithm}
+\begin{algorithm}
+\caption{Update}
+\begin{algorithmic}
+\FOR {$i = 0$ to $num\_spheres$}
+	\STATE $dynamic_spheres$[$i$].update($dt$)
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Predictive Implementation}
 
