@@ -634,7 +634,7 @@ Next we show that both algorithms eventually gain a benefit from multithreading,
 
 \section{Conclusion} 
 
-We have presented a novel algorithm to perform discrete event n-body simulations, using predictive event detection instead of polling collision detection.  Our algorithm runs in $O(n)$ time in the average-case for a single timestep.  We have demonstrated that this algorithm has significantly increased single-threaded performance over the naive implementation, and we have presented an implementation that obeys the lock-free property and scales comparably well to multiple thread
+We have presented a novel algorithm to perform discrete event n-body simulations, using predictive event detection instead of polling collision detection.  Our algorithm runs in $O(n)$ time in the average-case for a single timestep.  We have demonstrated that this algorithm has significantly increased single-threaded performance over the naive implementation, and we have presented an implementation that obeys the lock-free property and scales well to a multi-core architecture in comparison to the naive algorithm.
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,midterm}
