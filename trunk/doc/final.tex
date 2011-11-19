@@ -308,8 +308,7 @@ reducing the synchronization concerns to only the implementation of check-react.
 \subsubsection{Update}
 
 The update phase is simple and embarasingly parallel.  It also demonstrates our overall technique to distribute work equally to multiple threads.  In most of our sub-phases,
-we evenly distribute one object to perform operations on to each thread, evenly, one at a time by using a hash function that maps object ids to thread ids evenly. 
-$thread(object\_id) = object_id \% num\_threads + thread_id$
+we evenly distribute one object to perform operations on to each thread, evenly, one at a time by using a hash function that maps object ids to thread ids evenly. $thread(object\_id) = object\_id \% num\_threads + thread\_id$
 \floatname{algorithm}{Procedure}
 \begin{algorithm}
 \caption{Update\_Simulation}
@@ -353,27 +352,25 @@ We can do this by using a flag bit for each of the objects in the scene to check
 that bit for the OTHER object in our comparison, to see if the collision has already occured.  Regardless of whether or not the bit is set, we wish to atomically
 update the status of that bit to true for our current object.  The code becomes as follows.
 
-\begin{verbatimtab}[3]
-check_react_collisions()
-{
-   #search event queue for events that are occuring now
-   for e in events.find(current_time)
-   {
-	#if object reacted yet is false,set reacted to true and do the event
-	if(!compare_and_exchange(reacted_yet[e.o1],false,true))
-	{
-		#if the event hasn't been  happens and this thread is assigned to it
-
-		if(e.o1 is in current_thread AND check(e.o1,e.o2))
-		{
-			#modify both objects
-			collide(e.o1,e.o2)
-		}
-		#the event is passed, so remove it.
-		events.remove(e)
-	}
-}
-\end{verbatimtab}
+\floatname{algorithm}{Procedure}
+\begin{algorithm}
+\caption{Check\_React\_Collisions}
+\begin{algorithmic}
+\STATE \COMMENT{search event queue for events that are occuring now}
+\FOR{$e$ in $events$.find($current\_time$)}
+	\STATE \COMMENT{if object reacted yet is false,set reacted to true and do the event}
+	\IF{!compare\_and\_exchange(reacted\_yet[$e.o1$],false,true)}
+		\STATE \COMMENT{if the event hasn't been  happens and this thread is assigned to it}
+		\IF{$e.o1$ is in current\_thread and check($e.o1,e.o2$)}
+			\STATE \COMMENT{modify both objects}
+			\STATE collide($e.o1,e.o2$)
+		\ENDIF
+		\STATE \COMMENT{the event is passed, so remove it.}
+		\STATE $events$.remove($e$)
+	\ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 
 
 \subsubsection{Repredict}
