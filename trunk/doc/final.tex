@@ -477,10 +477,12 @@ EventIterator FutureEventQueue::find(current_time)
 
 \subsection{Summary of Predictive Method}
 	The subphase barriers and the thread object ownership system work together to ensure the thread-safety of the inputs and outputs to the Future Event Queue.
-This partnership ensures in all the covered cases that the same object data is never used as a concurrent shared resource for both reading and writing.  In addition, the vast majority
-of time te
+This partnership ensures in all the covered cases that the same object data is never used as a concurrent shared resource for both reading and writing.  In addition, we believe our algorithm maintains
+the lock-free property because it remains wait-free in all states except when a thread is waiting at a barrier, which we justified is still a lock-free state in Section \ref{barrier}.
 
 \section{Experimental Setup}%Nick
+
+In order to test our algorithm, we implemented a particular instance of future event simulation in the detection of collisions between two objects.
 
 In typical instances of this problem in the real world, the type of simulation varies dramatically. In many applications, the objects obey complex interaction patterns such as flocking behavior and user interaction.  However, these interactions are almost always built around a simple framework for simulation that obeys Newtonian physics as the primary motion characteristic, with the more complex
 behaviors simply activating different Newtonian trajectories and velocities \cite{Jadbabaie02coordinationof}.  Therefore, without loss of generality, we will simplifiy our simulation by limiting the object behaviors to simulate Newtonian physical interactions of objects under Earth-like gravity.
@@ -529,7 +531,7 @@ The performance of these systems is typically evaluated in terms of a throughput
 
 \subsection{Naive Implementation}
 
-The implementation of the naive solution is relatively straightforward, as a naive approach should be.  First, all of the dynamic objects must be updated for each timestamp to their new positions, using their previously calculated velocity vectors.  Then, because we are handling the spheres and planes separately, we have two sets of nested for loops to perform the collision checks.  The first loops over the spheres and checks each with all of the planes, and the second loops over the spheres and checks each with all of the spheres that are after it in the list.  We do this to avoid checking each pair twice (\texttt{collide($o1$,$o2$)} would evaluate the same as \texttt{collide($o2$,$o1$)}). For the threaded version of this algorithm, we used OpenMP controlled parallel for loops:
+The implementation of the naive solution is relatively straightforward, as a naive approach should be.  First, all of the dynamic objects must be updated for each timestamp to their new positions, using their previously calculated velocity vectors.  Then, because we are handling the spheres and planes separately, we have two sets of nested for loops to perform the collision checks.  The first loops over the spheres and checks each with all of the planes, and the second loops over the spheres and checks each with all of the spheres that are after it in the list.  We do this to avoid checking each pair twice (\texttt{collide($o1$,$o2$)} would evaluate the same as \texttt{collide($o2$,$o1$)}). For the threaded version of this algorithm, we parallel for loops:
 
 \floatname{algorithm}{Algorithm}
 \begin{algorithm}
@@ -543,7 +545,24 @@ The implementation of the naive solution is relatively straightforward, as a nai
 
 \subsection{Predictive Implementation}
 
-Future Work to be written for Final Paper.
+The scalable predictive implementation has aready been described in Section \ref{sec:theocont}.  However, we have not described the implementation of the sphere-sphere prediction algorithm.
+This algorithm is relatively simple.  Given two spheres, we can describe their positions, accelerations, and velocities as the equation
+
+\begin{equation}
+   
+\begin{verbatimtab}[3]
+ObjectIterator FutureEventQueue::find_invalid()
+{
+   for o in dynamic_objects
+   {
+      if(o in current_thread AND !this.current_events[o].valid)
+      #return object as part of invalid set for this thread.
+	yield this.current_events[e.o1]=e;
+   }
+}
+\end{verbatimtab}
+\end{equation}
+
 
 \section{Results} %Steven
 
