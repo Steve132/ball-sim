@@ -1,0 +1,22 @@
+ The following instructions should help you to build and install the source code contained in this archive, as well as give an overview of the content to be found:
+ 
+ BUILDING:
+Prerequisites:
+	A version of G++ that with experimental support for the upcoming C++11 standard,as well as OpenMP
+		-std::thread support
+		-std::atomic support
+		-OpenMP support
+	
+1)	Download and install CMake for your platform.
+2)	run CMake.  Point the source directory to directory containing this README file.
+	Point the binary directory to some directory (preferably ./build)
+3)	Configure CMake in release mode (CMAKE_BUILD_TYPE=Release)
+4)	Build the code using the IDE or make script you configured CMake with.
+5)	In the binary directory there are two binaries: headless_sim and glviewer_sim. They accept the same command-line arguments.
+
+To see a summary of the command line arguments, run one of the binaries with --help.  To see a visualization, run glviewer_sim.  
+To enable the predictive algorithm, use the -p switch.  
+
+You will find our document in /doc/final.pdf
+You will find the source code in /src
+You will find the data from our test scripts and the scripts to generate them in the root ball-sim directory (here)

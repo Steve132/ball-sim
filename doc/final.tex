@@ -98,7 +98,7 @@ Email: \texttt{narnold@knights.ucf.edu}}
 
 
 \begin{abstract} %Steven
-The general simulation of n-body systems often requires the simulation of pairwise interaction events between the objects.  The naive method of simulating these events is an algorithm that polls each pair of object for an interaction every timestep.  This algorithm has $O(n^2)$ operations per timestep in the number of objects.  However, this method scales very well to multiple cores. In this paper, we propose a novel method of pairwise simulation that saves a significant amount of computation time by predicting possible future outcomes rather than reacting to them.  We demonstrate the implementation of this method, as well as prove that it has amortized $O(n)$ complexity per timestep.  We also demonstrate a lock-free implementation to allow this algorithm to scale comparably to multiple cores of a shared memory machine.
+The general simulation of n-body systems often requires the simulation of pairwise interaction events between the objects.  The naive method of simulating these events is an algorithm that polls each pair of objects for an interaction every timestep.  This algorithm has $O(n^2)$ operations per timestep in the number of objects.  However, this method scales very well to multiple cores. In this paper, we propose a novel method of pairwise simulation that saves a significant amount of computation time by predicting possible future outcomes rather than reacting to them.  We demonstrate the implementation of this method, as well as prove that it has amortized $O(n)$ complexity per timestep.  We also demonstrate a lock-free implementation to allow this algorithm to scale comparably well to multiple cores of a shared memory machine.
 \end{abstract}
 
 \IEEEpeerreviewmaketitle
@@ -160,22 +160,22 @@ In our desired solution, we take a completely different approach.  In contrast t
 \FOR{each timestep $ti$}
 	\FOR{each dynamic object $do$}
 		\STATE update($do,dt$)  \COMMENT{$dt$ is the constant timestep difference}
-		\STATE \COMMENT{for each event that occurs in this timestep}
-		\FOR{each e in events.find(ti)}
-			\FOR{each object $o$}
-				\IF{check($e.o,o$)}
-					\STATE collide($e.o, o, dt$) \COMMENT{predict next collision event into queue}
-				\ENDIF
-			\ENDFOR
-			\STATE{$events$.remove($e$)}
+	\ENDFOR
+	\STATE \COMMENT{for each event that occurs in this timestep}
+	\FOR{each e in events.find(ti)}
+		\FOR{each object $o$}
+			\IF{check($e.o,o$)}
+				\STATE collide($e.o, o, dt$) \COMMENT{predict next collision event into queue}
+			\ENDIF
 		\ENDFOR
+		\STATE{$events$.remove($e$)}
 	\ENDFOR
 \ENDFOR
 \RETURN events
 \end{algorithmic}
 \end{algorithm}
 
-It is worth noting that although our solution is the same runtime complextiy as the naive solution in the worst case (and, in fact, the initial population of event queue will need to preform $n^2$ predictions), it is unlikely to compute ANY checks that are unlikely to occur, thus saving tremendous computation time.  
+It is worth noting that although our solution is the same runtime complextiy as the naive solution in the worst case (and, in fact, the initial population of event queue will need to preform $O(n^2)$ predictions), it is unlikely to compute ANY checks that are unlikely to occur, thus saving tremendous computation time in the average case.  
 
 However, our work is not done.  This algorithm is difficult to parallelize when compared to the naive algorithm, as it depends implicitly on reading and writing the global future nbody event queue data structure described in section \ref{sec:neq}.  This data structure is a specialized queue in which events take priority over other events about to take place. If we split the evaluation of the simulation into threads, then each thread must somehow synchronize which events it will prioritize and avoid collisions.  Furthermore, threads must be able to communicate and respond to future events  globally as collisions are predicted into the future.  This communication overhead is difficult to parallelize correctly, and will be the focus of our research.
 
@@ -204,8 +204,8 @@ It is important to take special note here of the operations in the future event 
 is that the find() method can search for all events that occur within a certain timeframe, and that events that get input into the queue are not necessarily persistent, as they 
 may be superceded by events that are inserted later but are queued to occur before.  An event A in the queue supercedes an event B iff event A and B have an object in common AND A is scheduled to occur BEFORE B.
 
-Lastly, ``find invalid'' is important because it is assumed that at some point some event will occur to all objects, otherwise simulating them is 
-useless.  Thus, any objects which are in the scene but not present in the future event queue would indicate an error in our simulation logic.  In our example, even objects which
+Lastly, ``find invalid'' is important because it is assumed that at some point some event will occur for each object. (If that was not true for a particular object o, then simulating o is 
+useless).  Thus, any objects which are in the scene but not present in the future event queue would indicate an error in our simulation logic.  In our example, even objects which
 will not collide with any other objects must eventually collide with the boundaries of the simulation volume.  If no such collisions were known about
 an object, we must know of this immediately and attempt to repredict that object's future.
 
@@ -215,7 +215,7 @@ In addition, our queue must implement these algorithms efficiently in order to g
 In this section, we propose a scalable lock-free implementation of the predictive algorithm from section \ref{sec:theocont}, including an implementation of the 
 N-Body Future Event Queue data structure.  Our implementation uses barriers and hardware atomic compare-and-swap primatives to guarantee thread-safety.  Our scalable implementation
 works in two parts, which we will discuss here:  First, it uses barriers and an hardware compare-and-exchange boolean to synchronize the algorithm that utilizes the data structure, 
-a process that is described in Section \ref{sec:stsp}.  Next, it uses an array with a thread-safe indexing scheme to implement the future event queue which is described in Section \ref{sec:feq}
+a process that is described in Section \ref{sec:stsp}.  Next, it uses an array with a thread-safe indexing scheme to implement the future event queue which is described in Section \ref{feq}
 \subsection{Barriers}
 \label{sec:barrier}
 A barrier is a construct that is crucial to any threaded simulation.  It is a simple synchronization primative that only has one operation: wait(n).  
@@ -238,9 +238,10 @@ using a hardware atomic instructions instead.  Wait can be implemented as
 	\STATE fetch\_and\_sub($\&num\_threads$,1)
 	\STATE \COMMENT{spin until all threads are collected}
 	\WHILE {$num\_threads > 0$}
-		\STATE \COMMENT{uncollect this thread}
-		\STATE fetch\_and\_add($\&num\_threads$, 1)
+		\STATE noop()
 	\ENDWHILE
+	\STATE \COMMENT{uncollect this thread}
+	\STATE fetch\_and\_add($\&num\_threads$, 1)
 \end{algorithmic}
 \end{algorithm}
 
@@ -449,8 +450,8 @@ ownership boundaries.
 \begin{algorithmic}
 \STATE ObjectIterator FutureEventQueue::find\_invalid()
 \FOR{o in dynamic\_objects}
-	\IF{o in current\_thread AND !this.current\_events[o].valid}
-		\STATE #return object as part of invalid set for this thread.
+	\IF{o in current\_thread AND !this.current\_events[o].valid }
+		\STATE \COMMENT{return object as part of invalid set for this thread.}
 		\STATE yield o;
 	\ENDIF
 \ENDFOR
@@ -470,7 +471,7 @@ and also checks to make sure that those events are happening in the current fram
 \STATE EventIterator FutureEventQueue::find(current\_time)
 \FOR{o in dynamic\_objects}
 	\IF{o in current\_thread AND this.current\_events[o].valid AND this.current\_events[o].time <= current\_time}
-		\STATE #return the event that is about to occur
+		\STATE \COMMENT{ the event that is about to occur}
 		\STATE yield this.current\_events[o];
 	\ENDIF
 \ENDFOR
