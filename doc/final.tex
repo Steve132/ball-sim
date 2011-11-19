@@ -434,11 +434,11 @@ FutureEventQueue::remove(event e)
 }
 \end{verbatimtab}
 
-\subsubsection{find_invalid}
+\subsubsection{find\_invalid}
 
-The implementation of find_invalid with our array-based queue is simply a linear search for any events that are marked as invalid in the array.
+The implementation of find\_invalid with our array-based queue is simply a linear search for any events that are marked as invalid in the array.
 However, because of our previous rule that the event array cannot be read or written by a thread not its owner in the same phase, we only return invalid
-objects from the objects in the current thread.  Although this would seem to break the functionality of find_invalid, this behavior simply serves to reinforce
+objects from the objects in the current thread.  Although this would seem to break the functionality of find\_invalid, this behavior simply serves to reinforce
 the constraint given in \ref{sec:repredict} that threads can only repredict objects they own. It also meas that we never repredict objects across thread
 ownership boundaries.
 
@@ -460,7 +460,7 @@ Find invalid runs in $O(n)$ space and time.
 
 \subsubsection{find}
 
-Similar to the implementation of find_invalid, the implementation of find also is implemented based on a linear search.  It finds all valid events
+Similar to the implementation of find\_invalid, the implementation of find also is implemented based on a linear search.  It finds all valid events
 and also checks to make sure that those events are happening in the current frame.
 
 \begin{verbatimtab}[3]
