@@ -548,24 +548,8 @@ The implementation of the naive solution is relatively straightforward, as a nai
 
 \subsection{Predictive Implementation}
 
-The scalable predictive implementation has aready been described in Section \ref{sec:theocont}.  However, we have not described the implementation of the sphere-sphere prediction algorithm.
-This algorithm is relatively simple.  Given two spheres, we can describe their positions, accelerations, and velocities as the equation
-
-\begin{equation}
-\end{equation}
-   
-\begin{verbatimtab}[3]
-ObjectIterator FutureEventQueue::find_invalid()
-{
-   for o in dynamic_objects
-   {
-      if(o in current_thread AND !this.current_events[o].valid)
-      #return object as part of invalid set for this thread.
-	yield this.current_events[e.o1]=e;
-   }
-}
-\end{verbatimtab}
-
+The scalable predictive implementation has aready been described in Section \ref{sec:theocont}.  However, we have not described the implementation of the sphere-sphere prediction algorithm, which is crucial to the 
+implementation we performed.  This algorithm is in Appendix \ref{predict}.
 
 \section{Results} %Steven
 
@@ -650,16 +634,49 @@ Next we show that both algorithms eventually gain a benefit from multithreading,
 
 \section{Conclusion} 
 
-
-As we have only completed the preliminary set of data gathering, and have not implemented our predictive algorithm, we are not able to draw any conclusions as of yet.  Upon completion of the predictive algorithm implementation, and the subsequent data gathering and analysis, we will be able to form appropriate conclusions.
+We have presented a novel algorithm to perform discrete event n-body simulations, using predictive event detection instead of polling collision detection.  Our algorithm runs in $O(n)$ time in the average-case for a single timestep.  We have demonstrated that this algorithm has significantly increased single-threaded performance over the naive implementation, and we have presented an implementation that obeys the lock-free property and scales comparably well to multiple thread
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,midterm}
 
 \appendix %Steven
-\section{Project Progress}
-This project is progressing well.  Save several hiccups in the implementation, we now have a very large and stable mature codebase that implements the naive implementations of the algorithm and allows
-us to visualize the result.
+\subsection{Prediction Algorithm for Two Spheres}
+\label{predict}
+This algorithm is relatively simple.  Given two spheres, we can describe their positions, accelerations, and velocities as the equation set.
+
+\begin{eqnarray*}
+\vec{p_a}(t)&=&\vec{s_a}+\vec{v_a} t+\vec{a_a} \frac{t ^ 2}{2} \\
+\vec{p_b}(t)&=&\vec{s_b}+\vec{v_b} t+\vec{a_b} \frac{t ^ 2}{2} \\
+\end{eqnarray*}
+
+Then, we find when/if the distance between the two spheres is equal to the sum of their radii.  
+
+\begin{eqnarray*}
+|| \vec{p_b}(t)-\vec{p_a}(t) ||&=&r_a+r_b \\
+|| \vec{p_b}(t)-\vec{p_a}(t) || ^ 2&=&(r_a+r_b) ^ 2 \\
+\end{eqnarray*}
+
+This can be expanded as a quartic polynomial in terms of the difference between their two positions, eg, p is the view of a from b's frame of reference.
+  
+\begin{equation}
+\vec{p}(t)=\vec{p_a}(t)-\vec{p_b}=\vec{s}+\vec{v} t+\vec{a} \frac{t ^ 2}{2}
+\end{equation}
+
+then, the expanded squared norm of p is a quartic polynomial
+
+\begin{eqnarray*}
+	|| \vec{p}(t) || ^ 2 &=&\vec{s} \cdot \vec{s} \\
+	&+&2 \vec{s} \cdot \vec{v} t \\
+	&+& (\vec{s} \cdot \vec{a} \\ 
+	&+&  \vec{v} \cdot \vec{v}) t ^ 2 \\
+	&+& \vec{a} \cdot \vec{v} t ^ 3 \\
+	&+& \frac{\vec{a} \cdot \vec{a}}{4} t ^ 4 \\
+	&=& (r_a+r_b) ^ 2 \\
+\end{eqnarray*}
+
+When acceleration is constant, then the difference of the two acceleration reference frames $a$ is 0, and the above reduces to a quadratic that can be solved using the quadratic formula.
+
+
 \subsection{Challenges Encountered}
 We encountered several challenges when implementing this project.  Although the simulation algorithm is simple in theory, debugging and implementing the physics behind the spheres caused a few small problems we did not foresee.
 
@@ -694,7 +711,7 @@ This problem generated 1 sphere-sphere collisions for each frame, for each pair 
 This dramatically reduced the number of sphere-sphere collisions to the correct number.
 
 \subsubsection{Thread Overhead}
-	Our implementation of the threading uses the OpenMP compiler extension subsystem.  Our implementation, which is a part of gcc 4.5, is built on top of pthreads under linux.  In our implementation, we 
+	Our implementation of the threading uses the C++11 threading subsystem.  Our implementation, which is a part of gcc 4.5, is built on top of pthreads under linux.  In our implementation, we 
 spawn a number of worker threads per timestamp in order to thread the system.  Our implementation of the naive algorithm should scale linearly with the number of threads.  However, in our implementation this is not the case.  We strongly suspect that
 several factors could be contributing to this difficulty.  
 
@@ -703,27 +720,6 @@ several factors could be contributing to this difficulty.
 	\item The thread spawn behavior is sub-optimal as described by \cite{performance-critical}
 	\item Thread affinity is poor.
 	\item Threads may be competing for the global statistical variables we are using to measure performance.
-\end{itemize}
-
-We intend on investigating all of these possibilities immediately in the following weeks.  It is important to do so, because our argument for the applicability of this algorithm to parallel data-structures
-is based on the necessity of competing with the highly-scalable naive algorithm.  If we fail to implement a scalable naive algorithm, then our ability to implement a scalable predictive algorithm is questionable.
-
-\subsection{Completed Tasks}
-\subsubsection{Simulation Framework}
-We completed a simulation framework capable of interactively running our simulation in multiple different configurations from the command line.  Our simulation framework correctly
-creates a simulation in a memory and cpu-efficiant way, and allows us to extend the implementation of the update step without changing the rest of the codebase.
-\subsubsection{Visualization Framework}
-In order to debug and to visualize the state of the simulation at a given timestep, a visualization in opengl was produced.
-\subsubsection{Threaded and Non-Threaded Naive Implementation}
-The implementation of our Naive algorithm is complete for the threaded and the non-threaded implementation.  However, as previously described, our implementation does not scale.  However, it is verified to function
-correctly in both implementatons.
-
-\subsection{Remaining Tasks}
-There are 3 major tasks remaining.
-\begin{itemize}
-\item Fix the scalability of the naive algorithm and generate new data.
-\item Write the predictive algorithm and test.
-\item Finish the final report.
 \end{itemize}
 
 \subsection{Target Conference}
