@@ -374,6 +374,7 @@ update the status of that bit to true for our current object.  The code becomes 
 
 
 \subsubsection{Repredict}
+\label{sec:repredict}
 The reprediction phase is slightly more complex, but it is also embarassingly parallel and lock-free, provided that the implementation of our future event queue is thread-safe and scalable as well.  It detects simulation errors of the sort described in section \ref{sec:neq}, and also re-predicts collisions
 that have been removed in check-react.  After finding all of the invalid objects (objects with no known future) that have been recently invalidated by check-react as well as logic errors, it then
 searches for all known predictions that will occur in the future and puts them into the queue.  
@@ -400,7 +401,84 @@ with some other object simultaneously, a case which is exceedingly rare for the 
 \subsection{Future Event Queue}
 \label{feq}
 The future event queue stores N-body events, and is designed to be used in concert with the sub-phase algorithm as described in Section \ref{sec:subphase}.
-Our implementation uses the following definiton 
+Our implementation uses an array to store a series of one-element priority-queues: one for each object in the scene.  This array shows the current best-guess
+prediction of events that are inbound on the object.  The advantage of this approach is that our predictive queue doesn't have to deal with the contention of 
+a standard queue implemented in a list, and it is also space efficient, as it is able to throw away events that supercede other events at insertion time.
+
+
+\subsubsection{insert}
+
+The implementation of insert is protected by the fact that an event that is inserted containing object $i$ as the first object in the event will only
+be inserted from the thread that owns object $i$, as can be seen from section \ref{sec:repredict}.  Thus, insert requires no synchronization, as it can be verified
+that no other thread will read or write to this same location during the react subphase.  It is important to note that this implementation can and does remove events,
+and would not be suitable for any other kind of event queue.  However, our application domain says that removing potential events that will not occur from the queue is a feature, not a bug.
+
+\begin{verbatimtab}[3]
+FutureEventQueue::insert(event e)
+{
+   if(!this.current_events[e.o1].valid OR this.current_events.time > e.time)
+	this.current_events[e.o1]=e;
+}
+\end{verbatimtab}
+
+This definition of insert runs in $O(1)$ time, which is actually much better then our requirement that it runs in $O(n)$ time.
+
+\subsubsection{remove}
+
+Remove is similar to insert, except it simply sets the event to invalid in the array queue.  It too is $O(1)$
+
+\begin{verbatimtab}[3]
+FutureEventQueue::remove(event e)
+{
+	this.current_events[e.o1].invalid;
+}
+\end{verbatimtab}
+
+\subsubsection{find_invalid}
+
+The implementation of find_invalid with our array-based queue is simply a linear search for any events that are marked as invalid in the array.
+However, because of our previous rule that the event array cannot be read or written by a thread not its owner in the same phase, we only return invalid
+objects from the objects in the current thread.  Although this would seem to break the functionality of find_invalid, this behavior simply serves to reinforce
+the constraint given in \ref{sec:repredict} that threads can only repredict objects they own. It also meas that we never repredict objects across thread
+ownership boundaries.
+
+\begin{verbatimtab}[3]
+ObjectIterator FutureEventQueue::find_invalid()
+{
+   for o in dynamic_objects
+   {
+      if(o in current_thread AND !this.current_events[o].valid)
+      {
+      #return object as part of invalid set for this thread.
+	yield o;
+      }
+   }
+}
+\end{verbatimtab}
+
+Find invalid runs in $O(n)$ space and time.
+
+\subsubsection{find}
+
+Similar to the implementation of find_invalid, the implementation of find also is implemented based on a linear search.  It finds all valid events
+and also checks to make sure that those events are happening in the current frame.
+
+\begin{verbatimtab}[3]
+EventIterator FutureEventQueue::find(current_time)
+{
+   for o in dynamic_objects
+   {
+      if(o in current_thread AND this.current_events[o].valid AND this.current_events[o].time <= current_time)
+      #return the event that is about to occur
+	yield this.current_events[o];
+   }
+}
+\end{verbatimtab}
+
+\subsection{Summary of Predictive Method}
+	The subphase barriers and the thread object ownership system work together to ensure the thread-safety of the inputs and outputs to the Future Event Queue.
+This partnership ensures in all the covered cases that the same object data is never used as a concurrent shared resource for both reading and writing.  In addition, the vast majority
+of time te
 
 \section{Experimental Setup}%Nick
 
