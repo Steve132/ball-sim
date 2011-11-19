@@ -413,13 +413,15 @@ be inserted from the thread that owns object $i$, as can be seen from section \r
 that no other thread will read or write to this same location during the react subphase.  It is important to note that this implementation can and does remove events,
 and would not be suitable for any other kind of event queue.  However, our application domain says that removing potential events that will not occur from the queue is a feature, not a bug.
 
-\begin{verbatimtab}[3]
-FutureEventQueue::insert(event e)
-{
-   if(!this.current_events[e.o1].valid OR this.current_events.time > e.time)
-	this.current_events[e.o1]=e;
-}
-\end{verbatimtab}
+\begin{algorithm}
+\caption{Insert}
+\begin{algorithmic}
+\STATE FutureEventQueue::insert(event $e$)
+\IF{!this.current\_events[$e.o1$].valid or this.current\_events.time > $e$.time}
+	\STATE this.current\_events[$e.o1$] = $e$;
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
 
 This definition of insert runs in $O(1)$ time, which is actually much better then our requirement that it runs in $O(n)$ time.
 
@@ -427,12 +429,13 @@ This definition of insert runs in $O(1)$ time, which is actually much better the
 
 Remove is similar to insert, except it simply sets the event to invalid in the array queue.  It too is $O(1)$
 
-\begin{verbatimtab}[3]
-FutureEventQueue::remove(event e)
-{
-	this.current_events[e.o1].invalid;
-}
-\end{verbatimtab}
+\begin{algorithm}
+\caption{Remove}
+\begin{algorithmic}
+\STATE FutureEventQueue::remove(event $e$)
+\STATE this.current\_events[$e.o1$].invalid;
+\end{algorithmic}
+\end{algorithm}
 
 \subsubsection{find\_invalid}
 
@@ -549,6 +552,7 @@ The scalable predictive implementation has aready been described in Section \ref
 This algorithm is relatively simple.  Given two spheres, we can describe their positions, accelerations, and velocities as the equation
 
 \begin{equation}
+\end{equation}
    
 \begin{verbatimtab}[3]
 ObjectIterator FutureEventQueue::find_invalid()
@@ -561,7 +565,6 @@ ObjectIterator FutureEventQueue::find_invalid()
    }
 }
 \end{verbatimtab}
-\end{equation}
 
 
 \section{Results} %Steven
