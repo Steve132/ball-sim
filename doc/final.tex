@@ -321,9 +321,15 @@ check_react_collisions()
    }
 }
 \end{verbatimtab}
-This phase does the grunt work of the predictive algorithm.  During this phase, pending events that were predicted to happen in the current timestep
-are checked to see if they actually occur.  This phase requires additional synchronization overhead for one reason:  collide() reads and writes TWO objects,
-which means it could potentially modify objects that occur 
+This phase does the grunt work of the predictive algorithm.  During this phase, pending events that were predicted to happen in the current timestep are checked to see if they actually occur.  This phase requires additional synchronization overhead for several reasons.
+
+\begin{enumerate}
+	\item collide() reads and writes TWO objects, which means it could potentially modify objects that are assigned to other threads non-deterministically.
+	\item There could be two events in the queue which actually describe the same event but swap the order of the objects, which could mean that a collide() reaction to the event could be triggered twice in the same frame.
+	\item Multiple threads could check() an object while another object is in the middle of writing to it.
+\end{enumerate}
+
+However, we can exploit the structure of our problem in order to guarantee that none of these cases occur.  Due to the fact that for two symmetric events, we only want one... we can check to see if one or both of the objects in the set have already been ``reacted'' against by using a hardware compare and swap operation to modify.
 
 \subsubsection{Repredict}
 The reprediction phase is slightly more complex, but it is also embarassingly parallel and lock-free, provided that the implementation of our future event queue is thread-safe and scalable as well.  It detects simulation errors of the sort described in section \ref{sec:neq}, and also re-predicts collisions
@@ -347,7 +353,7 @@ repredict()
    }
 }
 \end{verbatimtab}
-This algorithm is thread-safe and lock-free provided that the implementations of events.insert and events.find_invalid are thread-safe and lock-free, because predict is a read-only method that 
+This algorithm is thread-safe and lock-free provided that the implementations of events.insert and events.find\_invalid are thread-safe and lock-free, because predict is a read-only method that 
 does not write to non-thread assigned data, even though it reads the current state of all dynamic objects in the scene.
 
 In the case of an empty future queue, this phase is $O(n^2)$, because it has to make predictions on all pairs of objects.  However, in order for that to occur in the average case would require a majority of frames to have all objects collide
