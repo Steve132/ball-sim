@@ -160,7 +160,6 @@ for each timestep ti
 			if(check(e.o,o))
 				collide(e.o, o, dt)
 				#predict next collision event into queue
-				events.insert(predict(e.o,o)) 
 		events.remove(e)
 \end{verbatimtab}
 
@@ -185,6 +184,10 @@ FutureEventQueue
 	#returns an iterator that iterates over all
 	#predicted events that occur after time t
 	EventIterator find(time t)
+
+        #Returns all objects for which nothing is known about 
+        #their behavior
+        ObjectIterator find_invalid()
 }
 \end{verbatimtab}
 
@@ -192,7 +195,12 @@ It is important to take special note here of the operations in the future event 
 is that the find() method can search for all events that occur within a certain timeframe, and that events that get input into the queue are not necessarily persistent, as they 
 may be superceded by events that are inserted later but are queued to occur before.  An event A in the queue supercedes an event B iff event A and B have an object in common AND A is scheduled to occur BEFORE B.
 
-In addition, our queue must implement these algorithms efficiently in order to get the desired average-case $O(n)$ performance that is an improvement over our prediction algorithm.  In particular, "remove", "insert", and "find" must be implemented in $O(n)$ time.
+Lastly, ``find invalid'' is important because it is assumed that at some point some event will occur to all objects, otherwise simulating them is 
+useless.  Thus, any objects which are in the scene but not present in the future event queue would indicate an error in our simulation logic.  In our example, even objects which
+will not collide with any other objects must eventually collide with the boundaries of the simulation volume.  If no such collisions were known about
+an object, we must know of this immediately and attempt to repredict that object's future.
+
+In addition, our queue must implement these algorithms efficiently in order to get the desired average-case $O(n)$ performance that is an improvement over our prediction algorithm.  In particular, all operations must be implemented in $O(n)$ time.
 
 \section{Scalable Implementation}
 In this section, we propose a scalable lock-free implementation of the predictive algorithm from section \ref{sec:theocont}, including an implementation of the 
@@ -200,12 +208,67 @@ N-Body Future Event Queue data structure.  Our implementation uses barriers and 
 \subsection{Barriers}
 A barrier is a construct that is crucial to any threaded simulation.  It is a simple synchronization primative that only has one operation: wait(n).  
 A thread that enters wait(n) will wait at that point in the control flow of the program until the total number of threads in the wait(n) function is n.  Then,
-all threads return simultaneously.  
+all threads return simultaneously.
 
+Typically, a barrier is not classified as a lock-free operation.  In most implementations of a barrier, a locked mutex is used to sleep all the threads, which is 
+unlocked when the number of sleeping threads is equal to n.  However, this need not be the case.  We observe that the barrier preserves the lock-free property if it is implemented
+using a hardware atomic instructions instead.  Wait can be implemented as 
+
+\begin{verbatimtab}[3]
+barrier{
+int num_threads; #the number of threads to collect
+wait()
+    #collect this thread
+    fetch_and_sub(&num_threads,1);
+    #spin until all threads are collected
+    while(num_threads > 0);
+    #uncollect this thread
+    fetch_and_add(&num_threads,1);
+}
+\end{verbatimtab}
+
+When implemented in this way, the implementation preserves the lock-free property, because even though n-1 threads are forced to wait, the last thread never waits for any 
+mutex, or does it ever enter the spinlock loop.  The last thread does useful work until it enters the wait() body, then immediately exits, continuing to make progress, releasing all
+other threads in the process.
+
+\subsection{Timestep Sub-Phases}
 In all threaded implementations of timestamp-based simulation, at least one barrier construct
 is necessary in order to prevent the system from processing more than one timestep at a time.  Without an implict barrier at the beginning or end of the 
-processing for each timestamp, then worker threads could easily get out of sync on the timesteps that they are working on
+processing for each timestamp, then worker threads could easily get out of sync on the timesteps that they are working on, which would produce incorrect calculations
+for comparisons between threads.  The current timestamp of the simulation must be constant across all threads, and so a barrier is used in order to synchronize that timestamp.  This
+limitation is true for all threaded timestep simulation, our application included.
 
+Therefore, we can consider the timespan of a single timestep as a single computational unit, the beginning and end of which all threads are operating in sync.  We can ignore
+all processing that occurs outside of a single timestep.  For our implementation of the prediction algorithm described in \ref{sec:theocont}, a single timestep is broken down
+into several distinct 'phases`., with the overall structure as follows:
+
+\begin{verbatimtab}[3]
+timestep()
+{
+   check_react_collisions();
+   repredict();
+   update_simulation();
+   timestep_sync_barrier.wait();
+}
+\end{verbatimtab}
+
+Note the implicit barrier protecting all threads from moving to the next frame before their peers.  The implementations of each subroutine are given below:
+\begin{verbatimtab}[3]
+check_react_collisions()
+{
+   #search event queue for events that are occuring now
+   for e in events.find(current_time)
+   {
+	#if the event happens
+	if(check(e.o1,e.o2))
+	{
+		#modify both objects
+		collide(e.o1,e.o2)
+	#the event is passed, so remove it.
+	events.remove(e)
+}
+\end{verbatimtab}
+Our implementation moves further, and uses barriers to introduce strongly-partitioned 'sub-phases', in order to mitigate the concurrent execution issues 
 \section{Experimental Setup}%Nick
 
 In typical instances of this problem in the real world, the type of simulation varies dramatically. In many applications, the objects obey complex interaction patterns such as flocking behavior and user interaction.  However, these interactions are almost always built around a simple framework for simulation that obeys Newtonian physics as the primary motion characteristic, with the more complex
