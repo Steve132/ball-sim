@@ -235,11 +235,11 @@ using a hardware atomic instructions instead.  Wait can be implemented as
 	\STATE int $num\_threads$ \COMMENT{the number of threads to collect}
 	\STATE wait()
 	\STATE \COMMENT{collect this thread}
-	\STATE fetch\_and\_sub($\&num_threads$,1)
+	\STATE fetch\_and\_sub($\&num\_threads$,1)
 	\STATE \COMMENT{spin until all threads are collected}
 	\WHILE {$num\_threads > 0$}
 		\STATE \COMMENT{uncollect this thread}
-		\STATE fetch\_and\_add($\&num_threads$, 1)
+		\STATE fetch\_and\_add($\&num\_threads$, 1)
 	\ENDWHILE
 \end{algorithmic}
 \end{algorithm}
@@ -444,20 +444,18 @@ However, because of our previous rule that the event array cannot be read or wri
 objects from the objects in the current thread.  Although this would seem to break the functionality of find\_invalid, this behavior simply serves to reinforce
 the constraint given in \ref{sec:repredict} that threads can only repredict objects they own. It also meas that we never repredict objects across thread
 ownership boundaries.
-
-\begin{verbatimtab}[3]
-ObjectIterator FutureEventQueue::find_invalid()
-{
-   for o in dynamic_objects
-   {
-      if(o in current_thread AND !this.current_events[o].valid)
-      {
-      #return object as part of invalid set for this thread.
-	yield o;
-      }
-   }
-}
-\end{verbatimtab}
+\begin{algorithm}
+\caption{Find\_Invalid}
+\begin{algorithmic}
+\STATE ObjectIterator FutureEventQueue::find\_invalid()
+\FOR{o in dynamic\_objects}
+	\IF{o in current\_thread AND !this.current\_events[o].valid}
+		\STATE #return object as part of invalid set for this thread.
+		\STATE yield o;
+	\ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 
 Find invalid runs in $O(n)$ space and time.
 
@@ -466,17 +464,18 @@ Find invalid runs in $O(n)$ space and time.
 Similar to the implementation of find\_invalid, the implementation of find also is implemented based on a linear search.  It finds all valid events
 and also checks to make sure that those events are happening in the current frame.
 
-\begin{verbatimtab}[3]
-EventIterator FutureEventQueue::find(current_time)
-{
-   for o in dynamic_objects
-   {
-      if(o in current_thread AND this.current_events[o].valid AND this.current_events[o].time <= current_time)
-      #return the event that is about to occur
-	yield this.current_events[o];
-   }
-}
-\end{verbatimtab}
+\begin{algorithm}
+\caption{Find}
+\begin{algorithmic}
+\STATE EventIterator FutureEventQueue::find(current\_time)
+\FOR{o in dynamic\_objects}
+	\IF{o in current\_thread AND this.current\_events[o].valid AND this.current\_events[o].time <= current\_time}
+		\STATE #return the event that is about to occur
+		\STATE yield this.current\_events[o];
+	\ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Summary of Predictive Method}
 	The subphase barriers and the thread object ownership system work together to ensure the thread-safety of the inputs and outputs to the Future Event Queue.
@@ -541,7 +540,7 @@ The implementation of the naive solution is relatively straightforward, as a nai
 \caption{Update}
 \begin{algorithmic}
 \FOR {$i = 0$ to $num\_spheres$}
-	\STATE $dynamic_spheres$[$i$].update($dt$)
+	\STATE $dynamic\_spheres$[$i$].update($dt$)
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
