@@ -469,13 +469,7 @@ Future Work to be written for Final Paper.
 
 \section{Results} %Steven
 
-* Total time is scale-invariant (it doesn't matter the size of the volume, the runtime is bound by the number of checks being performed) and is constant across varying volume sizes
-
-* This is despite the reduction of actual collisions in increasing volume sizes
-
-* Total time shows polynomial growth due to the increasing number of collision checks as sphere count increases (which also shows polynomial growth)
-
-* Prediction rates were between 1.2x10e-6 and 0.05\% correct
+The total runtime of the naive algorithm is scale-invariant.  That is to say it doesn't matter the size of the volume, the runtime is bound by the number of checks being performed, which is constant across varying volume sizes.  This scale-invariance is despite the reduction of actual collisions occurring volume size increases.  The total runtime shows polynomial growth due to the increasing number of collision checks as sphere count increases, which also shows polynomial growth.  Because of the vast number of collision checks occurring, prediction rates were between 0.0001\% and 0.05\% correct detection.
 
 \begin{center}
 	\includegraphics[width=.45\textwidth]{runtime_naive_1thread.png}
@@ -487,15 +481,7 @@ Future Work to be written for Final Paper.
 	\captionof{figure}{}
 \end{center}
 
-* Total time is not scale-invariant, as predictions rely on calculating physical collisons - which as the volume increases, the likelihood of collision decreases
-
-* Total time is showing polynomial growth as well, but much slower than the naive algorithm (This may be a result of the extra overhead to perform collision equation calculations in order to reduce the number of unnecessary collision checks)
-
-* The number of checks performed per timestep is linearly increasing, as opposed to the polynomial growth of the naive solution
-
-* Prediction rates were between 0.3 and 0.7% correct, which although still low, are enormously more efficient (see table at bottom of tab)
-
-* (These numbers are low because we do check the entire array every timestep, which do hold potentially valid collisions that just haven't happened yet... these get checked over and over until their collision is detected as current)
+For the predictive algorithm, total runtime is not scale-invariant, as predictions rely on calculating physical collisons.  As the volume increases, the likelihood of collision decreases.  Total runtime is showing polynomial growth as was true with the naive algorithm, but at a much slower growth rate than the naive algorithm.  This may be a result of extra overhead to perform collision equation calculations in order to reduce the number of unnecessary collision checks.  The number of checks performed per timestep is linearly increasing, as opposed to the polynomial growth of the checks performed in the naive solution.  Prediction rates were between 0.3\% and 0.7\% correct, which although still low, are enormously more efficient when compared to the naive algorithm (see figure below).  These prediction rates are so low because at every timestep, the predictive algorithm still iterates over an array which holds future collision information.  Every array location maps to a sphere, and each location gets 'checked' once per timestep.  So an array location could be 'checked' many times before it actually triggers a collision event.
 
 \begin{center}
 	\includegraphics[width=.45\textwidth]{runtime_predictive_1thread.png}
@@ -507,11 +493,12 @@ Future Work to be written for Final Paper.
 	\captionof{figure}{}
 \end{center}
 
-* As the number of spheres increases, multiple threads to offer faster run times
+\begin{center}
+	\includegraphics[width=.45\textwidth]{collision_efficiency.png}
+	\captionof{figure}{}
+\end{center}
 
-* Total collisions is thread-invariant (as it should be), and scales linearly with the number of spheres
-
-* Total checks are also thread-invariant (as it should be), and scales polynomially with the number of spheres
+When subjecting the naive solution to thread improvements, multiple threads offer faster run times as the number of spheres increases.  Total collisions detected are thread-invariant (as they should be), and scale linearly with the number of spheres in the scene.  Total checks are also thread-invariant (as they should be), and scale polynomially with the number of spheres in the scene.
 
 \begin{center}
 	\includegraphics[width=.45\textwidth]{runtime_naive_allthreads.png}
@@ -523,11 +510,7 @@ Future Work to be written for Final Paper.
 	\captionof{figure}{}
 \end{center}
 
-* Although single-threaded runs show polynomial growth, it appears that multiple threads begin to exhibit closer to linear growth
-
-* As the number of spheres increases, the benefit of multiple threads increases
-
-* Collisions and checks are also thread-invariant (as it should be), and with the predictive algorithm, both scale linearly with the number of spheres
+Although single-threaded runs of the predictive algorithm show polynomial growth, it appears that multiple threads of the predictive algorithm begin to exhibit closer to linear growth.  As the number of spheres increases, the benefit of multiple threads increases as well.  Collisions and checks are also thread-invariant (as they should be), and with the predictive algorithm, both scale linearly with the number of spheres in the scene.
 
 \begin{center}
 	\includegraphics[width=.45\textwidth]{runtime_predictive_allthreads.png}
@@ -539,29 +522,21 @@ Future Work to be written for Final Paper.
 	\captionof{figure}{}
 \end{center}
 
-* In comparison, the predictive algorithm appears (at this resolution) to be linear with respect to the naive algorithm.  With the extra data points, we know this is not the case
-
-* The predictive algorithm can handle 4 times as many spheres (4k naive spheres runs just slightly longer than 16k predictive spheres) to execute in approximately the same runtime as the naive algorithm
+When comparing the runtimes of both algorithms and all thread scenarios, the predictive algorithm appears at this resolution to be linear with respect to the naive algorithm.  However, with the addition of a few extra simulations with even more spheres, we know this is not the case.  The runtimes do begin to exhibit a polynomial growth rate, albeit at a much slower growth.  For example, in our data, the predictive algorithm can handle four times as many spheres (shown by the 4096 naive spheres simulation runs just slightly longer than 16384 predictive spheres simulation) to execute in approximately the same runtime as the naive algorithm.
 
 \begin{center}
 	\includegraphics[width=.45\textwidth]{runtime_comparison.png}
 	\captionof{figure}{}
 \end{center}
 
-* Naive checks skyrocket rather quickly as the number of spheres increases
-
-* (I'm not sure specifically what I can say about the log-log plot, it's been a long time, but there it is for you)
+With respect to the naive algorithm, the number of checks skyrocket quickly as the number of spheres increases.  In order to more easily visualize the magnitude of this increase, we have shown a log-log plot of the number of spheres for the simulation vs. the number of checks performed by each algorithm.  The plot shows that the number of checks performed in the naive algorithm quickly grow to at least 10 orders of magnitude (base 2) more than the predictive algorithm.
 
 \begin{center}
 	\includegraphics[width=.45\textwidth]{log_total_checks_comparison.png}
 	\captionof{figure}{}
 \end{center}
 
-* Both algorithms benefit from multithreading, in comparison with their single threaded counterpart
-
-* In addition to the faster runtimes of the predictive algorithm, it also scales better than the naive solution as the number of spheres increases
-
-* There is, however, a threshold on the predictive algorithm where there is no threading benefit (in our data, this threshold is between 2k and 4k spheres).  This could be caused by some kind of overhead in managing the threads that is a significant portion of the total runtime when there are very few spheres (the predictive algorithm runtime between 2k and 4k spheres is 2-8 seconds on 30 seconds worth of simulation).  As the number of spheres increases, that overhead appears to become less and less dominant, and the performance improvement can be seen.
+Next we show that both algorithms eventually gain a benefit from multithreading, in comparison with their single threaded counterparts.  In addition to the faster runtimes of the predictive algorithm, it also scales better than the naive solution as the number of spheres increases.  There is, however, a threshold on the predictive algorithm where there is no threading benefit (in our data, this threshold is between 2048 and 4096 spheres).  This could be caused by some kind of overhead in managing the threads that is a significant portion of the total runtime when there are very few spheres (the predictive algorithm runtime between 2048 and 4096 spheres is 2-8 seconds).  As the number of spheres increases, that overhead appears to become less and less dominant, and the performance improvement can be seen.  At 32768 spheres, the speedup with 8 threads is shown to be 2.6 times faster than the single threaded simulation.
 
 \begin{center}
 	\includegraphics[width=.45\textwidth]{normalized_scalability_naive.png}
@@ -572,8 +547,6 @@ Future Work to be written for Final Paper.
 	\includegraphics[width=.45\textwidth]{normalized_scalability_predictive.png}
 	\captionof{figure}{}
 \end{center}
-
-* It might be worth noting that the difference between the algorithms shows on average a 0.2\% difference between collisions detected, with a maximum observed variance of 3\%.
 
 \section{Conclusion} 
 
