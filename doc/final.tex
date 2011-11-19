@@ -347,7 +347,33 @@ This phase does the grunt work of the predictive algorithm.  During this phase, 
 	\item Multiple threads could check() an object while another object is in the middle of writing to it.
 \end{enumerate}
 
-However, we can exploit the structure of our problem in order to guarantee that none of these cases occur.  Due to the fact that for two symmetric events, we only want one... we can check to see if one or both of the objects in the set have already been ``reacted'' against by using a hardware compare and swap operation to modify.
+However, we can exploit the structure of our problem in order to guarantee that none of these cases occur.  Due to the fact that for two symmetric events, we only want one... we can check to see if one or both of the objects in the set have already been collided.
+We can do this by using a flag bit for each of the objects in the scene to check whether or not the objects have been collided yet this frame.  Then, we check
+that bit for the OTHER object in our comparison, to see if the collision has already occured.  Regardless of whether or not the bit is set, we wish to atomically
+update the status of that bit to true for our current object.  The code becomes as follows.
+
+\begin{verbatimtab}[3]
+check_react_collisions()
+{
+   #search event queue for events that are occuring now
+   for e in events.find(current_time)
+   {
+	#if object reacted yet is false,set reacted to true and do the event
+	if(!compare_and_exchange(reacted_yet[e.o1],false,true))
+	{
+		#if the event hasn't been  happens and this thread is assigned to it
+
+		if(e.o1 is in current_thread AND check(e.o1,e.o2))
+		{
+			#modify both objects
+			collide(e.o1,e.o2)
+		}
+		#the event is passed, so remove it.
+		events.remove(e)
+	}
+}
+\end{verbatimtab}
+
 
 \subsubsection{Repredict}
 The reprediction phase is slightly more complex, but it is also embarassingly parallel and lock-free, provided that the implementation of our future event queue is thread-safe and scalable as well.  It detects simulation errors of the sort described in section \ref{sec:neq}, and also re-predicts collisions
@@ -376,6 +402,10 @@ does not write to non-thread assigned data, even though it reads the current sta
 
 In the case of an empty future queue, this phase is $O(n^2)$, because it has to make predictions on all pairs of objects.  However, in order for that to occur in the average case would require a majority of frames to have all objects collide
 with some other object simultaneously, a case which is exceedingly rare for the simulations we wish to run.
+
+\subsection{Future Event Queue}
+The future event queue stores N-body events, and is designed to be used in concert with the sub-phase algorithm as described in Section \ref{sec:subphase}.
+Our implementation uses the following definiton 
 
 \section{Experimental Setup}%Nick
 
@@ -420,8 +450,7 @@ for simple bounding-volume shapes \cite{uberflow,cloth}.  In our case, we choose
 In order to program the simulation, we will use C++, as it is a good language for high performance simulation applications.  In order to facilitate our 
 3D geometry and numerical libraries, we will write our own simulation system and geometry routines based on the C++ Numerical Vector library Eigen.  
 
-We wish to test performance economy as well as parallizability.  For our parallization tests, we will use thread-level parallelism constructs from the C++ compiler
-extension OpenMP, if applicable.  We may also experiment with using the new thread systems included with the new C++11 standard library.
+We wish to test performance economy as well as parallizability.  For our parallization tests, we will use thread-level parallelism constructs from the C++11 standard and atomic primitives, if applicable.
 
 The performance of these systems is typically evaluated in terms of a throughput measurement that measures the number of timestamps per second the system is capable of producing.  Equivalently, one can measure the average wall-clock time that passes while evaluating one timestamp.
 
