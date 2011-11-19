@@ -204,7 +204,9 @@ In addition, our queue must implement these algorithms efficiently in order to g
 
 \section{Scalable Implementation}
 In this section, we propose a scalable lock-free implementation of the predictive algorithm from section \ref{sec:theocont}, including an implementation of the 
-N-Body Future Event Queue data structure.  Our implementation uses barriers and hardware atomic compare-and-swap primatives to guarantee thread safety.
+N-Body Future Event Queue data structure.  Our implementation uses barriers and hardware atomic compare-and-swap primatives to guarantee thread-safety.  Our scalable implementation
+works in two parts, which we will discuss here:  First, it uses barriers and an hardware compare-and-exchange boolean to synchronize the algorithm that utilizes the data structure, 
+a process that is described in Section \ref{sec:stsp}.  Next, it uses an array with a thread-safe indexing scheme to implement the future event queue which is described in Section \ref{sec:feq}
 \subsection{Barriers}
 \label{sec:barrier}
 A barrier is a construct that is crucial to any threaded simulation.  It is a simple synchronization primative that only has one operation: wait(n).  
@@ -232,7 +234,8 @@ When implemented in this way, the implementation preserves the lock-free propert
 mutex, or does it ever enter the spinlock loop.  The last thread does useful work until it enters the wait() body, then immediately exits, continuing to make progress, releasing all
 other threads in the process.
 
-\subsection{Timestep Sub-Phases}
+\subsection{Scalable Timestep Sub-Phases}
+\label{sec:stsp}
 In all threaded implementations of timestamp-based simulation, at least one barrier construct
 is necessary in order to prevent the system from processing more than one timestep at a time.  Without an implict barrier at the beginning or end of the 
 processing for each timestamp, then worker threads could easily get out of sync on the timesteps that they are working on, which would produce incorrect calculations
@@ -278,11 +281,27 @@ timestep()
 }
 \end{verbatimtab}
 
-This way, we can guarantee that each thread never has cross-phase non-determinism, reducing the number of potential non-deterministic cases to account for from $9n to 3n$
+This way, we can guarantee that each thread never has cross-phase non-determinism, reducing the number of potential non-deterministic concurrency cases to account for from $9n to 3n$
 Furthermore, as we will demonstrate, the update phase and the repredict phase are embarassingly parallel and require no cross-thread communication or synchronization,
-reducing the synchronization overhead cases to only the 
+reducing the synchronization concerns to only the implementation of check-react.
+
 \subsection{Lock-Free Subphases}
 \label{sec:subphase}
+\subsubsection{Update}
+
+The update phase is simple and embarasingly parallel.  It also demonstrates our overall technique to distribute work equally to multiple threads.  In most of our sub-phases,
+we evenly distribute one object to perform operations on to each thread, evenly, one at a time by using a hash function that maps object ids to thread ids evenly. 
+$thread(object_id)=object_id \% num_threads+thread_id$
+\begin{verbatimtab}[3]
+update_simulation()
+{
+   for every object o assigned to current_thread:
+      update(o);
+}
+\end{verbatimtab}
+
+Because updating an object only modifies that particular object, this phase is embarrassingly data-parallel and needs no additional synchronization.
+
 \subsubsection{Check-React}
 
 \begin{verbatimtab}[3]
@@ -291,18 +310,49 @@ check_react_collisions()
    #search event queue for events that are occuring now
    for e in events.find(current_time)
    {
-	#if the event happens
-	if(check(e.o1,e.o2))
+	#if the event happens and this thread is assigned to it
+	if(e.o1 is in current_thread AND check(e.o1,e.o2))
 	{
 		#modify both objects
 		collide(e.o1,e.o2)
+	}
 	#the event is passed, so remove it.
 	events.remove(e)
+   }
 }
 \end{verbatimtab}
 This phase does the grunt work of the predictive algorithm.  During this phase, pending events that were predicted to happen in the current timestep
-are checked to see if they actually occur.  During this 
-Our implementation moves further, and uses barriers to introduce strongly-partitioned 'sub-phases', in order to mitigate the concurrent execution issues 
+are checked to see if they actually occur.  This phase requires additional synchronization overhead for one reason:  collide() reads and writes TWO objects,
+which means it could potentially modify objects that occur 
+
+\subsubsection{Repredict}
+The reprediction phase is slightly more complex, but it is also embarassingly parallel and lock-free, provided that the implementation of our future event queue is thread-safe and scalable as well.  It detects simulation errors of the sort described in section \ref{sec:neq}, and also re-predicts collisions
+that have been removed in check-react.  After finding all of the invalid objects (objects with no known future) that have been recently invalidated by check-react as well as logic errors, it then
+searches for all known predictions that will occur in the future and puts them into the queue.  
+\begin{verbatimtab}[3]
+repredict()
+{
+   #search event queue for objects that
+   #the queue is unaware of
+   for oinvalid in events.find_invalid(current_time)
+   {
+        #if invalid object is assigned to this thread
+        if(oinvalid in current_thread)
+        {
+		for do in dynamic_objects
+		{
+			events.insert(predict(oinvalid,do))
+		}
+	}
+   }
+}
+\end{verbatimtab}
+This algorithm is thread-safe and lock-free provided that the implementations of events.insert and events.find_invalid are thread-safe and lock-free, because predict is a read-only method that 
+does not write to non-thread assigned data, even though it reads the current state of all dynamic objects in the scene.
+
+In the case of an empty future queue, this phase is $O(n^2)$, because it has to make predictions on all pairs of objects.  However, in order for that to occur in the average case would require a majority of frames to have all objects collide
+with some other object simultaneously, a case which is exceedingly rare for the simulations we wish to run.
+
 \section{Experimental Setup}%Nick
 
 In typical instances of this problem in the real world, the type of simulation varies dramatically. In many applications, the objects obey complex interaction patterns such as flocking behavior and user interaction.  However, these interactions are almost always built around a simple framework for simulation that obeys Newtonian physics as the primary motion characteristic, with the more complex
