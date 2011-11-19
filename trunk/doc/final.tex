@@ -206,6 +206,7 @@ In addition, our queue must implement these algorithms efficiently in order to g
 In this section, we propose a scalable lock-free implementation of the predictive algorithm from section \ref{sec:theocont}, including an implementation of the 
 N-Body Future Event Queue data structure.  Our implementation uses barriers and hardware atomic compare-and-swap primatives to guarantee thread safety.
 \subsection{Barriers}
+\label{sec:barrier}
 A barrier is a construct that is crucial to any threaded simulation.  It is a simple synchronization primative that only has one operation: wait(n).  
 A thread that enters wait(n) will wait at that point in the control flow of the program until the total number of threads in the wait(n) function is n.  Then,
 all threads return simultaneously.
@@ -248,11 +249,42 @@ timestep()
    check_react_collisions();
    repredict();
    update_simulation();
-   timestep_sync_barrier.wait();
+   timestep_sync_barrier.wait(num_threads);
 }
 \end{verbatimtab}
 
-Note the implicit barrier protecting all threads from moving to the next frame before their peers.  The implementations of each subroutine are given below:
+Note the implicit barrier protecting all threads from moving to the next frame before their peers.  The implementations of each subroutine are given in section \ref{sec:subphase}.
+
+The primary problem with thread safety in this formulation of the timestep is the program errors that can occur in the status of the queue and the determinism of the simulation
+if multiple threads are in different phases simultaneously.  For example, if thread A is updating object j, in the ``update simulation stage'', and thread B is writing to object 
+j and i in the ``check react collisions'' phase, then the exact results the simulation will calculate are non-deterministic based on processor scheduling.  
+Due to the fact that there are 3 phases, and $n$ objects, the total number of possible non-deterministic phase-overlap outcomes is $3x3xn=9n$.  This is clearly not an thread-safe solution.
+
+However, as can be seen from section \ref{sec:subphase}, each of the subphases can be parallelized somewhat trivially.  Additionally, each subphase either reads and writes
+a single array for that phase without inter-thread communication, or reads and writes two arrays with inter-thread communication.  Therefore, to allow us to parallize each
+phase in isolation, we break up the timestep into ``sub-phases'' using an additional barrier operation, implemented as in section \ref{sec:barrier}.  
+
+\begin{verbatimtab}[3]
+timestep()
+{
+   check_react_collisions();
+   subphase_barrier.wait(numthreads);
+
+   repredict();
+   subphase_barrier.wait(numthreads);
+
+   update_simulation();
+   timestep_sync_barrier.wait(num_threads);
+}
+\end{verbatimtab}
+
+This way, we can guarantee that each thread never has cross-phase non-determinism, reducing the number of potential non-deterministic cases to account for from $9n to 3n$
+Furthermore, as we will demonstrate, the update phase and the repredict phase are embarassingly parallel and require no cross-thread communication or synchronization,
+reducing the synchronization overhead cases to only the 
+\subsection{Lock-Free Subphases}
+\label{sec:subphase}
+\subsubsection{Check-React}
+
 \begin{verbatimtab}[3]
 check_react_collisions()
 {
@@ -268,6 +300,8 @@ check_react_collisions()
 	events.remove(e)
 }
 \end{verbatimtab}
+This phase does the grunt work of the predictive algorithm.  During this phase, pending events that were predicted to happen in the current timestep
+are checked to see if they actually occur.  During this 
 Our implementation moves further, and uses barriers to introduce strongly-partitioned 'sub-phases', in order to mitigate the concurrent execution issues 
 \section{Experimental Setup}%Nick
 
