@@ -8,6 +8,8 @@
 % http://www.ieee.org/conferences_events/conferences/publishing/templates.html	
 
 \documentclass[conference]{IEEEtran}
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
 % *** CITATION PACKAGES ***
 %
@@ -118,15 +120,21 @@ For each object $o$ in the system, a subroutine is defined \texttt{update($o$,$d
 
 The brute force all-pairs solution is the naive solution to this problem as it is commonly implemented in games. This technique is known as a 'detection' technique because it relies on the idea of detecting a collision when it occurs instead of predicting a collision.  
 
-\begin{verbatimtab}[3]
-for each timestep ti
-	dt is the constant timestep difference
-	for each dynamic object "do"
-		update(do,dt)		
-		for each object  o
-			if(check(do,o))
-				collide(do, o, dt)
-\end{verbatimtab}
+\begin{algorithm}
+\caption{Naive Algorithm}
+\begin{algorithmic}
+\FOR{each timestep $ti$}
+	\FOR{each dynamic object $do$}
+		\STATE update($do,dt$)  \COMMENT{$dt$ is the constant timestep difference}
+		\FOR{each object $o$}
+			\IF{check($do, o$)}
+				\STATE collide($do, o, dt$)
+			\ENDIF
+		\ENDFOR
+	\ENDFOR
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 
 This technique is embarassingly parallel, allowing a thread per dynamic object or even a thread per pair with minimal overhead.  However, it is extremely
 wasteful, because there are $O(n^2)$ checks being made every single timestamp, even if the likelihood of a collision has changed little since the last timestep \cite{Seningood}.  
@@ -145,23 +153,27 @@ A similar algorithm that we refer to as the 'semi-naive' algorithm has also foun
 
 In our desired solution, we take a completely different approach.  In contrast to the naive and semi-naive algorithms, our solution avoids computing any unneeded checks on timestamps that do not change the solution by \textit{predicting} the intersections before they occur, rather than checking for them when they do not.  Our algorithm will use a slightly more complex subroutine \texttt{predict($o1$,$o2$)} that returns the time an intersection is likely to occur, and enters it into an event queue that contains the predicted collisions that are likely to occur.  When an intersection occurs, it is recomputed and removed from the queue.
 
-\begin{verbatimtab}[3]
-events=future_event_queue()
-#initialize events from initial states.
-
-for each timestep ti
-	dt is the constant timestep difference
-	for each dynamic object "do"
-		update(do,dt)
-
-	#for each event that occurs in this timestep
-	for each e in events.find(ti) 
-		for each object o
-			if(check(e.o,o))
-				collide(e.o, o, dt)
-				#predict next collision event into queue
-		events.remove(e)
-\end{verbatimtab}
+\begin{algorithm}
+\caption{Predictive Algorithm}
+\begin{algorithmic}
+\STATE \COMMENT{initialize events from initial states} % future_event_queue()
+\FOR{each timestep $ti$}
+	\FOR{each dynamic object $do$}
+		\STATE update($do,dt$)  \COMMENT{$dt$ is the constant timestep difference}
+		\STATE \COMMENT{for each event that occurs in this timestep}
+		\FOR{each e in events.find(ti)}
+			\FOR{each object $o$}
+				\IF{check($e.o,o$)}
+					\STATE collide($e.o, o, dt$) \COMMENT{predict next collision event into queue}
+				\ENDIF
+			\ENDFOR
+			\STATE{$events$.remove($e$)}
+		\ENDFOR
+	\ENDFOR
+\ENDFOR
+\RETURN events
+\end{algorithmic}
+\end{algorithm}
 
 It is worth noting that although our solution is the same runtime complextiy as the naive solution in the worst case (and, in fact, the initial population of event queue will need to preform $n^2$ predictions), it is unlikely to compute ANY checks that are unlikely to occur, thus saving tremendous computation time.  
 
@@ -171,25 +183,22 @@ However, our work is not done.  This algorithm is difficult to parallelize when 
 \label{sec:neq}
 Our algorithm depends on a data structure we call an "N-Body Future Event Queue".  This data structure is designed to facilitate the prediction algorithm
 by storing pairwise events that are probabilistically likely (but not guaranteed) to occur.  Such a data structure has the following pseudocode description
-\begin{verbatimtab}[3]
-FutureEventQueue
-{
-	#inserts an event into the queue, 
-	#possibly superceding any events that happen later
-	insert(event)
+\floatname{algorithm}{Data Structure}
+\begin{algorithm}
+\caption{Future Event Queue}
+\begin{algorithmic}
+\STATE \COMMENT{inserts an event into the queue, possibly superceding any events that happen later}
+\STATE \textbf{insert}($event$)
+\STATE \COMMENT{removes an event from the queue}
+\STATE \textbf{remove}($event$)
 	
-	#removes an event from the queue
-	remove(event)
-	
-	#returns an iterator that iterates over all
-	#predicted events that occur after time t
-	EventIterator find(time t)
+\STATE \COMMENT{returns an iterator that iterates over all predicted events that occur after time $t$}
+\STATE EventIterator \textbf{find}(time $t$)
 
-        #Returns all objects for which nothing is known about 
-        #their behavior
-        ObjectIterator find_invalid()
-}
-\end{verbatimtab}
+\STATE \COMMENT{Returns all objects for which nothing is known about their behavior}
+\STATE ObjectIterator \textbf{find\_invalid}()
+\end{algorithmic}
+\end{algorithm}
 
 It is important to take special note here of the operations in the future event queue.  The most important differences from it and a standard priority queue or event queue
 is that the find() method can search for all events that occur within a certain timeframe, and that events that get input into the queue are not necessarily persistent, as they 
@@ -217,18 +226,23 @@ Typically, a barrier is not classified as a lock-free operation.  In most implem
 unlocked when the number of sleeping threads is equal to n.  However, this need not be the case.  We observe that the barrier preserves the lock-free property if it is implemented
 using a hardware atomic instructions instead.  Wait can be implemented as 
 
-\begin{verbatimtab}[3]
-barrier{
-int num_threads; #the number of threads to collect
-wait()
-    #collect this thread
-    fetch_and_sub(&num_threads,1);
-    #spin until all threads are collected
-    while(num_threads > 0);
-    #uncollect this thread
-    fetch_and_add(&num_threads,1);
-}
-\end{verbatimtab}
+\floatname{algorithm}{Procedure}
+\begin{algorithm}
+\label{barrier}
+\caption{Wait}
+\begin{algorithmic}
+\STATE barrier
+	\STATE int $num\_threads$ \COMMENT{the number of threads to collect}
+	\STATE wait()
+	\STATE \COMMENT{collect this thread}
+	\STATE fetch\_and\_sub($\&num_threads$,1)
+	\STATE \COMMENT{spin until all threads are collected}
+	\WHILE {$num\_threads > 0$}
+		\STATE \COMMENT{uncollect this thread}
+		\STATE fetch\_and\_add($\&num_threads$, 1)
+	\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
 
 When implemented in this way, the implementation preserves the lock-free property, because even though n-1 threads are forced to wait, the last thread never waits for any 
 mutex, or does it ever enter the spinlock loop.  The last thread does useful work until it enters the wait() body, then immediately exits, continuing to make progress, releasing all
@@ -246,15 +260,16 @@ Therefore, we can consider the timespan of a single timestep as a single computa
 all processing that occurs outside of a single timestep.  For our implementation of the prediction algorithm described in \ref{sec:theocont}, a single timestep is broken down
 into several distinct 'phases`., with the overall structure as follows:
 
-\begin{verbatimtab}[3]
-timestep()
-{
-   check_react_collisions();
-   repredict();
-   update_simulation();
-   timestep_sync_barrier.wait(num_threads);
-}
-\end{verbatimtab}
+\floatname{algorithm}{Procedure}
+\begin{algorithm}
+\caption{Timestep}
+\begin{algorithmic}
+\STATE check\_react\_collisions();
+\STATE repredict();
+\STATE update\_simulation();
+\STATE timestep\_sync\_barrier.wait();
+\end{algorithmic}
+\end{algorithm}
 
 Note the implicit barrier protecting all threads from moving to the next frame before their peers.  The implementations of each subroutine are given in section \ref{sec:subphase}.
 
@@ -267,19 +282,22 @@ However, as can be seen from section \ref{sec:subphase}, each of the subphases c
 a single array for that phase without inter-thread communication, or reads and writes two arrays with inter-thread communication.  Therefore, to allow us to parallize each
 phase in isolation, we break up the timestep into ``sub-phases'' using an additional barrier operation, implemented as in section \ref{sec:barrier}.  
 
-\begin{verbatimtab}[3]
-timestep()
-{
-   check_react_collisions();
-   subphase_barrier.wait(numthreads);
-
-   repredict();
-   subphase_barrier.wait(numthreads);
-
-   update_simulation();
-   timestep_sync_barrier.wait(num_threads);
-}
-\end{verbatimtab}
+\floatname{algorithm}{Procedure}
+\begin{algorithm}
+\caption{Check\_React\_Collisions}
+\begin{algorithmic}
+\STATE \COMMENT{search event queue for events that are occuring now}
+\FOR{$e$ in $events$.find($current\_time$)}
+	\STATE \COMMENT{if the event happens}
+	\IF{check($e.o1,e.o2$)}
+		\STATE \COMMENT{modify both objects}
+		\STATE collide($e.o1,e.o2$)
+	\ENDIF
+	\STATE \COMMENT{the event is passed, so remove it.}
+	\STATE $events$.remove($e$)
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 
 This way, we can guarantee that each thread never has cross-phase non-determinism, reducing the number of potential non-deterministic concurrency cases to account for from $9n to 3n$
 Furthermore, as we will demonstrate, the update phase and the repredict phase are embarassingly parallel and require no cross-thread communication or synchronization,
