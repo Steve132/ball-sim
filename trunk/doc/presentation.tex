@@ -29,10 +29,11 @@
 			\item Dynamic objects physically collide with other objects
 			\item Model and react to collisions
 		\end{itemize}
+		\item Simple demo
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 	\frametitle{Naive Implementation}
 	\begin{itemize}
 		\item Embarrasingly parallel implementation
@@ -41,7 +42,7 @@
 			\item Objects are continually polled, waiting for collisions
 		\end{itemize}
 		\item
-%	\begin{lstlisting}[language=C,basicstyle=\footnotesize,frame=single,tabsize=4,title=Naive_Algorithm]
+	\begin{lstlisting}[language=C,basicstyle=\footnotesize,frame=single,tabsize=4,title=Naive\_Algorithm]
 for each timestep ti do
     for each dynamic object do do
         update(do, dt) {dt is the constant timestep difference}
@@ -52,7 +53,7 @@ for each timestep ti do
         end for
     end for
 end for
-%	\end{lstlisting}
+	\end{lstlisting}
 		\item Allows thread per object or pair
 		\item Wasteful, runs in $O(n ^ 2)$ time 
 		\item In sufficiently large scenes, collisions are rare
@@ -64,7 +65,7 @@ end for
 
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 	\frametitle{Our Proposed Predictive Algorithm}
 	\begin{itemize}
 		\item Instead of checking all possible object pairs for collisions, compute when pairs are likely to collide
@@ -73,7 +74,7 @@ end for
 		\end{itemize}
 		\item Store each pair's potential collision times into event queue
 		\item
-%	\begin{lstlisting}[language=C,basicstyle=\footnotesize,frame=single,tabsize=4,title=Predictive_Algorithm]
+	\begin{lstlisting}[language=C,basicstyle=\footnotesize,frame=single,tabsize=4,title=Predictive\_Algorithm]
 {initialize events from initial states}
 for each timestep ti do
   for each dynamic object do do
@@ -91,20 +92,26 @@ for each timestep ti do
 end for
 return events
 
-%	\end{lstlisting}
+	\end{lstlisting}
 	\item In worst case, also runs $O(n ^ 2)$ (initial population of event queue)
 	\item Timesteps now see $O(n)$ search of event queue
 	\item If collision, only recompute $2n$ future collisions
+	\item Average case $O(n)$ behavior.
 	\end{itemize}
 
 \end{frame}
+
+\begin{frame}
+  \frametitle{Whiteboard Demonstration}
+\end{frame}
+
 
 \begin{frame}
 	\frametitle{Potential Algorithm Issues}
 	\begin{itemize}
 		\item Predictive algorithm is not currently parallelizable
 		\begin{itemize}
-			\item Relies on independent accesses to global event queue
+			\item Relies on independent accesses to global future event queue (shared state)
 			\item Can we divide threads to ensure no collisions?
 			\item Can we guarantee threads will all act on one timestep at a time?
 		\end{itemize}
@@ -119,30 +126,47 @@ return events
 			\item Guarantee thread safety
 			\item Synchronizes threads utilizing the event queue
 			\item Use array with thread-safe indexing scheme
+			\item Uses subphase barriers to 
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 	\frametitle{Barriers}
+	\includegraphics[width=.9\textwidth]{unsync.png}
 	\begin{itemize}
 		\item Barriers make threads wait until all threads have reached the barrier
 		\item Then all threads are released to continue
-		\item
-%	\begin{lstlisting}[language=C,basicstyle=\footnotesize,frame=single,tabsize=4,title=Barrier]
-int num threads {the number of threads to collect}
-wait()
-{collect this thread}
-fetch and sub(&num threads,1)
-{spin until all threads are collected}
-while num threads > 0 do
-  noop()
-end while
-{uncollect this thread}
-fetch and add(&num threads, 1)
-%	\end{lstlisting}
+		\item Allows us to partition simulation into frames.
+		\item One timestep at a time.
+		\item Argument: Barriers obey lock-free property
+	\end{itemize}
+	\includegraphics[width=.9\textwidth]{sync.png}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Future Event Queue}
+	\begin{itemize}
+	\item \emph{insert(event)} inserts an event into the queue, possibly superceding any events that happen later
+	\item \emph{remove(event)} removes an event from the queue	
+	\item \emph{find(time)} returns an iterator that iterates over all predicted events that occur after time $t$.
+	\item \emph{find\_invalud()} Returns all objects for which nothing is known about their behavior
 	\end{itemize}
 \end{frame}
+
+\begin{frame}
+      \frametitle{Future Event Queue Implementation}
+      \begin{itemize}
+      \item Could use priority queue, but thread-safety problems.
+       \item ObjectID indexed array.  One ``pending event'' per object
+        \item Operations only operate on assigned object hashes
+	\item insert(e) overwrites pending\[e.o1.id\] $O(1)$
+	\item remove(e) invalidates pending\[e.o1.id\] $O(1)$
+	\item find\_invalid() is a linear search through array $O(n)$
+	\item find(t) is linear search $O(n)$
+      \end{itemize}
+\end{frame}
+
 
 \begin{frame}
 	\frametitle{Scalable Timestep Subphases}
@@ -155,42 +179,27 @@ fetch and add(&num threads, 1)
 			\item timestep\_sync\_barrier.wait()
 		\end{itemize}
 		\item Important to not allow different threads in different subphases at the same time
-		\item Implement subphase barriers as well
+		\item Implement subphase barriers as well...3*3 cases of overlap behavior->3 cases
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 	\frametitle{Updating Objects}
 	\begin{itemize}
 		\item Updating each object's position requires no information for any other objects
 		\item Physical motion calculation
 		\item Can be done in parallel without worry of collision
-		\item
-%	\begin{lstlisting}[language=C,basicstyle=\footnotesize,frame=single,tabsize=4,title=Update]
+		\item Reads/Writes only thread owned object
+	\begin{lstlisting}[language=C,basicstyle=\footnotesize,frame=single,tabsize=4,title=Update]
 for every object o assigned to current thread do
   update(o)
 end for
-%	\end{lstlisting}
+	\end{lstlisting}
 	\end{itemize}
 \end{frame}
-
-\begin{frame}
-	\frametitle{Check React Collisions}
-	\begin{itemize}
-		\item Potential synchronization issues
-		\begin{itemize}
-			\item Collide() method reads and writes TWO objects, which could be assigned to other threads non-deterministically
-			\item Two events in the event queue could be describing the same collision from different perspectives
-			\item Multiple threads could check an object while another thread is writing to it
-		\end{itemize}
-		\item Solved by adding a flag bit
-		\item Flag determines whether object has been collided this timestep
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
+\begin{frame}[fragile]
 	\frametitle{Check React Collisions (cont.)}
-%	\begin{lstlisting}[language=C,basicstyle=\footnotesize,frame=single,tabsize=4,title=Check_React_Collisions]
+	\begin{lstlisting}[language=C,basicstyle=\footnotesize,frame=single,tabsize=4,title=Check\_React\_Collisions]
 {search event queue for events that are occuring now}
 for e in events.find(current time) do
   {if object reacted yet is false,set reacted to true and do the event}
@@ -205,10 +214,23 @@ for e in events.find(current time) do
     events.remove(e)
   end if
 end for
-%	\end{lstlisting}
+	\end{lstlisting}
+\end{frame}
+\begin{frame}
+	\frametitle{Check React Collisions}
+	\begin{itemize}
+		\item Potential synchronization issues
+		\begin{itemize}
+			\item Collide() method reads and writes TWO objects, which could be assigned to other threads non-deterministically
+			\item Two events in the event queue could be describing the same collision from different perspectives
+			\item Multiple threads could check an object while another thread is writing to it
+		\end{itemize}
+		\item Solved by adding a flag bit
+		\item Flag determines whether object has been collided this timestep
+	\end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 	\frametitle{Repredict Collisions}
 	\begin{itemize}
 		\item Recalculate future collisions for invalidated pairs
@@ -218,7 +240,7 @@ end for
 		\end{itemize}
 		\item This step may read objects belonging to other threads, but won't modify them
 		\item
-%	\begin{lstlisting}[language=C,basicstyle=\footnotesize,frame=single,tabsize=4,title=Repredict]
+	\begin{lstlisting}[language=C,basicstyle=\footnotesize,frame=single,tabsize=4,title=Repredict]
 {search event queue for objects that the queue is unaware of}
 for oinvalid in events.find invalid(current time) do
   {if invalid object is assigned to this thread}
@@ -228,14 +250,7 @@ for oinvalid in events.find invalid(current time) do
     end for
   end if
 end for
-%	\end{lstlisting}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Future Event Queue}
-	\begin{itemize}
-		NOT SURE HOW TO SUMMARIZE THIS, STEVE CHECK THIS PLEASE :)
+	\end{lstlisting}
 	\end{itemize}
 \end{frame}
 
@@ -300,10 +315,12 @@ end for
 	\begin{center}
 		\includegraphics[width=.75\textwidth]{normalized_scalability_predictive.png}
 	\end{center}
+\end{frame}m
+
+
+\begin{frame}
+  \frametitle{Questions?}
 \end{frame}
-
-
-
 
 
 
