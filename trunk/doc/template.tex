@@ -30,7 +30,7 @@
           }
 
 %% Please type your abstract here.
-\abstract{The general simulation of n-body systems often requires the simulation of pairwise interaction events between the objects.  The naive method of simulating these events is an algorithm that polls each pair of objects for an interaction every \hyphenation{time-step}.  This algorithm has $O(n^2)$ operations per \hyphenation{time-step} in the number of objects.  However, this method scales very well to multiple cores. In this paper, we propose a novel method of pairwise simulation that saves a significant amount of computation time by predicting possible future outcomes rather than reacting to them.  We demonstrate the implementation of this method, as well as demonstrate that it has amortized $O(n)$ complexity per \hyphenation{time-step}.  We also demonstrate a lock-free implementation to allow this algorithm to scale comparably well to multiple cores of a shared memory machine.}
+\abstract{The general simulation of n-body systems often requires the simulation of pairwise interaction events between the objects.  The naive method of simulating these events is an algorithm that polls each pair of objects for an interaction every \hyphenation{time-step}.  This algorithm has $O(n^2)$ operations per \hyphenation{time-step} in the number of objects.  However, this method scales very well to multiple cores. In this paper, we propose a novel method of pairwise simulation that saves a significant amount of computation time by predicting possible future outcomes rather than reacting to them.  We demonstrate the implementation of this method, as well as demonstrate that it has amortized $O(n)$ complexity per \hyphenation{time-step}.  We also demonstrate an implementation to allow this algorithm to scale comparably well to multiple cores of a shared memory machine.}
 
 %% Keywords should be separated by \*\ sign
 \keywords{computer science literature and publications \*\ publications in electronic media \*\ bibliographies}
@@ -46,7 +46,7 @@
 
 There is a great deal of interest in discrete event simulation as it applies to video games and real time simulation. One interest in particular is the application of realistic physics in these simulations.  This kind of discrete event simulation is traditionally performed on large scale parallel clusters for film and scientific applications, or on massively parallel GPU architectures \cite{grape,uberflow}.  Specifically, we wish to explore the simulation and evolution of systems of dynamic and static objects where all the dynamic objects interact with all of the other objects, as happens when the dynamic objects physically collide with other objects.  In order to do this, we need to be able to model and react to collisions and interactions between objects. 
 
-Although the naive and semi-naive implementations of this kind of simulation are embarrassingly parallel, they are also exceedingly wasteful.  The method used to evaluate the interactions between objects is similar to a busy-wait loop, where all objects are continually polled, waiting for collisions to occur as the simulation progresses \cite{nbodycollisions,Moore88collisiondetection}.   As we will describe in the next sections, we are interested in using a novel predictive model along with a novel lock-free n-body event queue data structure to attempt to make a new kind of economical collision simulation system.  This system does not perform wasteful checks when checks are unlikely and maintains much of the parallelism of the naive solution.
+Although the naive and semi-naive implementations of this kind of simulation are embarrassingly parallel, they are also exceedingly wasteful.  The method used to evaluate the interactions between objects is similar to a busy-wait loop, where all objects are continually polled, waiting for collisions to occur as the simulation progresses \cite{nbodycollisions,Moore88collisiondetection}.   As we will describe in the next sections, we are interested in using a novel predictive model along with a novel scalable n-body event queue data structure to attempt to make a new kind of economical collision simulation system.  This system does not perform wasteful checks when checks are unlikely and maintains much of the parallelism of the naive solution.
 
 \section{Problem Definition}
 
@@ -151,7 +151,7 @@ an object, we must know of this immediately and attempt to re-predict that objec
 In addition, our queue must implement these algorithms efficiently in order to preserve the desired average-case $O(n)$ that our prediction algorithm facilitates.  In particular, all operations must be implemented in $O(n)$ time.
 
 \section{Scalable Implementation}
-In this section, we propose a scalable lock-free implementation of the predictive algorithm from section \ref{sec:theocont}, including an implementation of the 
+In this section, we propose a scalable implementation of the predictive algorithm from section \ref{sec:theocont}, including an implementation of the 
 N-Body Future Event Queue data structure.  Our implementation uses barriers and hardware atomic compare-and-swap primitives to guarantee thread-safety.  Our scalable implementation
 works in two parts, which we will discuss here:  First, it uses barriers and an hardware compare-and-exchange boolean to synchronize the algorithm that utilizes the data structure, 
 a process that is described in Section \ref{sec:stsp}.  Next, it uses an array with a thread-safe indexing scheme to implement the future event queue which is described in Section \ref{feq}
@@ -243,7 +243,7 @@ This way, we can guarantee that each thread never has cross-phase non-determinis
 Furthermore, as we will demonstrate, the update phase and the re-predict phase are embarrassingly parallel and require no cross-thread communication or synchronization,
 reducing the synchronization concerns to only the implementation of check-react.
 
-\subsection{Lock-Free Sub-phases}
+\subsection{Scalable Sub-phases}
 \label{sec:subphase}
 
 \subsubsection{Update}
@@ -328,7 +328,7 @@ becomes $O(F(n)+n R(n))$ in the worst case.
 
 \subsubsection{Re-predict}
 \label{sec:repredict}
-The re-prediction phase is slightly more complex, but it is also embarrassingly parallel and lock-free, provided that the implementation of our future event queue is thread-safe and scalable as well.  It detects simulation errors of the sort described in section \ref{sec:neq}, and also re-predicts collisions
+The re-prediction phase is slightly more complex, but it is also embarrassingly parallel and scalable, provided that the implementation of our future event queue is thread-safe and scalable as well.  It detects simulation errors of the sort described in section \ref{sec:neq}, and also re-predicts collisions
 that have been removed in check-react.  After finding all of the invalid objects (objects with no known future) that have been recently invalidated by check-react as well as logic errors, it then
 searches for all known predictions that will occur in the future and puts them into the queue.  
 
@@ -346,7 +346,7 @@ searches for all known predictions that will occur in the future and puts them i
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
-This algorithm is thread-safe and lock-free provided that the implementations of events.insert and events.find\_invalid are thread-safe and lock-free, because predict is a read-only method that 
+This algorithm is thread-safe and scalable provided that the implementations of events.insert and events.find\_invalid are thread-safe and scalable, because predict is a read-only method that 
 does not write to non-thread assigned data, even though it reads the current state of all dynamic objects in the scene.
 
 The complexity of this procedure also depends on an unknown factor, which is the number of invalid entries in the queue, which we will call $k'$.  In most cases, $k=k'$, because objects are made invalid
@@ -453,7 +453,7 @@ As it is also implemented as a linear search through the array, find() is in $O(
 \subsection{Summary of Predictive Method}
 	The sub-phase barriers and the thread object ownership system work together to ensure the thread-safety of the inputs and outputs to the Future Event Queue.
 This partnership ensures in all the covered cases that the same object data is never used as a concurrent shared resource for both reading and writing.  In addition, we believe our algorithm maintains
-the lock-free property because it remains wait-free in all states except when a thread is waiting at a barrier, which we justified is still a lock-free state in Section \ref{barrier}.
+the lock-free property because it remains wait-free in all states except when a thread is waiting at a barrier, which we justified is still a lock-free state in Section \ref{sec:barrier}.
 
 \subsubsection{Complexity}
 
@@ -657,7 +657,7 @@ Next we show that both algorithms eventually gain a benefit from multi-threading
 
 \section{Conclusion} 
 
-We have presented a novel algorithm to perform discrete event n-body simulations, using predictive event detection instead of polling collision detection.  Our algorithm runs in $O(n)$ time in the average-case for a single \hyphenation{time-step}.  We have demonstrated that this algorithm has significantly increased single-threaded performance over the naive implementation, and we have presented an implementation that obeys the lock-free property and scales well to a multi-core architecture in comparison to the naive algorithm.
+We have presented a novel algorithm to perform discrete event n-body simulations, using predictive event detection instead of polling collision detection.  Our algorithm runs in $O(n)$ time in the average-case for a single \hyphenation{time-step}.  We have demonstrated that this algorithm has significantly increased single-threaded performance over the naive implementation, and we have presented an implementation that scales well to a multi-core architecture in comparison to the naive algorithm.
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,midterm}
@@ -704,6 +704,7 @@ is taken as the predicted collision time.  Otherwise, no collision is predicted.
 
 
 
+\begin{comment}
 \begin{thebibliography}{99}
 \bibitem{journal-1} Akbar M.M., Manning E.G., Shoja G.C., Khan S., Heuristic Solutions for the Multiple-Choice Multi-dimension Knapsack Problem, LECT NOTES COMPUT SC, 2001, 2074, 659-668
 \bibitem{journal-2} Kemerer C.F., Slaughter S., An empirical approach to studying software evolution, IEEE T SOFTWARE ENG, 2002, 25, 493-509 
@@ -722,5 +723,6 @@ is taken as the predicted collision time.  Otherwise, no collision is predicted.
 \bibitem{standard-1} ISO 2108:1992, Information and documentation --- International standard book numbering (ISBN)
 \bibitem{standard-2} ISO/TR 9544:1988, Information processing --- Computer-assisted publishing --- Vocabulary
 \end{thebibliography}
+\end{comment}
 
 \end{document}
