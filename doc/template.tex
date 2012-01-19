@@ -22,7 +22,7 @@
 
 \author{Steven Braeger\inst{1}\email{steve@soapforge.com},
         Nicholas Arnold\inst{1}\email{narnold@knights.ucf.edu},
-        Damien Dechev\inst{1}\email{damian.dechev@gmail.com}}
+        Damian Dechev\inst{1}\email{damian.dechev@gmail.com}}
 
 \institute{
      \inst{1} University of Central Florida,\\
@@ -555,7 +555,7 @@ The total runtime of the naive algorithm is scale-invariant.  That is to say, th
 \end{figure}
 \end{center}
 
-For the predictive algorithm, total runtime is not scale-invariant, as predictions rely on calculating physical collisions.  As the volume increases, the likelihood of collision decreases (Figure \ref{rt_predict1}).  Total runtime is showing growth as was true with the naive algorithm, but at a much slower growth rate than the naive algorithm.  This may be a result of extra overhead to perform collision equation calculations in order to reduce the number of unnecessary collision checks.  The number of checks performed per \hyphenation{time-step} is linear with respect to the number of objects, as opposed to the polynomial growth of the checks performed in the naive solution (Figure \ref{col_predict1}.  Prediction rates were between 0.3\% and 0.7\% correct, which although still low, are enormously more efficient when compared to the naive algorithm (Figure \ref{col_eff}).  These prediction rates are so low because at every \hyphenation{time-step}, the predictive algorithm still iterates over an array which holds future collision information.  Every array location maps to a sphere, and each location gets 'checked' once per \hyphenation{time-step}.  So an array location could be 'checked' many times before it actually triggers a collision event.
+For the predictive algorithm, total runtime is not scale-invariant, as predictions rely on calculating physical collisions.  As the volume increases, the likelihood of collision decreases (Figure \ref{rt_predict1}).  Total runtime is showing growth as was true with the naive algorithm, but at a much slower growth rate than the naive algorithm.  This may be a result of extra overhead to perform collision equation calculations in order to reduce the number of unnecessary collision checks.  The number of checks performed per \hyphenation{time-step} is linear with respect to the number of objects, as opposed to the polynomial growth of the checks performed in the naive solution (Figure \ref{col_predict1}).  Prediction rates were between 0.3\% and 0.7\% correct, which although still low, are enormously more efficient when compared to the naive algorithm (Figure \ref{col_eff}).  These prediction rates are so low because at every \hyphenation{time-step}, the predictive algorithm still iterates over an array which holds future collision information.  Every array location maps to a sphere, and each location gets 'checked' once per \hyphenation{time-step}.  So an array location could be 'checked' many times before it actually triggers a collision event.
 
 \begin{center}
 \begin{figure}
