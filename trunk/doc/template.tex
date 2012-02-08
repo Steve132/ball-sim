@@ -77,7 +77,7 @@ The brute force all-pairs solution is the naive solution to this problem as it i
 \end{algorithm}
 
 This technique is embarrassingly parallel, allowing a thread per dynamic object or even a thread per pair with minimal overhead.  However, it is extremely
-wasteful, because there are $O(n^2)$ checks being made every single timestamp, even if the likelihood of a collision has changed little since the last time-step \cite{Seningood}.  
+wasteful, because there are $O(n^2)$ checks being made every single time-step, even if the likelihood of a collision has changed little since the last time-step \cite{Seningood}.  
 
 Each of these $O(n^2)$ checks per time-step is computationally cheap individually, but when the number of objects is very great the computational overhead of performing all of them becomes
 unmanageable. Considering that an extreme majority of the checks will fail due to the fact that collision occurrences are rare, most of them do not need to be computed, and avoiding their computation has the ability to dramatically increase the 
@@ -195,7 +195,7 @@ other threads in the process.
 In all threaded implementations of time-step-based simulation, at least one barrier construct
 is necessary in order to prevent the system from processing more than one time-step at a time.  Without an implicit barrier at the beginning or end of the 
 processing for each time-step, then worker threads could easily get out of sync on the time-steps that they are working on, which would produce incorrect calculations
-for comparisons between threads.  The current timestamp of the simulation must be constant across all threads, and so a barrier is used in order to synchronize that time-step.  This
+for comparisons between threads.  The current time-step of the simulation must be constant across all threads, and so a barrier is used in order to synchronize that time-step.  This
 limitation is true for all threaded time-step simulation, our application included.
 
 Therefore, we can consider the timespan of a single time-step as a single computational unit, the beginning and end of which all threads are operating in sync.  We can ignore
@@ -209,7 +209,7 @@ into several distinct 'phases,` with the overall structure as follows:
 \STATE check\_react\_collisions();
 \STATE repredict();
 \STATE update\_simulation();
-\STATE timestep\_sync\_barrier.wait();
+\STATE time-step\_sync\_barrier.wait();
 \end{algorithmic}
 \end{algorithm}
 
@@ -319,9 +319,9 @@ update the status of that bit to true for our current object.  The code becomes 
 \end{algorithm}
 
 The complexity analysis of this procedure is non-trivial.  During Check\_React\_Collisions, the code in the loop is executed only if there is 
-some collision that is predicted to occur during this timestep.  However, whether or not any collisions occur depends on a number of factors that
+some collision that is predicted to occur during this time-step.  However, whether or not any collisions occur depends on a number of factors that
 cannot be effectively reasoned about mathematically. For the purposes of our analysis in the rest of the section, let $k$ refer to the number 
-of collisions that occur during the current timestep.  
+of collisions that occur during the current time-step.  
 
 To analyize this section, we make the reasonable assumption that collide(),check() and compare\_and\_exchange all have $O(1)$ complexity, so the complexity
 of the loop is $O(k R(n))$, where $R$ is the complexity of $events$.remove(), which we will discuss later.  In addition, we must consider the complexity $F$
@@ -376,11 +376,11 @@ that no other thread will read or write to this same location during the react s
 It is important to note that this implementation can and does remove events before they are checked from the queue,
 and would not be suitable for any other kind of event queue.  However, our application domain says that removing potential events that will not occur from the queue is a feature, not a bug.
 The repredict phase and the check-react phase work together to ensure the correctness of the algorithm despite the fact that these events can be removed.
-For example, a pair of objects O1 and O2 may predict a collision may occur at timestamp 60 in the future.  However, an object O3 may predict a collision with O1 at timestamp 30.
-This collision may NOT occur due to the fact that something else might occur between now and timestamp 30, but it is still entered into the queue.  Thus, the check-react phase must double-check
+For example, a pair of objects O1 and O2 may predict a collision may occur at time-step 60 in the future.  However, an object O3 may predict a collision with O1 at time-step 30.
+This collision may NOT occur due to the fact that something else might occur between now and time-step 30, but it is still entered into the queue.  Thus, the check-react phase must double-check
 all collisions in the queue for validity before reacting.  However, upon reaction to a collision that event is marked as invalid in the queue.  All invalid
-objects are then recomputed.  In our example, the collision predicted at timestamp 30 removes the collision predicted at timestamp 60.  However,
-if the first collision fails to occur, then during the repredict phase of timestep 30, the collision between O1 and O2 at timestep 60 would be re-discovered.
+objects are then recomputed.  In our example, the collision predicted at time-step 30 removes the collision predicted at time-step 60.  However,
+if the first collision fails to occur, then during the repredict phase of time-step 30, the collision between O1 and O2 at time-step 60 would be re-discovered.
 
 \begin{algorithm}
 \caption{Insert}
@@ -459,15 +459,15 @@ the lock-free property because it remains wait-free in all states except when a 
 
 \subsubsection{Complexity}
 
-By examining the results from each of these analysis, we can analyze the complexity of the overall timestep in by looking at the total complexity for each of the sub-phases described in Section \ref{sec:stsp}.
+By examining the results from each of these analysis, we can analyze the complexity of the overall time-step in by looking at the total complexity for each of the sub-phases described in Section \ref{sec:stsp}.
 From Section \ref{sub:checkreact} we see that the complexity of the check-react subphase is $O(F(n)+k R(n))$, which becomes $O(O(1)+kO(1))=O(k)$ after substuting our definitions of $F$ and $R$ from Section \ref{feq}.
 From Section \ref{sub:update} the complexity of the update subphase is $O(n)$.  
 Lastly, the complexity of the repredict subphase \ref{sec:repredict} is $O(F_i(n)+k' n I(n))$, which also reduces after substitution to $O(O(1)+k' n O(1))=O(k'n)$.
 
-Because the final complexity per timestep is the complexity of all of the phases, the final timestep complexity is $O(k+n+k'n)$.  In the worst case $k'=k=n$, which occurs once during the initialization phase, and could occur with 
+Because the final complexity per time-step is the complexity of all of the phases, the final time-step complexity is $O(k+n+k'n)$.  In the worst case $k'=k=n$, which occurs once during the initialization phase, and could occur with 
 very low probability at any other time, then this reduces to $O(n^2)$.  However, experimentally and rationally, $k << n$, because the number of collisions
 that are predicted to occur in any single timetep are guaranteed by the physical nature of our problem to be much less then $n$.  As a matter of fact, as seen in Section \ref{results}, in our experiments
-$k=0$ in 90-98\% of the timesteps simulated.
+$k=0$ in 90-98\% of the time-steps simulated.
 
 \section{Experimental Setup}%Nick
 
