@@ -30,10 +30,10 @@
           }
 
 %% Please type your abstract here.
-\abstract{The general simulation of n-body systems often requires the simulation of pairwise interaction events between the objects.  The naive method of simulating these events is an algorithm that polls each pair of objects for an interaction every \hyphenation{time-step}.  This algorithm has $O(n^2)$ operations per \hyphenation{time-step} in the number of objects.  However, this method scales very well to multiple cores. In this paper, we propose a novel method of pairwise simulation that saves a significant amount of computation time by predicting possible future outcomes rather than reacting to them.  We demonstrate the implementation of this method, as well as demonstrate that it has amortized $O(n)$ complexity per \hyphenation{time-step}.  We also demonstrate an implementation to allow this algorithm to scale comparably well to multiple cores of a shared memory machine.}
+\abstract{The general simulation of n-body systems often requires the simulation of pairwise interaction events between the objects.  The naive method of simulating these events is an algorithm that polls each pair of objects for an interaction every time-step.  This algorithm has $O(n^2)$ operations per time-step in the number of objects.  However, this method scales very well to multiple cores. In this paper, we propose a novel method of pairwise simulation that saves a significant amount of computation time by predicting possible future outcomes rather than reacting to them.  We demonstrate the implementation of this method, as well as demonstrate that it has amortized $O(n)$ complexity per time-step.  We also demonstrate an implementation to allow this algorithm to scale comparably well to multiple cores of a shared memory machine.}
 
 %% Keywords should be separated by \*\ sign
-\keywords{Scalable simulation\*\ n-body \*\ event \*\ prediction}
+\keywords{n-body systems |*| non-blocking synchronization |*| discrete event simulation |*| prediction}
 
 
 \begin{document}
@@ -41,6 +41,8 @@
 
 %% ###################################################################
 
+\hyphenation{time-step}
+\hyphenation{time-steps}
 
 \section{Introduction}
 
@@ -50,9 +52,9 @@ Although the naive and semi-naive implementations of this kind of simulation are
 
 \section{Problem Definition}
 
-As input, we are given a description of static objects, dynamic objects, and the geometry defining their boundaries.  We are also given initial states like position, acceleration and velocity of the objects in the system, and a set of rules to update those objects.  As output, we wish to compute the exact state of each object in the system for each of the $n$ \hyphenation{time-steps} $t_0, t_1, t_2, \ldots, t_n$.
+As input, we are given a description of static objects, dynamic objects, and the geometry defining their boundaries.  We are also given initial states like position, acceleration and velocity of the objects in the system, and a set of rules to update those objects.  As output, we wish to compute the exact state of each object in the system for each of the $n$ time-steps $t_0, t_1, t_2, \ldots, t_n$.
 
-For each object $o$ in the system, a subroutine is defined \texttt{update($o$,$dt$)}, which computes the state of the object in the next \hyphenation{time-step}, given the object state in the current \hyphenation{time-step} and a time $dt$ between \hyphenation{time-steps}.  For each pair of objects $o1$ and $o2$, an additional subroutine is defined \texttt{collide($o1$,$o2$)} which computes the state of both $o1$ and $o2$ in the next \hyphenation{time-step}, assuming that the objects have collided during the current \hyphenation{time-step}.
+For each object $o$ in the system, a subroutine is defined \texttt{update($o$,$dt$)}, which computes the state of the object in the next time-step, given the object state in the current time-step and a time $dt$ between time-step.  For each pair of objects $o1$ and $o2$, an additional subroutine is defined \texttt{collide($o1$,$o2$)} which computes the state of both $o1$ and $o2$ in the next time-step, assuming that the objects have collided during the current time-step.
 
 \subsection{Naive Algorithm}
 
@@ -61,9 +63,9 @@ The brute force all-pairs solution is the naive solution to this problem as it i
 \begin{algorithm}
 \caption{Naive Algorithm}
 \begin{algorithmic}
-\FOR{each \hyphenation{time-step} $ti$}
+\FOR{each time-step $ti$}
 	\FOR{each dynamic object $do$}
-		\STATE update($do,dt$)  \COMMENT{$dt$ is the constant \hyphenation{time-step} difference}
+		\STATE update($do,dt$)  \COMMENT{$dt$ is the constant time-step difference}
 		\FOR{each object $o$}
 			\IF{check($do, o$)}
 				\STATE collide($do, o, dt$)
@@ -75,9 +77,9 @@ The brute force all-pairs solution is the naive solution to this problem as it i
 \end{algorithm}
 
 This technique is embarrassingly parallel, allowing a thread per dynamic object or even a thread per pair with minimal overhead.  However, it is extremely
-wasteful, because there are $O(n^2)$ checks being made every single timestamp, even if the likelihood of a collision has changed little since the last \hyphenation{time-step} \cite{Seningood}.  
+wasteful, because there are $O(n^2)$ checks being made every single timestamp, even if the likelihood of a collision has changed little since the last time-step \cite{Seningood}.  
 
-Each of these $O(n^2)$ checks per \hyphenation{time-step} is computationally cheap individually, but when the number of objects is very great the computational overhead of performing all of them becomes
+Each of these $O(n^2)$ checks per time-step is computationally cheap individually, but when the number of objects is very great the computational overhead of performing all of them becomes
 unmanageable. Considering that an extreme majority of the checks will fail due to the fact that collision occurrences are rare, most of them do not need to be computed, and avoiding their computation has the ability to dramatically increase the 
 throughput of our simulation.
 
@@ -89,17 +91,17 @@ A similar algorithm that we refer to as the 'semi-naive' algorithm has also foun
 \label{sec:theocont}
 \subsection{Predictive Algorithm}
 
-In our desired solution, we take a completely different approach.  In contrast to the naive and semi-naive algorithms, our solution avoids computing any unneeded checks on \hyphenation{time-steps} that do not change the solution by \textit{predicting} the intersections before they occur, rather than checking for them when they do not.  Our algorithm will use a slightly more complex subroutine \texttt{predict($o1$,$o2$)} that returns the time an intersection is likely to occur, and enters it into an event queue that contains the predicted collisions that are likely to occur.  When an intersection occurs, it is recomputed and removed from the queue.
+In our desired solution, we take a completely different approach.  In contrast to the naive and semi-naive algorithms, our solution avoids computing any unneeded checks on time-steps that do not change the solution by \textit{predicting} the intersections before they occur, rather than checking for them when they do not.  Our algorithm will use a slightly more complex subroutine \texttt{predict($o1$,$o2$)} that returns the time an intersection is likely to occur, and enters it into an event queue that contains the predicted collisions that are likely to occur.  When an intersection occurs, it is recomputed and removed from the queue.
 
 \begin{algorithm}
 \caption{Predictive Algorithm}
 \begin{algorithmic}
 \STATE \COMMENT{initialize events from initial states} % future_event_queue()
-\FOR{each \hyphenation{time-step} $ti$}
+\FOR{each time-step $ti$}
 	\FOR{each dynamic object $do$}
-		\STATE update($do,dt$)  \COMMENT{$dt$ is the constant \hyphenation{time-step} difference}
+		\STATE update($do,dt$)  \COMMENT{$dt$ is the constant time-step difference}
 	\ENDFOR
-	\STATE \COMMENT{for each event that occurs in this \hyphenation{time-step}}
+	\STATE \COMMENT{for each event that occurs in this time-step}
 	\FOR{each e in events.find(ti)}
 		\FOR{each object $o$}
 			\IF{check($e.o,o$)}
@@ -190,14 +192,14 @@ other threads in the process.
 
 \subsection{Scalable Timestep Sub-Phases}
 \label{sec:stsp}
-In all threaded implementations of \hyphenation{time-step}-based simulation, at least one barrier construct
-is necessary in order to prevent the system from processing more than one \hyphenation{time-step} at a time.  Without an implicit barrier at the beginning or end of the 
-processing for each \hyphenation{time-step}, then worker threads could easily get out of sync on the \hyphenation{time-steps} that they are working on, which would produce incorrect calculations
-for comparisons between threads.  The current timestamp of the simulation must be constant across all threads, and so a barrier is used in order to synchronize that \hyphenation{time-step}.  This
-limitation is true for all threaded \hyphenation{time-step} simulation, our application included.
+In all threaded implementations of time-step-based simulation, at least one barrier construct
+is necessary in order to prevent the system from processing more than one time-step at a time.  Without an implicit barrier at the beginning or end of the 
+processing for each time-step, then worker threads could easily get out of sync on the time-steps that they are working on, which would produce incorrect calculations
+for comparisons between threads.  The current timestamp of the simulation must be constant across all threads, and so a barrier is used in order to synchronize that time-step.  This
+limitation is true for all threaded time-step simulation, our application included.
 
-Therefore, we can consider the timespan of a single \hyphenation{time-step} as a single computational unit, the beginning and end of which all threads are operating in sync.  We can ignore
-all processing that occurs outside of a single \hyphenation{time-step}.  For our implementation of the prediction algorithm described in \ref{sec:theocont}, a single \hyphenation{time-step} is broken down
+Therefore, we can consider the timespan of a single time-step as a single computational unit, the beginning and end of which all threads are operating in sync.  We can ignore
+all processing that occurs outside of a single time-step.  For our implementation of the prediction algorithm described in \ref{sec:theocont}, a single time-step is broken down
 into several distinct 'phases,` with the overall structure as follows:
 
 \floatname{algorithm}{Procedure}
@@ -213,14 +215,14 @@ into several distinct 'phases,` with the overall structure as follows:
 
 Note the implicit barrier protecting all threads from moving to the next frame before their peers.  The implementation of each subroutine are given in section \ref{sec:subphase}.
 
-The primary problem with thread safety in this formulation of the \hyphenation{time-step} is the program errors that can occur in the status of the queue and the determinism of the simulation
+The primary problem with thread safety in this formulation of the time-step is the program errors that can occur in the status of the queue and the determinism of the simulation
 if multiple threads are in different phases simultaneously.  For example, if thread A is updating object j, in the ``update simulation stage'', and thread B is writing to object 
 j and i in the ``check react collisions'' phase, then the exact results the simulation will calculate are non-deterministic based on processor scheduling.  
 Due to the fact that there are 3 phases, and $n$ objects, the total number of possible non-deterministic phase-overlap outcomes is $3\times3\times n=9n$.  This is clearly not an thread-safe solution.
 
 However, as can be seen from section \ref{sec:subphase}, each of the sub-phases can be parallelized somewhat trivially.  Additionally, each sub-phase either reads and writes
 a single array for that phase without inter-thread communication, or reads and writes two arrays with inter-thread communication.  Therefore, to allow us to parallelize each
-phase in isolation, we break up the \hyphenation{time-step} into ``sub-phases'' using an additional barrier operation, implemented as in section \ref{sec:barrier}.  
+phase in isolation, we break up the time-step into ``sub-phases'' using an additional barrier operation, implemented as in section \ref{sec:barrier}.  
 
 \floatname{algorithm}{Procedure}
 \begin{algorithm}
@@ -283,7 +285,7 @@ that the entire Update\_Simulation procedure is $O(n)$.
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
-This phase does the grunt work of the predictive algorithm.  During this phase, pending events that were predicted to happen in the current \hyphenation{time-step} are checked to see if they actually occur.  This phase requires additional synchronization overhead for several reasons.
+This phase does the grunt work of the predictive algorithm.  During this phase, pending events that were predicted to happen in the current time-step are checked to see if they actually occur.  This phase requires additional synchronization overhead for several reasons.
 
 \begin{enumerate}
 	\item collide() reads and writes TWO objects, which means it could potentially modify objects that are assigned to other threads non-deterministically.
@@ -514,11 +516,11 @@ In order to program the simulation, we will use the latest version of the C++ st
 
 We wish to test performance economy as well as parallizability.  For our parallelization tests, we used thread-level parallelism and atomic primitives from the latest version of the C++ standard.
 
-The performance of these systems is typically evaluated in terms of a throughput measurement that measures the number of \hyphenation{time-steps} per second the system is capable of evaluating.  Equivalently, one can measure the average wall-clock time that passes while evaluating one \hyphenation{time-step}.
+The performance of these systems is typically evaluated in terms of a throughput measurement that measures the number of time-steps per second the system is capable of evaluating.  Equivalently, one can measure the average wall-clock time that passes while evaluating one time-step.
 
 \subsection{Naive Implementation}
 
-The implementation of the naive solution is relatively straightforward, as a naive approach should be.  First, all of the dynamic objects must be updated for each \hyphenation{time-step} to their new positions, using their previously calculated velocity vectors.  Then, because we are handling the spheres and planes separately, we have two sets of nested for loops to perform the collision checks.  The first loops over the spheres and checks each with all of the planes, and the second loops over the spheres and checks each with all of the spheres that are after it in the list.  We do this to avoid checking each pair twice (\texttt{collide($o1$,$o2$)} would evaluate the same as \texttt{collide($o2$,$o1$)}). For the threaded version of this algorithm, we simply run outermost for loop in parallel:
+The implementation of the naive solution is relatively straightforward, as a naive approach should be.  First, all of the dynamic objects must be updated for each time-step to their new positions, using their previously calculated velocity vectors.  Then, because we are handling the spheres and planes separately, we have two sets of nested for loops to perform the collision checks.  The first loops over the spheres and checks each with all of the planes, and the second loops over the spheres and checks each with all of the spheres that are after it in the list.  We do this to avoid checking each pair twice (\texttt{collide($o1$,$o2$)} would evaluate the same as \texttt{collide($o2$,$o1$)}). For the threaded version of this algorithm, we simply run outermost for loop in parallel:
 
 \floatname{algorithm}{Algorithm}
 \begin{algorithm}
@@ -555,7 +557,7 @@ The total runtime of the naive algorithm is scale-invariant.  That is to say, th
 \end{figure}
 \end{center}
 
-For the predictive algorithm, total runtime is not scale-invariant, as predictions rely on calculating physical collisions.  As the volume increases, the likelihood of collision decreases (Figure \ref{rt_predict1}).  Total runtime is showing growth as was true with the naive algorithm, but at a much slower growth rate than the naive algorithm.  This may be a result of extra overhead to perform collision equation calculations in order to reduce the number of unnecessary collision checks.  The number of checks performed per \hyphenation{time-step} is linear with respect to the number of objects, as opposed to the polynomial growth of the checks performed in the naive solution (Figure \ref{col_predict1}).  Prediction rates were between 0.3\% and 0.7\% correct, which although still low, are enormously more efficient when compared to the naive algorithm (Figure \ref{col_eff}).  These prediction rates are so low because at every \hyphenation{time-step}, the predictive algorithm still iterates over an array which holds future collision information.  Every array location maps to a sphere, and each location gets 'checked' once per \hyphenation{time-step}.  So an array location could be 'checked' many times before it actually triggers a collision event.
+For the predictive algorithm, total runtime is not scale-invariant, as predictions rely on calculating physical collisions.  As the volume increases, the likelihood of collision decreases (Figure \ref{rt_predict1}).  Total runtime is showing growth as was true with the naive algorithm, but at a much slower growth rate than the naive algorithm.  This may be a result of extra overhead to perform collision equation calculations in order to reduce the number of unnecessary collision checks.  The number of checks performed per time-step is linear with respect to the number of objects, as opposed to the polynomial growth of the checks performed in the naive solution (Figure \ref{col_predict1}).  Prediction rates were between 0.3\% and 0.7\% correct, which although still low, are enormously more efficient when compared to the naive algorithm (Figure \ref{col_eff}).  These prediction rates are so low because at every time-step, the predictive algorithm still iterates over an array which holds future collision information.  Every array location maps to a sphere, and each location gets 'checked' once per time-step.  So an array location could be 'checked' many times before it actually triggers a collision event.
 
 \begin{center}
 \begin{figure}
@@ -657,7 +659,7 @@ Next we show that both algorithms eventually gain a benefit from multi-threading
 
 \section{Conclusion} 
 
-We have presented a novel algorithm to perform discrete event n-body simulations, using predictive event detection instead of polling collision detection.  Our algorithm runs in $O(n)$ time in the average-case for a single \hyphenation{time-step}.  We have demonstrated that this algorithm has significantly increased single-threaded performance over the naive implementation, and we have presented an implementation that scales well to a multi-core architecture in comparison to the naive algorithm.
+We have presented a novel algorithm to perform discrete event n-body simulations, using predictive event detection instead of polling collision detection.  Our algorithm runs in $O(n)$ time in the average-case for a single time-step.  We have demonstrated that this algorithm has significantly increased single-threaded performance over the naive implementation, and we have presented an implementation that scales well to a multi-core architecture in comparison to the naive algorithm.
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,midterm}
