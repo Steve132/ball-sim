@@ -1,0 +1,21 @@
+ 
+
+More Experiments to perform:
+	-Comparing to Locking (or lock-free) Pqueue
+	-Comparing to Locking Future Queue
+	-Comparing to other nbody approach with bounding volumes
+
+Organise a little better, one or more sections to identify comparison between naive algorithm and predictions better
+
+Justify which nbody we compare against.  Justify when you may want to use our method.
+	-BVH maybe bad because dynamic
+
+http://yhsim.nudt.edu.cn/pads2012.htm
+Annual Simulation Symposium
+
+
+qwertyuiop
+
+
+
+sghzxcvbnm

@@ -1,0 +1,68 @@
+\documentclass[letterpaper,10pt]{article}
+
+\usepackage{fullpage}
+
+\author{Steven Braeger, Nicholas Arnold, Damian Dechev}
+\title{Revisions Cover Letter for ``Scalable N-Body Event Prediction''}
+\date{02/10/12}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Thank you for taking the time to review our submission ``Scalable N-Body Event Prediction.''  We recieved the reviewer's comments, and we believe the 
+following letter will address them satisfactorily.  Below we have a bulleted summary of each reviewer's comments, and how we addressed them.
+
+\section{Reviewer \#1}
+
+\subsection{The abstract claims that the paper ``...prove[s] that it has amortized $O(n)$ complexity per timestep.'' There is no such proof.}
+We added an analysis of the time-complexity of the procedure to each of the sections where a procedure or method was described.  We then 
+added a subsection that collates these analysis into one final per-timestep complexity analysis.  An argument is presented describing the justification for a 
+probabilistic $O(n)$ steps per timestep.  Lastly, the word ``proof'' is removed from these arguments.
+\subsection{There are a number of misspelled words in the paper. Some examples include "occurances", "primative", and "embarasingly".}
+These errors and grammatical mistakes have been corrected.
+
+\subsection{The claim that the paper's implementation of a barrier is lock-free doesn't make any sense. (It would be OK to argue this point in the reviewer's response instead of the paper if the authors believe otherwise.) }
+In order to rectify this problem to prevent further disagreement, we have relaxed the claims from ``lock-free'' to ``scalable'' in most of the 
+instances of these claims in the paper.  However, the section claiming lock-freedom while obeying the barrier property remains, and the authors still believe their implementation arguably obeys the lock-free property.
+
+As the reviewer quoted on wikipedia, ``An algorithm is lock-free if it satisfies that when the program threads are run sufficiently long at least one of the threads makes progress (for some sensible definition of progress).''
+When using a barrier construct for thread safety in an application with n active threads, up to n-1 active threads wait at the barrier and make no progress.  However, the nth thread
+does not wait, and immediately progresses to the end of the barrier, freeing the other threads in the process.  The n-th thread therefore makes progress, passes through the barrier without stopping, and continues to make progress, which satisfies the ``at least one'' criteria above.
+As long as the barrier can be implemented in a way that prevents the nth thread from waiting on a mutex, then we argue that the barrier is a valid lock-free threading primative.
+
+As barriers are the main threading primative we utilise in the paper, we still believe that our entire algorithm satisfies the lock-free property.  However, this claim has been excised from the paper to satisfy reviewer's reservations.
+
+\subsection{There is inconsistent use of the terms "timestep" and "timestamp". }
+We have tried to resolve this issue as simply as possible by clarifying ``timestep'' in all but one instance where ``timestamp'' is appropriate.
+However, the reviewer also expressed an uncertainty as to WHEN events get processed.  For clarification, as specified in the predicive algorithm summary, the event queue
+is polled at the beginning of every timestep, but events in the queue only get processed if the timeSTAMP of the event is equal or less than to the current time, indicating that the event is supposed to occur currently.
+We have also fixed a latex error that did not show the correct text in our previous submission.
+
+\subsection{The paper needs to more clearly explain the following issue...}
+A paragraph has been added in the text in the section describing the queue to address the reviewer's issue and some variants of it.
+
+\subsection{In section VI, please make explicit reference to each of the figures.}
+We believe we have addressed this issue.
+
+\subsection{Scalable Barrier Implementation}
+We have carefully studied the formal definition of lock-freedom and provide reasoning about why barriers do not meet this progress guarantee.
+We provide three relevant citations to publications in the domain of nonblocking and lock-free multicore algorithms and data structures.
+
+\subsection{Minor Issues}
+We believe we addressed all of the minor issues.
+
+\section{Reviewer \#2}
+\subsection{The prediction method is not explained in the paper}
+It was explained in detail in the appendix.  We added some clarifying language to this appendix.
+\subsection{There are many curves in Fig.6, Fig.8, and Fig.10...}
+We believe we have addressed this issue.
+\subsection{The scales of x-axis are different in graphs of the naive method and the prediction method}
+we believe we have addressed this issue.
+
+\section{Conclusion}
+Thank you for the reviews.  
+
+\end{document}
