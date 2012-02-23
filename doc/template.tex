@@ -22,7 +22,7 @@
 
 \author{Steven Braeger\inst{1}\email{steve@soapforge.com},
         Nicholas Arnold\inst{1}\email{narnold@knights.ucf.edu},
-        Damian Dechev\inst{1}\email{damian.dechev@gmail.com}}
+        Damian Dechev\inst{1}\email{dechev@eecs.ucf.edu}}
 
 \institute{
      \inst{1} University of Central Florida,\\
@@ -155,17 +155,16 @@ In addition, our queue must implement these algorithms efficiently in order to p
 \section{Scalable Implementation}
 In this section, we propose a scalable implementation of the predictive algorithm from section \ref{sec:theocont}, including an implementation of the 
 N-Body Future Event Queue data structure.  Our implementation uses barriers and hardware atomic compare-and-swap primitives to guarantee thread-safety.  Our scalable implementation
-works in two parts, which we will discuss here:  First, it uses barriers and an hardware compare-and-exchange boolean to synchronize the algorithm that utilizes the data structure, 
-a process that is described in Section \ref{sec:stsp}.  Next, it uses an array with a thread-safe indexing scheme to implement the future event queue which is described in Section \ref{feq}
+works in two phases, which we will discuss here. First, it uses barriers and a hardware compare-and-swap boolean to synchronize the algorithm that utilizes the data structure,  a process that is described in Section \ref{sec:stsp}. Next, it uses an array with a thread-safe indexing scheme to implement the future event queue which is described in Section \ref{feq}
 \subsection{Barriers}
 \label{sec:barrier}
-A barrier is a construct that is crucial to any threaded simulation.  It is a simple synchronization primitive that only has one operation: wait(n).  
+A barrier is a construct that is important to many threaded simulations. It is a simple synchronization primitive that only has a single operation: wait(n).  
 A thread that enters wait(n) will wait at that point in the control flow of the program until the total number of threads in the wait(n) function is n.  Then,
 all threads return simultaneously.
 
-Typically, a barrier is not classified as a lock-free operation.  In most implementations of a barrier, a locked mutex is used to sleep all the threads, which is 
-unlocked when the number of sleeping threads is equal to n.  However, this need not be the case.  We observe that the barrier preserves the lock-free property if it is implemented
-using a hardware atomic instruction instead.  Wait() can be implemented as the following pseudcode.
+Lock-freedom is a \emph{progress condition} and as defined by Herlihy et al.~\cite{HS08, Shavit11}, a concurrent object is \emph{lock-free} if it guarantees that \emph{some} process in the system makes progress in a \emph{finite} number of steps. To meet the progress condition of lock-freedom, one should not use any form of a mutual exclusion mechanism~\cite{HS08, Dechev06}. In most implementations of a barrier, a locked mutex is used to sleep all the threads, which is 
+unlocked when the number of sleeping threads is equal to n. Thus, a barrier implementation does not meet the lock-free progress guarantee.  
+Here we present an alternative optimized implementation of the barrier's wait routine that is inspired by the implementation techniques of lock-free algorithms~\cite{Shavit11, Dechev06} and uses a hardware atomic instruction instead. However, our barrier implementation does not meet the lock-free progress guarantee as the system's progress is still subject to the decisions of the scheduler. Wait() can be implemented as the following pseudcode.
 
 \floatname{algorithm}{Procedure}
 \begin{algorithm}
@@ -186,9 +185,9 @@ using a hardware atomic instruction instead.  Wait() can be implemented as the f
 \end{algorithmic}
 \end{algorithm}
 
-When implemented in this way, the implementation preserves the lock-free property, because even though n-1 threads are forced to wait, the last thread never waits for any 
-mutex, or does it ever enter the spin-lock loop.  The last thread does useful work until it enters the wait() body, then immediately exits, continuing to make progress, releasing all
-other threads in the process.
+%When implemented in this way, the implementation preserves the lock-free property, because even though n-1 threads are forced to wait, the last thread never waits for any 
+%mutex, or does it ever enter the spin-lock loop.  The last thread does useful work until it enters the wait() body, then immediately exits, continuing to make progress, releasing all
+%other threads in the process.
 
 \subsection{Scalable Timestep Sub-Phases}
 \label{sec:stsp}
@@ -454,8 +453,9 @@ As it is also implemented as a linear search through the array, find() is in $O(
 
 \subsection{Summary of Predictive Method}
 	The sub-phase barriers and the thread object ownership system work together to ensure the thread-safety of the inputs and outputs to the Future Event Queue.
-This partnership ensures in all the covered cases that the same object data is never used as a concurrent shared resource for both reading and writing.  In addition, we believe our algorithm maintains
-the lock-free property because it remains wait-free in all states except when a thread is waiting at a barrier, which we justified is still a lock-free state in Section \ref{sec:barrier}.
+This partnership ensures in all the covered cases that the same object data is never used as a concurrent shared resource for both reading and writing.  
+%In addition, we believe our algorithm maintains
+%the lock-free property because it remains wait-free in all states except when a thread is waiting at a barrier, which we justified is still a lock-free state in Section \ref{sec:barrier}.
 
 \subsubsection{Complexity}
 
@@ -724,6 +724,8 @@ is taken as the predicted collision time.  Otherwise, no collision is predicted.
 \bibitem{patent} Philip Morris Inc., European patent application 0021165 A1, 1981.01.07
 \bibitem{standard-1} ISO 2108:1992, Information and documentation --- International standard book numbering (ISBN)
 \bibitem{standard-2} ISO/TR 9544:1988, Information processing --- Computer-assisted publishing --- Vocabulary
+\bibitem{HS08} Herlihy, M. and Shavit, N., The Art of Multiprocessor Programming, Morgan Kaufmann Publishers, New York, NY, USA, 2008. ISBN: 9780123705914.
+\bibitem{Shavit11}, Shavit, N., Data Structures in the Multicore Age,  Commun. ACM, vol. 54, year 2011, pages 76-84.
 \end{thebibliography}
 \end{comment}
 
